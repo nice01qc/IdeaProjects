@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 缺少什么命名空间直接在http://www.springframework.org/schema/
+     上添加就好了，但对应的包必须加入才能生效-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--之所以单独拿出来，发现以混合其它bean 就不会初始化了，不知道什么原因-->
+
+
+        <!--引用其他bean-->
+        <!--该Bean与父容器1具有相同的id-->
+    <bean id="secretary" class="test.Secretary">
+        <property name="name" value="浩哥专属"></property>
+    </bean>
+    <bean id="boss" class="test.Boss" >
+        <property name="secretary">
+            <!--parent 为继承，bean为本地-->
+            <ref parent="secretary"/>
+            <!--<ref bean="secretary" />-->
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 缺少什么命名空间直接在http://www.springframework.org/schema/
+     上添加就好了，但对应的包必须加入才能生效-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <!--@@@@@@@@@@@@@@@@@@@@@@@ 纯手工xml配置 @@@@@@@@@@@@@@@@@@@@@@@@-->
+
+   <!--bean的作用域有 singleton,prototype,request,session,globalSession。-->
+
+    <!--set方法初始化-->
+    <!--id命名有限制-->
+    <bean id="car1" class="test.Car1">
+        <property name="brand" value="红旗CA72"></property>
+        <property name="color" value="black"></property>
+        <property name="maxSpeed" value="200"></property>
+    </bean>
+
+    <!--name命名没有限制-->
+    <bean name="car2" class="test.Car1">
+        <property name="brand" value="红ds旗CdsA72"></property>
+        <property name="color" value="bladsck"></property>
+        <property name="maxSpeed" value="2s0d0"></property>
+    </bean>
+    <!--构造函数初始化-->
+    <bean name="car3" class="test.Car1">
+        <constructor-arg type="java.lang.String" value="hognqi"></constructor-arg>
+        <constructor-arg type="java.lang.String" value="red"></constructor-arg>
+        <constructor-arg type="java.lang.String" value="323"></constructor-arg>
+    </bean>
+    <!--工厂方法注入-->
+    <bean id="carFactory" class="test.CarFactory3"></bean>
+    <bean id="car55" factory-bean="carFactory" factory-method="createCar"></bean>
+    <!--静态工厂方法-->
+    <bean id="car66" class="test.CarFactory3" factory-method="createCar1"></bean>
+
+
+    <!--注入参数详解——将集合等注入到Bean中-->
+        <!--字面量值-->
+    <bean id="car6" class="test.Car1">
+        <property name="brand">
+            <value><![CDATA[红旗%@#！￥￥#%@￥]]></value>
+        </property>
+    </bean>
+
+
+   <!--引用没问题，可能跟那个那个实现生命周期有问题，或者跟继承另一个bean有问题，估计是最后一个问题-->
+    <bean id="secretary" class="test.Secretary">
+        <property name="name" value="浩哥专属"></property>
+    </bean>
+    <bean id="boss" class="test.Boss" >
+        <property name="secretary" ref="secretary"></property>
+    </bean>
+
+    <!--级联属性-->
+    <bean id="boss1" class="test.Boss">
+        <property name="secretary" ref="secretary"></property>
+        <property name="car1.brand" value="baoma"></property>
+    </bean>
+
+    <!--集合类属性-->
+    <bean id="me" class="test.Me">
+        <property name="favorites">
+            <list>
+                <value>看报</value>
+                <value>赛车</value>
+                <value>高尔夫</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="me1" class="test.Me">
+        <property name="reads">
+            <set>
+                <value>红楼梦</value>
+                <value>水浒</value>
+                <value>三国</value>
+            </set>
+        </property>
+    </bean>
+    <bean id="me2" class="test.Me">
+        <property name="jop">
+            <map>
+                <entry>
+                    <key><value>am</value></key>
+                    <value>会见顾客</value>
+                </entry>
+                <entry>
+                    <key><value>pm</value></key>
+                    <value>吃饭</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="me3" class="test.Me">
+        <property name="mails">
+            <props>
+                <prop key="jobmail">john-office@baobaotao.com</prop>
+                <prop key="lifeMail">john-life@baobaotao.com</prop>
+            </props>
+        </property>
+    </bean>
+    <!--集合合并-->
+    <bean id="parentMe" abstract="true" class="test.Me">
+        <property name="reads">
+            <set>
+                <value>红楼梦</value>
+                <value>水浒</value>
+                <value>三国</value>
+            </set>
+        </property>
+    </bean>
+    <bean id="me4" parent="parentMe">
+        <property name="reads">
+            <set merge="true">
+                <value>爬山</value>
+                <value>游泳</value>
+            </set>
+        </property>
+    </bean>
+
+    <!--通过util命名空间配置集合类型的Bean-->
+    <util:list id="favoriteList">
+        <value>看小说</value>
+        <value>看电影</value>
+        <value>看电脑</value>
+    </util:list>
+    <!--下面直接使用就好了-->
+    <bean id="me5" class="test.Me">
+        <property name="favorites" ref="favoriteList"></property>
+    </bean>
+
+
+
+
+
+</beans>

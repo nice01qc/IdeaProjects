@@ -1,0 +1,75 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+    <!--首页处理-->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <!--错误处理，默认容器自己处理，输出异常信息和堆跟踪信息-->
+    <error-page>
+        <!--以http状态码进行转发-->
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+    <error-page>
+        <!--以收到的异常类型进行转发-->
+        <exception-type>java.lang.NullPointerException</exception-type>
+        <location>/null.jsp</location>
+    </error-page>
+
+    <!--上下文参数设置-->
+    <context-param>
+        <param-name>Jake</param-name>
+        <param-value>he is my brother !</param-value>
+    </context-param>
+    <!--&lt;!&ndash;servlet 参数设置及配置&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>view</servlet-name>-->
+        <!--<servlet-class>servlet.View</servlet-class>-->
+        <!--<load-on-startup>3</load-on-startup>    &lt;!&ndash;启动应用程序是否要初始化 &ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>haoge</param-name>-->
+            <!--<param-value>good</param-value>-->
+        <!--</init-param>-->
+
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>view</servlet-name>-->
+        <!--<url-pattern>/view</url-pattern>-->
+        <!--&lt;!&ndash;<url-pattern>/</url-pattern> 匹配所有的，除了已有的模式 &ndash;&gt;-->
+    <!--</servlet-mapping>-->
+
+    <!--以下时监听器-->
+    <!--监听器有：生命周期监听器、属性操作监听器、会话属性监听器-->
+    <!--<listener>-->
+        <!--<listener-class>servlet.AvatarInitializer</listener-class>-->
+    <!--</listener>-->
+
+
+    <!--&lt;!&ndash;一下时过滤器&ndash;&gt;-->
+    <!--<filter>-->
+        <!--<filter-name>performanceFilter</filter-name>-->
+        <!--<filter-class>servlet.PerformanceFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>performanceFilter</filter-name>-->
+        <!--<servlet-name>view</servlet-name>-->
+        <!--<dispatcher>REQUEST</dispatcher>-->
+        <!--&lt;!&ndash;一下三个一直没效果，不知道什么情况！！！&ndash;&gt;-->
+        <!--<dispatcher>FORWARD</dispatcher>-->
+        <!--<dispatcher>INCLUDE</dispatcher>-->
+        <!--<dispatcher>ERROR</dispatcher>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter>-->
+        <!--<filter-name>filterall</filter-name>-->
+        <!--<filter-class>servlet.FilterAll</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>filterall</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+</web-app>

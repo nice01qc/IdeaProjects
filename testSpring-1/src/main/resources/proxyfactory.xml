@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="greetingAdvice" class="test2aop.aop.method.GreetingBeforeAdvice"></bean>
+    <bean id="afterAdvice" class="test2aop.aop.method.GreetingAfterAdvice"></bean>
+    <bean id="interceptor" class="test2aop.aop.method.GreetingInterceptor"></bean>
+    <bean id="target" class="test2aop.aop.NaiveWaiter"></bean>
+
+    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--指定代理接口，多个接口用list-->
+        <property name="proxyInterfaces" value="test2aop.aop.Waiter"></property>
+        <!--是否对类进行代理，设置为true时，使用CGLib代理，就可以不用上面的接口-->
+        <property name="proxyTargetClass" value="false"></property>
+        <!--指定使用增强-->
+        <!--<property name="interceptorNames" value="greetingAdvice,afterAdvice"></property>-->
+        <property name="interceptorNames" value="interceptor"></property>
+        <!--指定对那个bean进行代理-->
+        <property name="targetName" value="target"></property>
+
+    </bean>
+
+
+
+
+</beans>

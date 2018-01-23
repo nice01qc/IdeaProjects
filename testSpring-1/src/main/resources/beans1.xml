@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 缺少什么命名空间直接在http://www.springframework.org/schema/
+     上添加就好了，但对应的包必须加入才能生效-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+  <!--基于注解的配置，在test1 包里  -->
+
+  <!--扫描类包应用于注解定义的bean-->
+  <context:component-scan base-package="test1,test.Beans2">
+    <!--一下是过滤，自己看着办-->
+    <!--<context:exclude-filter type="annotation" expression=""></context:exclude-filter>-->
+    <!--<context:include-filter type="annotation" expression=""></context:include-filter>-->
+  </context:component-scan>
+
+  <!--引入文件-->
+  <import resource="classpath:beans.xml"  />
+
+
+</beans>
