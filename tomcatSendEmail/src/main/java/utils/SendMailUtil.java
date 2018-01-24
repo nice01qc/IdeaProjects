@@ -36,12 +36,7 @@ public class SendMailUtil implements Runnable {
 	private static final String host = "smtp.qq.com";
 	
 	private static final String password = "okdnjspbthmvbdhb";
-	
-//	private static final String fromEmail = "zhangjianshun@dormforce.net";
-//	
-//	private static final String host = "smtp.qiye.163.com";
-//	
-//	private static final String password = "zhangjianshun";
+
 	
 	//邮件主题
 	private static final String subject = "网管会报名反馈";
