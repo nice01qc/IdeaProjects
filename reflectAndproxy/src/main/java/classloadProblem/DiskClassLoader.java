@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 
-// 自行创建的一个类加载器
+// 自行创建的一个类加载器,默认先从自己的路径下寻找，没找到再抛给父类
 public class DiskClassLoader extends ClassLoader {
 
     private String mLibPath;
@@ -19,7 +19,6 @@ public class DiskClassLoader extends ClassLoader {
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         String fileName = getFileName(name);
         File file = new File(mLibPath,fileName);
-
         try{
             FileInputStream is = new FileInputStream(file);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -35,6 +34,7 @@ public class DiskClassLoader extends ClassLoader {
 
             is.close();
             bos.close();
+            System.out.println("see it ,which load from my direct");
 
             return defineClass(name,data,0,data.length);
         }catch (IOException e){
@@ -49,7 +49,7 @@ public class DiskClassLoader extends ClassLoader {
         if (index == -1){
             return name + ".class";
         }else{
-            return name.substring(index)+".class";
+            return name.substring(index+1)+".class";
         }
     }
 }
