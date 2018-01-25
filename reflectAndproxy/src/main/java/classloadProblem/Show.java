@@ -26,4 +26,12 @@ public class Show {
 
 
     }
+
+    public void justtest(){
+        System.out.println("show's method justtest() !");
+    }
+
+    static{
+        System.out.println("just test Class.forName !");
+    }
 }
