@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+
+// 自行创建的一个类加载器
 public class DiskClassLoader extends ClassLoader {
 
     private String mLibPath;

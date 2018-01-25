@@ -1,7 +1,6 @@
 package classloadProblem;
 
-import sun.misc.Launcher;
-
+// 展示着三个加载器的默认加载路径
 public class Show {
     public static void main(String[] args) throws ClassNotFoundException {
         // Bootstrap 目录有
