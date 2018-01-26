@@ -95,6 +95,14 @@ update customers set cust_city="shenzhen",cust_email="12121@qq.com" where cust_i
 /* ----- delete data ----- */
 delete from customers where cust_id = 1001;
 
+/* ----- views :equal a table ,just virtual ----- */
+create view productcustomers as 
+	select cust_id,cust_email from customers where cust_id>3;
+show create view productcustomers;	-- show the creation of productcustomers
+drop view productcustomers;	-- delete view productcustomers
+
+/* 使用存储过程,可结合多条语句，以免出错，已编译，更快*/
+-- 客户端更改分隔符 delimiter // <=> delimiter ;
 
 
 

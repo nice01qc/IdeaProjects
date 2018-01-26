@@ -7,6 +7,11 @@ public class TestBoy {
     @Boy(name = "string str")
     String str="haoge";
 
+    public TestBoy(int a, String str) {
+        this.a = a;
+        this.str = str;
+    }
+
     @Boy(name = "method getA !")
     public int getA() {
         return a;
@@ -25,5 +30,13 @@ public class TestBoy {
     @Boy(name = "method setStr !")
     public void setStr(@Boy(name = "parameter String str of method setStr !") String str) {
         this.str = str;
+    }
+
+    @Override
+    public String toString() {
+        return "TestBoy{" +
+                "a=" + a +
+                ", str='" + str + '\'' +
+                '}';
     }
 }
