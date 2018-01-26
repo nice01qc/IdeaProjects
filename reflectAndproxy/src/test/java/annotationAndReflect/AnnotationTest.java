@@ -1,4 +1,4 @@
-package annotation;
+package annotationAndReflect;
 
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 public class AnnotationTest {
     @Test
     public void testBoy() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException, NoSuchMethodException, InvocationTargetException {
-        Class<?> testboyclass = Class.forName("annotation.TestBoy");
+        Class<?> testboyclass = Class.forName("annotationAndReflect.TestBoy");
         TestBoy testBoy = new TestBoy(233,"Mike");
 
         // 输出所有属性
@@ -61,6 +61,9 @@ public class AnnotationTest {
             }
         }
 
+        /**
+         * 其他的都同上
+         */
     }
 
 

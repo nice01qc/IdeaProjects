@@ -8,3 +8,7 @@ out/
 *.iml
 *.grd
 *.jar
+.classpath
+.gitattributes
+.project
+ssm.iml

@@ -1,4 +1,4 @@
-package annotation;
+package annotationAndReflect;
 
 @Boy(name = "TestBoy",age = 28)
 public class TestBoy {
