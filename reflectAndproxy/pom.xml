@@ -7,6 +7,7 @@
     <groupId>nice01.qc.reflectAndproxy</groupId>
     <artifactId>nice01qc</artifactId>
     <version>1.0-SNAPSHOT</version>
+    
     <build>
         <plugins>
             <plugin>
