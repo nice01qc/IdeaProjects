@@ -31,9 +31,6 @@
             <version>${cglib.version}</version>
         </dependency>
 
-
-
-
     </dependencies>
 
     <build>
