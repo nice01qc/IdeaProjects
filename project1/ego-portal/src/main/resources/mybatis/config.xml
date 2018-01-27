@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 配置插件、配置二级缓存等 -->
+	<settings>
+		<!-- 开启缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+		<!-- 开启懒加载 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+	</settings>
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<!-- 指定方言（指定数据库类型） -->
+			<property name="dialect" value="mysql"/>
+		</plugin>
+	</plugins>
+</configuration>

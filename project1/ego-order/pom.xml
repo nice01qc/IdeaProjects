@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.bjsxt</groupId>
+	<artifactId>ego-order</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>com.bjsxt</groupId>
+		<artifactId>ego-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>com.bjsxt</groupId>
+			<artifactId>ego-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>ego-order-pojo</module>
+		<module>ego-order-mapper</module>
+		<module>ego-order-service</module>
+		<module>ego-order-web</module>
+	</modules>
+</project>
