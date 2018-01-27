@@ -1,5 +1,6 @@
 package proxy;
 
+import net.sf.cglib.proxy.Enhancer;
 import org.junit.Test;
 
 import java.lang.reflect.*;
@@ -8,7 +9,8 @@ public class ProxyTest {
     // 普通测试一
     @Test
     public void test1(){
-        ProxyObject proxyObject = new ProxyObject();
+        // 创建实例
+        ProxyInterfaceImpl proxyObject = new ProxyInterfaceImpl();
         proxyObject.setAge(22);
 
         InvocationHandler handler = new InvocationHandler() {
@@ -20,9 +22,10 @@ public class ProxyTest {
                 return result;
             }
         };
+
         // Interfaces 参数必须从目标对象中获取
-        ProxyInaterface proxyInaterface = (ProxyInaterface) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),proxyObject.getClass().getInterfaces(),handler);
-        proxyInaterface.nice();
+        ProxyInterface proxyInterface = (ProxyInterface) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),proxyObject.getClass().getInterfaces(),handler);
+        proxyInterface.nice();
 
         Class[] classes = proxyObject.getClass().getInterfaces();
     }
@@ -30,7 +33,7 @@ public class ProxyTest {
     // 普通测试二，更加详细的步骤
     @Test
     public void test2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        ProxyObject proxyObject = new ProxyObject();
+        ProxyInterfaceImpl proxyObject = new ProxyInterfaceImpl();
         proxyObject.setAge(22);
 
         // InvocationHandlerImpl 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分派转发
@@ -51,9 +54,26 @@ public class ProxyTest {
         Constructor constructor = clazz.getConstructor(new Class[]{InvocationHandler.class});
 
         // 通过构造函数对象创建动态代理类实例
-        ProxyInaterface proxyInaterface = (ProxyInaterface)constructor.newInstance(new Object[]{handler});
+        ProxyInterface proxyInterface = (ProxyInterface)constructor.newInstance(new Object[]{handler});
 
-        proxyInaterface.nice();
+        proxyInterface.nice();
+
+    }
+
+    // ·测试cglib动态代理
+    @Test
+    public void testCglib(){
+        Enhancer enhancer = new Enhancer();
+        // 继承被代理类，作为父类
+        enhancer.setSuperclass(MyCglibObject.class);
+        // 设置回调
+        enhancer.setCallback(new MyCglibProxy());
+        // 生成代理类对象
+        MyCglibObject myCglibObject = (MyCglibObject)enhancer.create();
+
+        myCglibObject.say();
+
+        System.out.println(myCglibObject.getClass().getSimpleName());
 
     }
 

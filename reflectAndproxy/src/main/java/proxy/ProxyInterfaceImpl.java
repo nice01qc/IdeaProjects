@@ -1,6 +1,6 @@
 package proxy;
 
-public class ProxyObject implements ProxyInaterface{
+public class ProxyInterfaceImpl implements ProxyInterface {
     private int age;
 
     public int getAge() {

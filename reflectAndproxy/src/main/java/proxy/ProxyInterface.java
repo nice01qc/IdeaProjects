@@ -1,5 +1,5 @@
 package proxy;
 
-public interface ProxyInaterface {
+public interface ProxyInterface {
     public void nice();
 }
