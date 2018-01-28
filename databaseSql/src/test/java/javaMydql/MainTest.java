@@ -1,10 +1,13 @@
 package javaMydql;
 
+import org.junit.Test;
+
 import java.sql.*;
 
 public class MainTest {
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    @Test
+    public void testThreeMethod() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/imooc?useSSL=false","root","1234");
@@ -53,6 +56,47 @@ public class MainTest {
         connection.close();
 
 
+
         // http://blog.csdn.net/u013132035/article/details/53266094
+    }
+
+    // jdbc事务处理
+    @Test
+    public void testjdbcAffairs() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/imooc?useSSL=false","root","1234");
+        //begin....
+        Savepoint sp1 = null;   // 回滚保存点1
+        Savepoint sp2 = null;   // 回滚保持点2
+        Statement statement = null;
+        ResultSet resultSet = null;
+        connection.setAutoCommit(false);  // 取消自动提交事务
+
+        String sql = "select * from orders";
+        try {
+            sp1 = connection.setSavepoint();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            sp2 =connection.setSavepoint();
+            System.out.println(sp1.hashCode()+";"+sp2.hashCode());
+            while (resultSet.next()){
+                System.out.println(resultSet.getInt("cust_id"));
+            }
+        } catch (SQLException e) {
+
+            connection.rollback(sp1);   // 遇到错误就回滚
+
+            System.out.println("出错了");
+
+            e.printStackTrace();
+        }finally {
+            connection.commit();
+            resultSet.close();  // 最好做些判断
+            statement.close();
+            connection.close();
+        }
+        System.out.println("交易成功！");
+
     }
 }
