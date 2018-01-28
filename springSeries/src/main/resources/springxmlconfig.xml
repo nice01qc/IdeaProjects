@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-
+    <bean id="boy1" class="springxmlconfig.pojo.Boy">
+        <property name="a"><value>32</value></property>
+    </bean>
 
 </beans>
