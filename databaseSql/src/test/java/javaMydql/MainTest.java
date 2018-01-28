@@ -7,7 +7,7 @@ public class MainTest {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/imooc","root","1234");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/imooc?useSSL=false","root","1234");
 
         Statement statement = connection.createStatement();
 
@@ -53,6 +53,6 @@ public class MainTest {
         connection.close();
 
 
-        //http://blog.csdn.net/u013132035/article/details/53266094
+        // http://blog.csdn.net/u013132035/article/details/53266094
     }
 }

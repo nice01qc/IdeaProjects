@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50717
+Source Server         : MySQL
+Source Server Version : 50720
 Source Host           : localhost:3306
 Source Database       : imooc
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-01-27 21:40:40
+Date: 2018-01-28 14:25:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -316,5 +316,18 @@ BEGIN
 	SELECT SUM(cust_id) from customers INTO y;
 
 	END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for proc1
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `proc1`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc1`(IN a INT,OUT b INT)
+BEGIN
+	SET b = a;
+	SELECT * from customers;
+END
 ;;
 DELIMITER ;
