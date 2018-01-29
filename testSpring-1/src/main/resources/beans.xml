@@ -35,6 +35,7 @@
         <constructor-arg type="java.lang.String" value="red"></constructor-arg>
         <constructor-arg type="java.lang.String" value="323"></constructor-arg>
     </bean>
+
     <!--工厂方法注入-->
     <bean id="carFactory" class="test.CarFactory3"></bean>
     <bean id="car55" factory-bean="carFactory" factory-method="createCar"></bean>

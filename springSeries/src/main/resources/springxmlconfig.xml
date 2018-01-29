@@ -7,5 +7,15 @@
     <bean id="boy1" class="springxmlconfig.pojo.Boy">
         <property name="a"><value>32</value></property>
     </bean>
+    <bean id="girl1" class="springxmlconfig.pojo.Girl" scope="prototype">
+        <property name="name" value="33"></property>
+    </bean>
+    <bean id="parents1" class="springxmlconfig.pojo.Parents" depends-on="girl1,boy1">
+        <property name="boy" ref="boy1"></property>
+        <property name="girl" ref="girl1"></property>
+    </bean>
+
+
+
 
 </beans>

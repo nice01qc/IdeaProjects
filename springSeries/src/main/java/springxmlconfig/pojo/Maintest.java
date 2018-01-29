@@ -10,7 +10,10 @@ public class Maintest {
         Boy boy = (Boy)ctx.getBean("boy1");
         Boy boy2 = ctx.getBean(Boy.class);
 
+        Girl girl1 = (Girl) ctx.getBean("girl1");
+
         boy2.boysay();
         System.out.println(boy.hashCode()+";" + boy2.hashCode());
+
     }
 }
