@@ -1,14 +1,11 @@
 package springxmlconfig.pojo;
 
-import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class TestPojo {
-    ApplicationContext ctx = null;
-    @Test
-    public void TestPojo(){
-        ctx = new ClassPathXmlApplicationContext("springxmlconfig.xml");    // 获取bean
+public class Maintest {
+    public static void main(String[] args) {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("springxmlconfig.xml");    // 获取bean
 
         Boy boy = (Boy)ctx.getBean("boy1");
         Boy boy2 = ctx.getBean(Boy.class);
@@ -16,5 +13,4 @@ public class TestPojo {
         boy2.boysay();
         System.out.println(boy.hashCode()+";" + boy2.hashCode());
     }
-
 }
