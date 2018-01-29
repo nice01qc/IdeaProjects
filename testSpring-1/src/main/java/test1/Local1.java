@@ -17,8 +17,10 @@ public class Local1 {
         System.out.println(numberFormat.format(x));
 
         DateFormat dataFormat = DateFormat.getDateInstance(DateFormat.FULL,locale2);
+        DateFormat dataFormat1 = DateFormat.getDateInstance(DateFormat.FULL,locale1);
         Date date = new Date();
         System.out.println(dataFormat.format(date));
+        System.out.println(dataFormat1.format(date));
 
     }
 }

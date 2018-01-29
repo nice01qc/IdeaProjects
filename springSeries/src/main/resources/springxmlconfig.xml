@@ -3,6 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--<value><![CDATA[红旗%@#！￥￥#%@￥]]></value>-->
+
+    <!--xml 配置bean-->
 
     <bean id="boy1" class="springxmlconfig.pojo.Boy">
         <property name="a"><value>32</value></property>
@@ -14,6 +17,85 @@
         <property name="boy" ref="boy1"></property>
         <property name="girl" ref="girl1"></property>
     </bean>
+
+    <!-- 工厂方法注入 -->
+    <bean id="parentsFactory" class="springxmlconfig.pojo.ParentsFactory"></bean>
+    <bean id="boy2" factory-bean="parentsFactory" factory-method="getBoy"></bean>
+
+    <!-- 静态工厂方法注入 -->
+    <bean id="girl2" class="springxmlconfig.pojo.ParentsFactory" factory-method="GEtStaticGirl"></bean>
+
+
+
+    <!--集合类属性-->
+    <!-- <bean id="me" class="test.Me">
+        <property name="favorites">
+            <list>
+                <value>看报</value>
+                <value>赛车</value>
+                <value>高尔夫</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="me1" class="test.Me">
+        <property name="reads">
+            <set>
+                <value>红楼梦</value>
+                <value>水浒</value>
+                <value>三国</value>
+            </set>
+        </property>
+    </bean>
+    <bean id="me2" class="test.Me">
+        <property name="jop">
+            <map>
+                <entry>
+                    <key><value>am</value></key>
+                    <value>会见顾客</value>
+                </entry>
+                <entry>
+                    <key><value>pm</value></key>
+                    <value>吃饭</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="me3" class="test.Me">
+        <property name="mails">
+            <props>
+                <prop key="jobmail">john-office@baobaotao.com</prop>
+                <prop key="lifeMail">john-life@baobaotao.com</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="parentMe" abstract="true" class="test.Me">
+        <property name="reads">
+            <set>
+                <value>红楼梦</value>
+                <value>水浒</value>
+                <value>三国</value>
+            </set>
+        </property>
+    </bean>
+    <bean id="me4" parent="parentMe">
+        <property name="reads">
+            <set merge="true">
+                <value>爬山</value>
+                <value>游泳</value>
+            </set>
+        </property>
+    </bean>
+
+    </bean>
+
+
+
+    <util:list id="favoriteList">
+        <value>看小说</value>
+        <value>看电影</value>
+        <value>看电脑</value>
+    </util:list>  -->
 
 
 

@@ -13,7 +13,7 @@
   <!--基于注解的配置，在test1 包里  -->
 
   <!--扫描类包应用于注解定义的bean-->
-  <context:component-scan base-package="test1,test.Beans2">
+  <context:component-scan base-package="test1,test">
     <!--一下是过滤，自己看着办-->
     <!--<context:exclude-filter type="annotation" expression=""></context:exclude-filter>-->
     <!--<context:include-filter type="annotation" expression=""></context:include-filter>-->
