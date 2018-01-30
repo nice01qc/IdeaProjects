@@ -1,4 +1,4 @@
-package springBootPassage1.exmaple1;
+package springBootPassage1.example1;
 
 import org.springframework.stereotype.Component;
 

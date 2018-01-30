@@ -12,6 +12,7 @@
     <properties>
         <junit.version>3.8.1</junit.version>
         <spring.version>4.3.11.RELEASE</spring.version>
+        <aspect.version>1.8.10</aspect.version>
     </properties>
 
     <dependencies>
@@ -43,11 +44,27 @@
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
+
+
+        <!-- aspectj支持 -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspect.version}</version>
+        </dependency>
+        <!-- aspectj注解支持 -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspect.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>RELEASE</version>
         </dependency>
+
 
     </dependencies>
 

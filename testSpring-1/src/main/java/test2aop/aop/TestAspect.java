@@ -18,9 +18,5 @@ public class TestAspect {
 //        waiter1.greetTo("dkalfkdjkl");
 
 
-
-
-
-
     }
 }

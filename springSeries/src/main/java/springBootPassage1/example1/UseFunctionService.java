@@ -1,8 +1,7 @@
-package springBootPassage1.exmaple1;
+package springBootPassage1.example1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 @Component

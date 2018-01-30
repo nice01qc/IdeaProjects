@@ -11,7 +11,7 @@ public class EnableSellerAspect {
 
 
     /**
-     * @Aspectj 切面 音阶增强，在此类里可以为那些类实现引介增强
+     * @Aspectj 切面引介增强，在此类里可以为那些类实现引介增强
      */
     @DeclareParents(value = "test2aop.aop.Waiter+",defaultImpl = SmartSeller.class)
     private Seller seller; //要实现的目标接口，也就是说value实现了此接口，可以转型为此类
