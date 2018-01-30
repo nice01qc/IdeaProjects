@@ -15,5 +15,6 @@ public class Maintest {
         boy2.boysay();
         System.out.println(boy.hashCode()+";" + boy2.hashCode());
 
+        
     }
 }
