@@ -14,7 +14,7 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 @Configuration
 @ComponentScan("springBootPassage2")
-@PropertySource("classpath:test.properties")
+@PropertySource("classpath:springBootPassage2/test.properties")
 public class ElConfig {
 
     @Value("I love you ")
@@ -29,7 +29,7 @@ public class ElConfig {
     @Value("#{demoService.another}")
     private String fromAnother;
 
-    @Value("classpath:test.txt")
+    @Value("classpath:springBootPassage2/test.txt")
     private Resource testFile;
 
     @Value("http://www.baidu.com")

@@ -14,6 +14,7 @@
         <spring.version>4.3.11.RELEASE</spring.version>
         <aspect.version>1.8.10</aspect.version>
         <commons.version>2.5</commons.version>
+        <jsr250.version>1.0</jsr250.version>
     </properties>
 
     <dependencies>
@@ -48,7 +49,7 @@
 
 
 
-        <!-- aspectj支持 -->
+        <!-- aspectj支持,可以不加这个，但下面那个注解要加 -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
@@ -71,6 +72,15 @@
             <artifactId>commons-io</artifactId>
             <version>${commons.version}</version>
         </dependency>
+
+
+        <!--JSR250 Bean 的初始化和销毁方式之一，这个是注解的方式 @PostConstruct,@PreDestroy -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>${jsr250.version}</version>
+        </dependency>
+
 
     </dependencies>
 
