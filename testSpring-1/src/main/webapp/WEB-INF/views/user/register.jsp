@@ -7,7 +7,7 @@
   <title>新增用户</title>
 </head>
 <body>
-    <form method="post" action="/test/user.html">
+    <form method="post" action="/test/user">
             <table>
                 <tr>
                     <td>用户名:</td>
