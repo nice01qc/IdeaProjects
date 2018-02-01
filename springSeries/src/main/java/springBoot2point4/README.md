@@ -28,6 +28,10 @@ Profile 为在不同环境下使用不同的配置提供了支持，通过注解
         public void onStartup(ServletContext )
       }
       ```
-
-      ​
+## 其测试目录下包含 spring-test 测试部分知识
+1. SpringJUnit4ClassRunner在JUnit环境下提供Spring TestContextFrameWork的功能。
+2. @ContextConfiguration 用来加载配置ApplicationContext，其中classes属性用来加载配置类。
+3. @ActiveProfiles 用来声明活动得到profile。
+4. 可使用普通的@Autowired注入Bean。
+5. 测试代码，通过JUnit的Assert来效验结果是否与预期一致。
 

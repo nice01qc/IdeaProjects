@@ -48,7 +48,6 @@
         </dependency>
 
 
-
         <!-- aspectj支持,可以不加这个，但下面那个注解要加 -->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -81,10 +80,15 @@
             <version>${jsr250.version}</version>
         </dependency>
 
+        <!--spring-test 所需jar包-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
 
     </dependencies>
-
-
 
 
 </project>
