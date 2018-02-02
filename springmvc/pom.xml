@@ -107,6 +107,19 @@
       <version>${logback.version}</version>
     </dependency>
 
+    <!--添加Jackson及相关依赖，获取json或者xml之间的转换-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <version>2.5.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.5.3</version>
+    </dependency>
+
 
     <!--测试-->
     <dependency>
@@ -120,9 +133,14 @@
   </dependencies>
 
 
-
-
   <build>
     <finalName>springmvc</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.2</version>
+        </plugin>
+    </plugins>
   </build>
 </project>
