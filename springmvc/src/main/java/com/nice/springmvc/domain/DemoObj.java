@@ -1,5 +1,6 @@
 package com.nice.springmvc.domain;
 
+
 public class DemoObj {
     private Long id;
     private String name;
