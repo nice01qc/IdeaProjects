@@ -30,6 +30,7 @@ public class Priority<T extends Comparable<T>> {
 
     public T deMax(){
         T result = priorityArray[1];
+        priorityArray[1] = priorityArray[N];
         sink(1);
         priorityArray[N] = null;
         N--;
@@ -62,7 +63,7 @@ public class Priority<T extends Comparable<T>> {
         while(2*k <= N){
             j = 2*k;
             if (j < N && less(j,j+1)) j++;
-            if (less(k,j)) break;
+//            if (less(j,k)) break;
             exch(j,k);
             k = j;
         }
