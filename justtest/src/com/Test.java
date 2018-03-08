@@ -1,6 +1,7 @@
 package com;
 
 public class Test {
+
     public static void main(String[] args) {
 
         Priority<Integer> priority = new Priority<>();
@@ -17,4 +18,5 @@ public class Test {
 
         System.out.println(priority.getSize());
     }
+    
 }
