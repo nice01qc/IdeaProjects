@@ -60,8 +60,13 @@ public class minOfStack {
         stack.push(3);
 
         System.out.println(stack.peek());
+
         System.out.println(stack.pop());
+
         System.out.println(stack.peek());
+
+        Set<Integer> set = new HashSet<>();
+
 
     }
 }
