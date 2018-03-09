@@ -1,7 +1,6 @@
 package com;
 
-import java.util.Iterator;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 定义一个栈的数据结构，得到栈中最小的元素
@@ -40,13 +39,30 @@ public class minOfStack {
         return result;
     }
 
+
     public static void main(String[] args) {
-        minOfStack min = new minOfStack();
-        min.push(10);
-        min.push(5);
-        min.push(30);
-        min.push(8);
-        System.out.println(min.min());
+//        minOfStack min = new minOfStack();
+//        min.push(10);
+//        min.push(5);
+//        min.push(30);
+//        min.push(8);
+//
+//
+//        Set<String> set = new HashSet<>();
+//
+//
+//        System.out.println(min.min());
+
+        Stack<Integer> stack = new Stack<>();
+
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+
+        System.out.println(stack.peek());
+        System.out.println(stack.pop());
+        System.out.println(stack.peek());
+
     }
 }
 
