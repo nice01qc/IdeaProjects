@@ -1,5 +1,7 @@
 package com;
 
+import edu.princeton.cs.algs4.RedBlackBST;
+
 import java.util.*;
 
 /**
@@ -67,7 +69,7 @@ public class minOfStack {
 
         Set<Integer> set = new HashSet<>();
 
-
+        RedBlackBST
     }
 }
 
