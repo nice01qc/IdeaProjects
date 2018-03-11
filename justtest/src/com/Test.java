@@ -38,7 +38,7 @@ public class Test {
             red.deleteMax();
 
         }
-//        red.delete("fk");
+        red.delete("fk");
 //        red.delete("dk");
 //
 //        for (int i = red.size(); i > 0; i--){
