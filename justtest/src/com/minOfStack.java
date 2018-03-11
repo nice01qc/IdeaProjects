@@ -55,7 +55,7 @@ public class minOfStack {
 //
 //        System.out.println(min.min());
 
-        Stack<Integer> stack = new Stack<>();
+        Stack<Integer> stack = new Stack<Integer>();
 
         stack.push(1);
         stack.push(2);
@@ -67,9 +67,6 @@ public class minOfStack {
 
         System.out.println(stack.peek());
 
-        Set<Integer> set = new HashSet<>();
-
-        RedBlackBST
     }
 }
 
