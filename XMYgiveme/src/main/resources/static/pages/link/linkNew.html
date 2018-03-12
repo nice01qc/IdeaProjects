@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>新建创意链接类型</title>
+    <link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stylesheets/log.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stylesheets/idea.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+    <script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+	<script type="text/javascript" src="/resources/js/web-common.js"></script>
+</head>
+
+<body>
+<form id="addLinkForm">
+	<div class="net_container">
+	    <!--顶部logo start-->
+	    <div class="net_header" ><img src="/assets/images/crm-logo.png" /></div>
+	    <!--顶部logo end-->
+	    <!--顶部menu start-->
+	    <!--<div class="menu">This is the Menu</div>-->
+	    <!--顶部menu end-->
+	    <!--内容部分 start-->
+	    <div class="net_mainContent">
+		 <!--内容部分 start-->
+		    <div class="net_mainContent">
+        <!--左侧导航 start-->
+		<div class="net_sidebar">
+			<ul class="mtree transit" id="mtree">
+			</ul>
+		</div>
+        <!--左侧导航 end-->
+	        <!--主要内容 start-->
+	        <div class="content_bg">
+	        <div class="net_content">
+	        		<div class="account-info" >
+	                    <div class="account-info-border" style="margin-left:-2px;"></div>
+	                    <div class="account-info-font" >新建创意链接类型</div>
+	                </div>
+	            <div class="net_content">
+	                <!--内容部分 start-->
+	                <div class="content_m">
+	                    <div class="content_m_info" style="margin-left:-21px;;">
+	                        <div class="module">
+	                            <div class="module_l">资源归属</div>
+	                            <div class="module_c">
+	                                <span class="m_right_10"><input type="radio" name="belongsTo" id="belongsTo" value="0" checked="checked"/>飞凡</span>
+	                                <div class="clearfloat"></div>
+	                            </div>
+	                            <div class="clearfloat"></div>
+	                        </div>
+	                        <div class="module">
+	                            <div class="module_l">客户端类型</div>
+	                            <div class="module_c" id="clientType">
+	                                <span class="m_right_10"><input type="radio" name="clientType" id="clientTypeApp" value="1" checked="checked"/><label for="clientTypeApp">App</label></span>
+	                                <span class="m_right_10"><input type="radio" name="clientType" id="clientTypeH5" value="2"/><label for="clientTypeH5">飞凡M站</label></span>
+	                            </div>
+	                            <div class="clearfloat"></div>
+	                        </div>
+	                        <div class="module">
+	                            <div class="module_l">支持应用</div>
+	                            <div class="module_c">
+	                            <span  class="supportAppsApp">
+	                                <span class="m_right_10"><input type="radio" id="supportAppsApp1" value=1 name="supportApps"  checked="checked"/><label for="supportAppsApp1">飞凡ios</label></span>
+	                                <span class="m_right_10"><input type="radio" id="supportAppsApp2" value=2 name="supportApps"/><label for="supportAppsApp2">飞凡Android</label></span>
+	                            </span> 
+	                            <span style="display:none" class="supportAppsH5">
+	                                <span class="m_right_10"><input id="supportAppsH51" type="radio" value=4 name="supportApps" /><label for="supportAppsH51">飞凡</label></span>
+	                                <span class="m_right_10"><input id="supportAppsH52" type="radio" value=8 name="supportApps"/><label for="supportAppsH52">飞悦</label></span>
+	                            </span>
+	                            </div>
+	                            <div class="clearfloat"></div>
+	                        </div>
+	                        <div class="module">
+	                            <div class="module_l" style="width:135px;">创意链接类型名称</div>
+	                            <div class="module_c"><input class="input_1" type="text" id="name" name="name" placeholder="电影ID"  style="padding:0px 10px;"/></div>
+	                            <div class="clearfloat"></div>
+	                        </div>
+	                        <div class="module">
+	                            <div class="module_l">描述</div>
+	                            <div class="module_c"><textarea class="input_1" name="comment" id="comment" style="height:200px;padding:10px 10px; " ></textarea></div>
+	                            <div class="clearfloat"></div>
+	                        </div>
+	                    </div>
+	                    <div class="clearfloat"></div>
+	                </div>
+	                <div class="content_b_left">
+	                    <button class="button_2 m_left_65"  type="button"  id="submit" style="margin-left:230px;" >新建</button>
+	                </div>
+	                <!--内容部分 end-->
+	                <div class="clearfloat"></div>
+	            </div>
+	            <!--主要内容 end-->
+	            <div class="clearfloat"></div>
+	        </div>
+	    </div>
+	     </div>
+	    <!--内容部分 end-->
+	    <!--底部 start-->
+	    <!--<div class="net_footer"></div>-->
+	    <!--底部 end-->
+	</div></div>
+</form>
+<script>
+    $(document).ready(function () {
+    	if ($('input#clientTypeH5')[0].checked) {
+        	$('.supportAppsApp').hide();
+            $('.supportAppsH5').show();
+        } else {
+        	$('.supportAppsH5').hide();
+            $('.supportAppsApp').show();
+        }
+        $('#submit').click(function () {
+        	var data = {};
+        	data.belongsTo =$('#belongsTo').val();
+        	$("input:radio[name='clientType']").each(function(){ 
+        		   	if($(this).is(":checked"))
+        				data.clientType = $(this).val();
+        		 });
+        	$("input:radio[name='supportApps']").each(function(){ 
+    		   	if($(this).is(":checked"))
+    				data.supportApps = $(this).val();
+    		 });
+        	var name = $('#name').val();
+        	var comment = $('#comment').val();
+            if (name) data.name = $('#name').val();
+            if (comment) data.comment = $('#comment').val();
+            if(name.length>30){
+            	alert("新建失败,创意链接类型名称不能超过三十字！");
+            	return;
+            }else if(comment.length>300){
+            	alert("新建失败,创意链接类型描述不能超过三百字！");
+            	return;
+            }
+        	if(name!=""){
+        		$.ajax({
+            		async:true,
+                    url: "/link",
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data)
+                })
+                .success(function(){
+                    alert(' 新建成功！');
+                    //跳转 - - - - 附导航ID
+                    localStorage.setItem("crmClickedMenuId",18);
+                    window.location.href="/pages/link/linkList.html";
+                })
+                .error(function(){
+                    alert("新建失败！");
+                });
+        	}else{
+        		alert("新建失败,创意链接类型名称不能为空！");
+        	}
+        });
+        
+        $('input#clientTypeApp').change(function () {
+            if ($('input#clientTypeApp')[0].checked) {
+            	$('#supportAppsApp1').prop('checked',true);
+            	$('.supportAppsH5').hide();
+                $('.supportAppsApp').show();
+            } else {
+                $('.supportAppsApp').hide();
+                $('.supportAppsApp input:checkbox:checked').map(function (k, v) {
+                    console.log(v.checked = false)
+                });
+            }
+        });
+
+        $('input#clientTypeH5').change(function () {
+            if ($('input#clientTypeH5')[0].checked) {
+            	$('#supportAppsH51').prop('checked',true);
+            	$('.supportAppsApp').hide();
+                $('.supportAppsH5').show();
+            } else {
+                $('.supportAppsH5').hide();
+                $('.supportAppsH5 input:checkbox:checked').map(function (k, v) {
+                    console.log(v.checked = false)
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

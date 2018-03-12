@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.wanda.ffanad.crm.mappers.ext.TFfanadAdxCreationEntityMapperExt">
+
+	<!-- 待审核review列表页查询条件 -->
+ 	<sql id="WaitReviewPageCondition">
+ 			<if test="arlv.dspName != null and arlv.dspName != &quot;&quot;">
+				and tfad.name=#{arlv.dspName,jdbcType=VARCHAR}
+			</if>
+			<if test="arlv.hasUpdateTime==1">
+				and tfac.update_time &gt;= STR_TO_DATE(#{arlv.updateTimeStart,jdbcType=VARCHAR}, &apos;%Y-%m-%d&apos;)
+				and tfac.update_time &lt; DATE_ADD(#{arlv.updateTimeEnd,jdbcType=VARCHAR},INTERVAL 1 DAY)
+			</if>
+			<if test="arlv.hasThrowTime==1">
+				and 
+				tfac.schedule_time_start &lt; DATE_ADD(#{arlv.throwTimeEnd,jdbcType=VARCHAR},INTERVAL 1 DAY)
+				and
+				tfac.schedule_time_end &gt;= STR_TO_DATE(#{arlv.throwTimeStart,jdbcType=VARCHAR}, &apos;%Y-%m-%d&apos;)
+			</if>
+			<if test="arlv.url != null and arlv.url != &quot;&quot;">
+				and tfac.url
+				like CONCAT('%',#{arlv.url,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="arlv.landingPageUrl != null and arlv.landingPageUrl != &quot;&quot;">
+				and tfac.landing_page_url
+				like CONCAT('%',#{arlv.landingPageUrl,jdbcType=VARCHAR},'%')
+			</if>
+			and tfac.review_status='0'
+ 	</sql>
+ 	
+ 	<!-- 已审核review列表页查询条件 -->
+ 	<sql id="AlreadyReviewPageCondition">
+ 			<if test="aarlv.dspName != null and aarlv.dspName != &quot;&quot;">
+				and tfad.name=#{aarlv.dspName,jdbcType=VARCHAR}
+			</if>
+			<if test="aarlv.hasReviewTime==1">
+				and tfac.review_time &gt;= STR_TO_DATE(#{aarlv.reviewTimeStart,jdbcType=VARCHAR}, &apos;%Y-%m-%d&apos;)
+				and tfac.review_time &lt; DATE_ADD(#{aarlv.reviewTimeEnd,jdbcType=VARCHAR},INTERVAL 1 DAY)
+			</if>
+			<if test="aarlv.hasUpdateTime==1">
+				and tfac.update_time &gt;= STR_TO_DATE(#{aarlv.updateTimeStart,jdbcType=VARCHAR}, &apos;%Y-%m-%d&apos;)
+				and tfac.update_time &lt; DATE_ADD(#{aarlv.updateTimeEnd,jdbcType=VARCHAR},INTERVAL 1 DAY)
+			</if>
+			<if test="aarlv.hasThrowTime==1">
+				and 
+				tfac.schedule_time_start &lt; DATE_ADD(#{aarlv.throwTimeEnd,jdbcType=VARCHAR},INTERVAL 1 DAY)
+				and 
+				tfac.schedule_time_end &gt;= STR_TO_DATE(#{aarlv.throwTimeStart,jdbcType=VARCHAR}, &apos;%Y-%m-%d&apos;)				
+			</if>
+			<if test="aarlv.url != null and aarlv.url != &quot;&quot;">
+				and tfac.url
+				like CONCAT('%',#{aarlv.url,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="aarlv.landingPageUrl != null and aarlv.landingPageUrl != &quot;&quot;">
+				and tfac.landing_page_url
+				like CONCAT('%',#{aarlv.landingPageUrl,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="aarlv.reviewStatus != null and aarlv.reviewStatus != &quot;&quot;">
+				and tfac.review_status=#{aarlv.reviewStatus,jdbcType=TINYINT}
+			</if>
+			and tfac.review_status!='0'
+ 	</sql>
+ 	
+    <!--查询符合条件的待审核数据总数-->
+	<select id="getTotalCountWaitReviewPage" resultType="java.lang.Integer">
+		select 
+			count(1) as 'count'
+		from 
+			t_ffanad_adx_creation tfac
+			join 
+			t_ffanad_adx_dsp tfad
+			on tfac.dsp_id=tfad.id
+		where
+			1=1
+			<include refid="WaitReviewPageCondition" />
+	</select>
+	<!-- 查询符合条件的待审核列表 -->
+	<select id="getWaitReviewPageList" resultType="com.wanda.ffanad.crm.dto.resp.AdxReviewListResVo">
+		select 
+			tfad.name 									   as 'dspName',
+			DATE_FORMAT(tfac.update_time,"%Y-%m-%d %H:%i") as 'updateTime',
+			tfac.url									   as 'url',
+			tfac.landing_page_url						   as 'landingPageUrl',
+			tfac.copy_url								   as 'copyUrl',
+			tfac.id										   as 'id',
+			tfac.review_status							   as 'reviewStatus'
+		from 
+			t_ffanad_adx_creation tfac
+			join 
+			t_ffanad_adx_dsp tfad
+			on tfac.dsp_id=tfad.id
+		where
+			1=1
+			<include refid="WaitReviewPageCondition" />
+			order by tfac.update_time
+			limit
+			#{arlv.pageStartNo,jdbcType=INTEGER},#{arlv.limit,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 审核创意-->
+	<update id="operateReviewById">
+		update
+			t_ffanad_adx_creation tfac
+		set
+			tfac.review_status=#{aror.status,jdbcType=TINYINT},
+			tfac.review_time=now(),
+			tfac.review_message=#{aror.noAdoptMsg,jdbcType=VARCHAR},
+			tfac.updater_id=#{aror.accountId,jdbcType=BIGINT},
+			tfac.updater_name=#{aror.accountName,jdbcType=VARCHAR},
+		    tfac.update_time=now()
+		where
+			tfac.id in
+			<foreach collection="aror.idList" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+			</foreach>
+			and
+			tfac.review_status != #{aror.status,jdbcType=TINYINT}
+	 </update>
+	 
+	 <!-- 根据ID获取待审核的创意 -->
+	<select id="getWaitReviewListByIdList" resultType="com.wanda.ffanad.crm.dto.resp.AdxReviewListResVo">
+		select 
+			tfac.url									   as 'url',
+			tfac.landing_page_url						   as 'landingPageUrl',
+			tfac.id										   as 'id',
+			tfac.review_message							   as 'reviewMessage',
+			tfac.review_status							   as 'reviewStatus'
+		from 
+			t_ffanad_adx_creation tfac
+		where
+			tfac.id in
+			<foreach collection="list" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+			</foreach>
+	</select>
+	
+	 <!--查询符合条件的已审核数据总数-->
+	<select id="getTotalCountAlreadyReviewPage" resultType="java.lang.Integer">
+		select 
+			count(1) as 'count'
+		from 
+			t_ffanad_adx_creation tfac
+			join 
+			t_ffanad_adx_dsp tfad
+			on tfac.dsp_id=tfad.id
+		where
+			1=1
+			<include refid="AlreadyReviewPageCondition" />
+	</select>
+	<!-- 查询符合条件的已审核列表 -->
+	<select id="getAlreadyReviewPageList" resultType="com.wanda.ffanad.crm.dto.resp.AdxReviewListResVo">
+		select 
+			tfad.name 									   as 'dspName',
+			DATE_FORMAT(tfac.update_time,"%Y-%m-%d %H:%i") as 'updateTime',
+			tfac.url									   as 'url',
+			tfac.landing_page_url						   as 'landingPageUrl',
+			tfac.copy_url								   as 'copyUrl',
+			tfac.id										   as 'id',
+			tfac.review_status							   as 'reviewStatus'
+		from 
+			t_ffanad_adx_creation tfac
+			join 
+			t_ffanad_adx_dsp tfad
+			on tfac.dsp_id=tfad.id
+		where
+			1=1
+			<include refid="AlreadyReviewPageCondition" />
+			order by tfac.update_time desc
+			limit
+			#{aarlv.pageStartNo,jdbcType=INTEGER},#{aarlv.limit,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据ID获取创意审核信息 -->
+	<select id="getCreationReviewById" resultType="com.wanda.ffanad.crm.dto.resp.AdxReviewListResVo">
+		select 
+			tfad.name 									   as 'dspName',
+			DATE_FORMAT(tfac.update_time,"%Y-%m-%d %H:%i") as 'updateTime',
+			tfac.url									   as 'url',
+			tfac.landing_page_url						   as 'landingPageUrl',
+			tfac.copy_url								   as 'copyUrl',
+			tfac.id										   as 'id',
+			tfac.review_status							   as 'reviewStatus'
+		from 
+			t_ffanad_adx_creation tfac
+			join 
+			t_ffanad_adx_dsp tfad
+			on tfac.dsp_id=tfad.id
+		where
+			tfac.id=#{id,jdbcType=BIGINT}
+	</select>
+	
+	
+	<!-- 根据dspid审核创意，将所有未审核的修改为审核通过 -->
+	<update id="reviewAllWaitReviewCreationByDspId">
+		update
+			t_ffanad_adx_creation tfac
+		set
+			tfac.review_status='1',
+			tfac.review_time=now(),
+			tfac.updater_id=#{aror.accountId,jdbcType=BIGINT},
+			tfac.updater_name=#{aror.accountName,jdbcType=VARCHAR},
+		    tfac.update_time=now()
+		where
+			tfac.dsp_id=#{dspId,jdbcType=BIGINT}
+			and
+			tfac.review_status='0'
+	 </update>
+	 
+	 <!-- 根据dspid获取所有未审核的创意 -->
+	<select id="getWaitReviewListByDspId" resultType="com.wanda.ffanad.crm.dto.resp.AdxReviewListResVo">
+		select 
+			tfac.url									   as 'url',
+			tfac.landing_page_url						   as 'landingPageUrl',
+			tfac.id										   as 'id',
+			tfac.review_message							   as 'reviewMessage',
+			tfac.review_status							   as 'reviewStatus'
+		from 
+			t_ffanad_adx_creation tfac
+		where
+			tfac.dsp_id=#{dspId,jdbcType=BIGINT}
+			and
+			tfac.review_status='0'
+	</select>
+</mapper>

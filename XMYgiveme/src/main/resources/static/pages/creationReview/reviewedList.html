@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>已审核创意列表</title>
+    <link href="../../assets/CRM/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/log.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/idea.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/scripts/mtree/css/mtree.css" rel="stylesheet" >
+    <link href="../../assets/scripts/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/css/pagination.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../assets/scripts/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../../assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src='../../assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="../../resources/js/web-common.js"></script>
+    <style>
+        .table-ele {
+            width: 100%;
+            text-align: center;
+            border: 1px solid #e4e4e4;
+        }
+        .url-ele {
+            position: relative;
+            text-overflow: ellipsis;
+            text-align: left;
+            overflow: hidden;
+            word-break: break-all;
+        }
+        .url-ele.view-all {
+            word-wrap: break-word;
+        }
+        .view-all-url-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 20px;
+            font-size: 10px;
+            padding: 0 10px;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="net_container" id="containerdiv">
+    <!--顶部logo start-->
+    <div class="net_header">
+        <img src="../../assets/images/crm-logo.png" />
+    </div>
+    <!--顶部logo end-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="main-content">
+                <h2 class="content-title">已审核创意</h2>
+                <div class="search-form">
+                    <div class="search-param">
+                        <label for="review-status-select" class="param-title">审核状态：</label>
+                        <select class="param-select" name="reviewStatus" id="review-status-select">
+                            <option value="">全部</option>
+                            <option value="1">审核通过</option>
+                            <option value="2">审核退回</option>
+                        </select>
+                    </div>
+                    <div class="search-param">
+                        <label for="review-time-select" class="param-title">审核时间：</label>
+                        <select class="param-select date-select-check" id="review-time-select">
+                            <option value="">全部</option>
+                            <option value="d">自定义</option>
+                        </select>
+                        <input class="param-input date-range-picker hide" id="review-time-input" readonly="readonly" type="text" placeholder=" - " />
+                    </div>
+                    <div class="search-param">
+                        <label for="dsp-select" class="param-title">来源：</label>
+                        <select class="param-select" name="dspName" id="dsp-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <div class="search-param">
+                        <label for="update-time-select" class="param-title">更新时间：</label>
+                        <select class="param-select date-select-check" id="update-time-select">
+                            <option value="">全部</option>
+                            <option value="d">自定义</option>
+                        </select>
+                        <input class="param-input date-range-picker hide" id="update-time-input" readonly="readonly" type="text" placeholder=" - " />
+                    </div>
+                    <div class="search-param">
+                        <label for="throw-time-select" class="param-title">预期投放时间：</label>
+                        <select class="param-select date-select-check" id="throw-time-select">
+                            <option value="">不限</option>
+                            <option value="d">自定义</option>
+                        </select>
+                        <input class="param-input date-range-picker hide" id="throw-time-input" readonly="readonly" type="text" placeholder=" - " />
+                    </div>
+                    <div class="search-param">
+                        <label for="url-input" class="param-title">图片链接：</label>
+                        <input class="param-input" type="text" id="url-input">
+                    </div>
+                    <div class="search-param">
+                        <label for="jump-url" class="param-title">点击跳转链接：</label>
+                        <input class="param-input" type="text" id="jump-url">
+                    </div>
+                    <button id="creationListSearchBtn" class="btn-search" style="margin-top: 5px;">查询</button>
+                </div>
+                <div id="creationListGrid"></div>
+                <div id="creationListPagination"></div>
+                <!--主要内容 end-->
+                <div class="clearfloat"></div>
+            </div>
+        </div>
+    </div>
+    <!--退回理由-->
+    <div class="modal fade in" id="retreat-reason" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4>请选择退回理由</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="retreat-reason-form">
+                        <div class="form-group">
+                            <label for="question-class" class="col-sm-3 control-label"><span style="color: red;">*</span>问题分类：</label>
+                            <div class="col-sm-9">
+                                <select id="question-class" class="form-control" name="questionClass" required="required">
+                                    <option value="">请选择</option>
+                                    <option value="广告主体问题">广告主体问题</option>
+                                    <option value="图片问题">图片问题</option>
+                                    <option value="着陆页问题">着陆页问题</option>
+                                    <option value="其他问题">其他问题</option>
+                                </select>
+                                <span class="tip hide text-danger">请选择 问题分类</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-detail" class="col-sm-3 control-label"><span style="color: red;">*</span>问题：</label>
+                            <div class="col-sm-9">
+                                <select id="question-detail" class="form-control" name="question" required="required">
+                                    <option value="">请先选择问题分类</option>
+                                </select>
+                                <span class="tip hide text-danger">请选择 问题</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="no-adopt-msg" class="col-sm-3 control-label">补充说明：</label>
+                            <div class="col-sm-9">
+                                <textarea id="no-adopt-msg" class="form-control" maxlength="100" placeholder="最多输入100个字符长度（非必填）" name="question" rows="5" style="resize: none;padding:6px;"></textarea>
+                                <span class="center-block">可输<span class="input-tip text-danger" style="margin: 0 5px;">100</span>个字符</span>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="button" id="submit-reason-btn" data-loading-text="稍候" class="btn btn-search">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--内容部分 end-->
+    <script type="text/javascript" src="../../assets/scripts/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="../../assets/scripts/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="../../resources/js/table-with-search-component.js"></script>
+    <script type="text/javascript" src="../../resources/js/creationReview/reviewedList.js?v2"></script>
+</div>
+</body>
+</html>

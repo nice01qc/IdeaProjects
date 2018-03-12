@@ -1,0 +1,218 @@
+table {
+    background-color: #e6e6e6;
+    margin-left: 20px; /* width: 1000px; */
+}
+
+table td {
+    background-color: #FFF;
+}
+
+.span_red {
+    color: #F00;
+}
+
+.span_required_mark {
+    color: #F00;
+    display: block;
+    width: 30px;
+    margin-left: 10px;
+    float: left;
+    text-align: center;
+}
+
+.span_grey {
+    color: #959595;
+}
+
+.span_font_12 {
+    font-size: 12px;
+}
+
+.span_font_14 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.content_m_info {
+    margin: 10px;
+}
+
+.input_1 {
+    width: 350px;
+    height: 26px;
+    border: 1px solid #e6e6e6;
+    border-radius: 2px;
+    padding-left: 6px;
+}
+
+.input_2 {
+    width: 50px;
+    height: 26px;
+    border: 1px solid #e6e6e6;
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.textarea_1 {
+    width: 400px;
+    height: 100px;
+    resize: none;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid #e6e6e6;
+    padding: 6px;
+}
+
+.select_1 {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #e6e6e6;
+}
+
+.cont {
+    float: left;
+}
+
+.h_111 {
+    height: 111px;
+}
+
+.l_height_111 {
+    line-height: 111px;
+}
+
+.l_height_66 {
+    line-height: 66px;
+}
+
+.upload_img {
+    width: 300px;
+    width: 150px;
+    width: 187px;
+    height: 164px;
+}
+
+/**datastatics**/
+
+.time_ele {
+    width: 451px;
+    float: left;
+    margin-left: 4px;
+}
+
+.time_ele span {
+    font-weight: bold;
+    float: left;
+    margin-left: 30px;
+    margin-right: 6px;
+    margin-top: 4px;
+}
+
+.time_ele input {
+    width: 150px;
+    height: 30px;
+    border: 1px solid #e6e6e6;
+    margin-right: 10px;
+    padding-left: 6px;
+}
+
+.head_ele {
+    width: 1000px;
+    margin-top: 30px;
+    font-size: 14px;
+    height: 80px;
+    float: left;
+}
+
+.useremail_ele {
+    float: left;
+    margin-left: 30px;
+    float: left;
+}
+
+.useremail_ele span {
+    font-weight: bold;
+    float: left;
+    margin-left: 30px;
+    margin-right: 6px;
+    margin-top: 4px;
+}
+
+.useremail_ele input {
+    width: 150px;
+    height: 30px;
+    border: 1px solid #e6e6e6;
+    margin-right: 10px;
+    padding-left: 6px;
+}
+
+.query_ele button {
+    margin-left: 30px;
+
+}
+
+.content_data {
+    width: 1019px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 0 10px rgba(158, 160, 169, 0.5);
+    margin-left: 10px;
+}
+
+.content_data table {
+    width: 98%;
+    border: 1px solid #d9d9d9;
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.content_data .data_f_row {
+    font-weight: bold;
+    text-align: center;
+    height: 36px;
+}
+
+.content_data .data_s_row {
+    font-weight: bold;
+    color: #FF9800;
+    font-size: 24px;
+    text-align: center;
+    height: 36px;
+}
+
+.content_data table tr td {
+    border: none;
+
+}
+
+.greatUser select {
+    height: 30px;
+    width: 110px;
+    border-radius: 2px;
+    margin-left: 61px;
+    margin-top: 18px;
+    border: 1px solid #cccccc;
+}
+
+.data_pic {
+    min-width: 280px;
+    height: 400px;
+    margin: 3px auto;
+}
+
+/*h5预览*/
+#preview-modal .view-content {
+    width: 250px;
+    height: 529px;
+    background-image: url(/resources/img/iphone.png);
+    margin-left: auto;
+    margin-right: auto;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+#preview-modal .view-content .h5-preivew-iframe {
+    margin: 75px 17px;
+    width: 217px;
+    height: 384px;
+    border: none;
+    border-radius: 5px;
+}

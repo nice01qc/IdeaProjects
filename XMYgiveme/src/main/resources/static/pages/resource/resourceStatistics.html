@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>资源审核定价</title>
+    <link href="../../assets/CRM/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/resourse_detail.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../assets/scripts/mtree/css/mtree.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/scripts/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../assets/scripts/date-time/bootstrap-datepicker3.css"/>
+    <script type="text/javascript" src="../../assets/scripts/jquery.js"></script>
+    <script src='../../assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="../../resources/js/web-common.js"></script>
+    <script type="text/javascript" src="resourceStatistics.js"></script>
+    <script type="text/javascript" src="../../assets/scripts/date-time/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="../../assets/scripts/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
+    <link href="../../assets/CRM/css/main.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../assets/CRM/js/highcharts.js"></script>
+    <script type="text/javascript" src="../../assets/CRM/js/exporting.js"></script>
+</head>
+
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"><img src="../../assets/CRM/img/crm-logo.png"/></div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="content_t">
+                    <div class="content_t_l"></div>
+                    <div class="content_t_r">数据</div>
+                    <div class="m_top_20">
+                        <button id="returnList">返回列表</button>
+                    </div>
+                </div>
+                <!--内容部分 start-->
+                <div class="content_m">
+                    <div class="head_ele">
+                        <div class="time_ele">
+                            <span>时间：</span>
+                            <input type="text" id="sdate" data-date-format="yyyy-mm-dd" placeholder="开始日期" class="date-picker"
+                                   readonly="readonly"/>&nbsp;&nbsp;-&nbsp;&nbsp;
+                            <input type="text" id="edate" class="date-picker" data-date-format="yyyy-mm-dd"
+                                   readonly="readonly" placeholder="结束日期"/>
+                        </div>
+                        <div class="useremail_ele">
+                            <span>用户邮箱：</span>
+                            <input type="text" id="userEmail" class="userEmail" readonly/>
+                        </div>
+                        <div class="query_ele">
+                            <button class="query_btn">查询</button>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+
+                    <div class="content_data">
+                        <table>
+                            <tr class="data_f_row">
+                                <td><span>请求</span></td>
+                                <td><span>展示</span></td>
+                                <td><span>点击</span></td>
+                                <td><span>填充率</span></td>
+                                <td><span>点击率</span></td>
+                                <td><span>收入</span></td>
+                            </tr>
+                            <tr class="data_s_row">
+                                <td><span id="totalRequest">0</span></td>
+                                <td><span id="totalDisplay">0</span></td>
+                                <td><span id="totalClick">0</span></td>
+                                <td><span id="totalDisplayRate">0.00%</span></td>
+                                <td><span id="totalClickRate">0.00%</span></td>
+                                <td><span id="adRevenue">0.00</span></td>
+                            </tr>
+                        </table>
+                        <div class="greatUser">
+                            <select id="displayfilter" onchange="displayFilterChanged(this.value)">
+                                <option selected="selected" value="0">请求</option>
+                                <option value="1">展示</option>
+                                <option value="2">点击</option>
+                                <option value="3">填充率</option>
+                                <option value="4">点击率</option>
+                                <option value="5">收入</option>
+                            </select>
+                        </div>
+                        <div id="container" class="data_pic"></div>
+                    </div>
+                </div>
+
+                <!--内容部分 end-->
+            </div>
+            <!--主要内容 end-->
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <!--底部 start-->
+    <!--<div class="footer"></div>-->
+    <!--底部 end-->
+</div>
+</body>
+</html>

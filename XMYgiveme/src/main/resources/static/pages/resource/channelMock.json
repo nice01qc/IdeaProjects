@@ -1,0 +1,26 @@
+{
+  "status": 200,
+  "result": {
+    "list": [{
+      "resourceId": 111,
+      "resourceName": "广场大屏",
+      "channelName": "定制轮播"
+    }, {
+      "resourceId": 21,
+      "resourceName": "广场大屏2",
+      "channelName": "定制轮播"
+    }, {
+      "resourceId": 121,
+      "resourceName": "广场大屏3",
+      "channelName": "定制轮播"
+    }, {
+      "resourceId": 31,
+      "resourceName": "广场大屏4",
+      "channelName": "定制轮播"
+    }],
+    "pageNo": 1,
+    "pageSize": 20,
+    "status": 200,
+    "totalCount": 21
+  }
+}

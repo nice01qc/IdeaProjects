@@ -1,0 +1,210 @@
+.body{
+ margin:0;
+    width:100%;
+    height:100%;
+}
+.login-bg{
+     width: 100%;
+    height: 100%;
+    background-image: url('/assets/images/login-bg.png');
+    background-size: 100% 100%;
+}
+.login-bg-style{
+    margin:0 auto; /* 居中 这个是必须的，，其它的属性非必须 */
+    width:509px; /* 给个宽度 顶到浏览器的两边就看不出居中效果了 */
+    text-align:center; /* 文字等内容居中 */
+    padding-top: 20%;
+}
+.login-body{
+    width: 100%;
+    height: 100%;
+    background: url('/assets/images/login-bg.png') repeat-x center center;
+    background-size:100% 100%;
+    margin:0px;
+     font-family: Microsoft YaHei; 
+}
+.register-bg{
+    float: left;
+    background-color: #efefef;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
+.login-logo{
+    width: 317px;
+    height: 45px;
+    margin-left: 80px;
+    /* padding-top: 69px;  */
+}
+.login-logo img{
+    height:100%;
+    width:100%
+}
+.none{
+    width: 100%;
+    height: 49px;
+    /* margin-left: 464px; */
+}
+.none-style{
+    width: 100%;
+    height: 17px;
+}
+.login-middle{
+    width: 100%;
+    height: 58px;
+   /*  margin-left: 464px; */
+}
+.login-middle-style{
+    width: 461px;
+    height: 58px;
+    float: left;
+}
+.register-bg input{
+    width: 199px;
+    height: 44px;
+    margin-left: 7px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #000000;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.wrong-msg{
+    width: 461px;
+    /* margin-left: 464px; */
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+.password-forget{
+    float:left;
+    margin-left:20px;
+    font-size:14px;
+    cursor:pointer;
+}
+.password-forget-color{
+    color:#86e8ee;
+    border-bottom:1px solid #86e8ee
+}
+.mail{
+    float: left;
+    width: 217px;
+    height: 60px;
+}
+.password{
+    margin-left: 9px;
+    width: 215px;
+    height: 60px;
+    float: left;
+}
+.go-next{
+    width: 48px;
+    height: 47px;
+    float: left;
+}
+.go-next img{
+    width: auto;
+    height: 100%;
+    margin-top: 5px;
+    cursor:pointer;
+}
+.warning{
+    width: 100%;
+    margin-top: 14px;
+    font-size: 10px;
+    color: #ffffff;
+    text-align: center;
+    float: left;
+}
+.warning-style{
+    width: 461px;
+    height: 36px;
+    /* margin-left: 464px; */
+    background-image: url('/assets/images/frame-msg.png');
+    background-size: 100% 100%;
+}
+.wrong-message img{
+    width: 12px;
+    height: 13px;
+    position: absolute;
+    margin-left: -19px;
+    margin-top: 6px;
+}
+.wrong-msg-up{
+    /*width:100%;*/
+    /*height:50%*/
+}
+.wrong-msg-style{
+    width:100%;
+    height:auto;
+    margin-top:1%;
+    float:left;
+    text-align:center;
+}
+.wrong-message span{
+    color:#86e8ee;
+    font-size:10px;
+}
+.wrong-font{
+    height: 49px;
+    color: #86e8ee;
+    font-size: 10px;
+    text-align: center;
+    /*line-height: 200%;*/
+}
+.wrong-message{
+    width: 461px;
+    float: left;
+    text-align: center;
+    margin-top: 4px;
+}
+.check{
+    width: 440px;
+    height: 21px;
+    margin-top: 14px;
+    /* margin-left: 464px; */
+    font-size: 14px;
+    color: #ffffff;
+}
+.check img{
+    width:12px;
+    height:auto
+}
+.mail-remember{
+    float:left;
+    margin-left:12px;
+    font-size:14px
+}
+.msg-up{
+    width:100%;
+    height:50%
+}
+.msg-up-msg{
+    width:100%;
+    height:auto;
+    margin-top:1%;
+    float:left;
+    text-align:center;
+}
+.wrong-style{
+    background-image: url('/assets/images/wrong-.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 17px;
+    background-position-x: 193px;
+}
+.text-style{
+    border: 1px solid #fb767f;
+}
+input:focus{
+    -webkit-box-shadow: 0 0 5px #00b7ff;/*点击input 外阴影*/
+    -moz-box-shadow:0 0 5px #00b7ff;
+    box-shadow: 0 0 5px #00b7ff;
+    border-color:#00b7ff ;/*黑色边框改为白色*/
+    outline:0;/*去掉默认谷歌点击input边框显示蓝色  */
+    background: #fff;/*input内背景为白色*/
+}
+.check_tip{
+	/* margin-top: 23px; */
+}

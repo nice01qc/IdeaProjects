@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>APP审核</title>
+    <link href="../../resources/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/css/idea.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/css/log.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/date-time/bootstrap-datepicker3.css">
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <link href="../../resources/css/pagination.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="../../resources/js/jquery-1.8.3.min.js"></script>
+    <!--  script type="text/javascript" src="../../resources/js/jquery.datetimepicker.js"></script> -->
+    <script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="/resources/js/web-common.js"></script>
+
+    <script type="text/javascript" src="appList.js"></script>
+
+    <style type="text/css">
+        .form-control {
+            height: 30px;
+            padding: 0px 12px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"><img src="/assets/images/crm-logo.png"/></div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="account-info">
+                    <div class="account-info-border"></div>
+                    <div class="account-info-font" style="margin-top:2px;">APP审核</div>
+                </div>
+                <!--内容部分 start-->
+                <div class="content_m">
+                    <div class="content_m_menu form-inline" style="margin-top: 20px;">
+                        <div class="f_left  m_left_10">
+                            <label for="platform">选择平台&nbsp;</label>
+                            <select id='platform' class="form-control select_1" style="width: 110px;">
+                                <option value="">全部</option>
+                                <option value="1">iPhone</option>
+                                <option value="0">Android</option>
+                            </select>
+                        </div>
+                        <div class="f_left  m_left_10">
+                            <label for="name">&nbsp;App名称/itunesID/包名&nbsp;</label>
+                            <input type="text" id="name" style="width: 200px;" class="input_1 form-control "
+                                   placeholder="App名称/itunesID/包名">
+                        </div>
+                        <div class="f_left  m_left_10">
+                            <label for="name">Appkey&nbsp;</label>
+                            <input type="text" id='appKey' style="width: 200px;" class="input_1 form-control "
+                                   placeholder="Appkey">
+                        </div>
+                    </div>
+                    <div class="content_m_menu form-inline">
+                        <div class="f_left  m_left_10" style="padding-top: 10px;">
+                            <label for="name">用户邮箱&nbsp;</label>
+                            <input type="text" id='email' style="width: 200px;" class="input_1 form-control " placeholder="用户邮箱">
+                        </div>
+                        <div class="f_left  m_left_10" style="padding-top: 10px;">
+                            <label for="registerStartTime"> 创建时间&nbsp;</label><input type="text" data-date-format="yyyy-mm-dd"
+                                                                                     readonly="readonly" id="registerStartTime"
+                                                                                     class="form-control date-picker input_2"
+                                                                                     placeholder="开始日期"
+                                                                                     style="width: 150px;"> <label
+                                for="registerEndTime">&nbsp;&nbsp;-&nbsp;&nbsp;</label><input type="text"
+                                                                                  id="registerEndTime"
+                                                                                  class="form-control date-picker input_2"
+                                                                                  data-date-format="yyyy-mm-dd"
+                                                                                  readonly="readonly" style="width: 150px;"
+                                                                                  placeholder="结束日期">
+                        </div>
+                        <div class="f_left  m_left_10" style="padding-top: 10px;">
+                            <button type="button" id="searchBtn" style="color:#ffffff;height:30px;">查询</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                    <div style="width:100%; height:22px; margin-top:10px; margin-bottom:10px;margin-left: 17px;">
+                    </div>
+                </div>
+
+                <!-- 				<div style="margin-top:150px;"> -->
+                <table border="1" cellspacing="0" class="table-style-roll" style="margin-left:27px;">
+                    <thead>
+                    <tr class="tr-a">
+                        <td class="td-b" style="word-wrap: break-word; word-break: break-all;">App名称</td>
+                        <td class="td-d" style="width:190px; word-wrap: break-word; word-break: break-all;">Appkey</td>
+                        <td class="td-d" style="width:250px; word-wrap: break-word; word-break: break-all;">App Secret</td>
+                        <td class="td-f" style="width: 160px">平台类型</td>
+                        <td class="td-a" style="width: 70px;">展示</td>
+                        <td class="td-a" style="width: 70px;">点击</td>
+                        <td class="td-a">点击率</td>
+                        <td class="td-a" style="width: 130px;">创建时间</td>
+                        <td class="td-g" style="width: 110px;">App状态</td>
+                        <td class="td-d">用户邮箱</td>
+                        <td class="td-d">操作</td>
+                        <td class="td-f">审核</td>
+                    </tr>
+                    </thead>
+                    <tbody id="appList"></tbody>
+                </table>
+            </div>
+
+            <div id="Pagination" class="pagination">
+                <div class="pre-page"><i class="glyphicon glyphicon-triangle-left"></i></div>
+                <div class="page-info">0 / 0</div>
+                <div class="next-page"><i class="glyphicon glyphicon-triangle-right"></i></div>
+                <div id='pageNumDiv'>
+                    <input type='text' placeholder="页码" class='text-box' id='current_page' value=''/>
+                    <button class='button-next' id='pageNumClick'>跳转</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<!--第一个弹出框-->
+<input type='hidden' value='' id='auditId'/>
+<div class="content_m content_m_cl"
+     style="position:fixed;background-color:rgba(0,0,0,0.5); top:0px; width:100%; height:100%; border: 0px;" hidden="true"
+     id="appAudit">
+    <div class="content_m_info content_click" style="width:320px">
+        <div class="module module_click">
+            <div class="module_l">驳回理由</div>
+            <div class="module_c"><textarea class="input_2" type="text" style="height:100px" id="reason"
+                                            maxlength="100"></textarea></div>
+            <div class="clearfloat"></div>
+        </div>
+        <div class="module" style="margin-top:0px">
+            <div class="module_c module_pos m_bottom_20" style="margin-bottom:10px">
+                <button class="button_7" onclick='submitAudit()'>提交</button>
+                <button class="button_6" onclick='closeAudit()'>取消</button>
+            </div>
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

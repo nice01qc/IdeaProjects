@@ -1,0 +1,111 @@
+.btn {
+	padding: 2px 12px;
+}
+
+.form-group {
+	margin-right: 40px;
+}
+
+.search-bar #dateRange {
+	width: 200px;
+}
+
+.search-bar .options {
+	float: right;
+	display: inline;
+}
+
+.main-dashboard {
+	height: 152px;
+	text-align: center;
+	color: #ffffff;
+	margin-top: 10px;
+	background-image: url(/assets/images/blue-bg.png);
+	background-size: 100% 100%;
+	margin-top: 10px;
+}
+
+.main-dashboard .title {
+	line-height: 35px;
+	font-size: 16px;
+}
+
+.main-dashboard .data {
+	line-height: 35px;
+	font-size: 22px;
+	font-weight: bold;
+	font-family: inherit;
+}
+
+.main-dashboard table {
+	margin-top: 41px;
+}
+
+.main-dashboard table td {
+	width: 16.66%;
+}
+
+.table-list {
+	margin-top: 20px;
+}
+
+.data-container thead {
+	background: #f2f2f4;
+}
+
+.promote-list .pull-right, .chart-head .pull-right {
+	text-align: right;
+}
+
+.chart-head {
+	margin-top: 30px;
+}
+
+.table-footer {
+	margin-top: 10px;
+}
+
+.table-footer .pull-right {
+	text-align: right;
+	display: none;
+}
+
+.table-footer span {
+	color: #008cba;
+}
+
+.pie-table {
+	margin-top: 90px;
+}
+
+.date-pickers {
+	position: absolute;
+}
+
+.line-options {
+	position: absolute;
+	top: 50%;
+	left: 12%;
+	z-index: 997;
+	max-width: 410px;
+}
+
+.pagination a {
+	padding: 6px 12px;
+	line-height: 1.428571429;
+	color: #67ccff !important;
+}
+
+.button-next {
+	width: 83px;
+	height: 35px;
+	margin-left: 15px;
+	margin-top: 16px;
+	float: left;
+	border-radius: 2px;
+	border: 1px solid #e6e6e6;
+	color: #67ccff;
+	background-color: #ffffff;
+	font-size: 16px;
+	cursor: pointer;
+}

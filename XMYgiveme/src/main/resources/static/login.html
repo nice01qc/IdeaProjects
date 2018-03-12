@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>飞凡CRM管理系统</title>
+ <!--        <link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css" /> -->
+    <link href="/assets/stylesheets/login.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/MD5.js"></script>
+</head>
+<body class="login-body"> 
+    <div class="login-bg-style" >
+        <div class="login-logo">
+            <img src="/assets/images/crm-logo.png">
+        </div>
+         <div class="check_tip">
+        <div id="general-div" class="none"></div>
+        <div class="none-style" id="none-style" style="display:none"></div>
+        <div class="wrong-msg" id="wrong-msg1" style="height: 32px;display:none">
+            <div class="wrong-message">
+                <img src="/assets/images/wrong-msg.png"/>
+                <span>邮箱或密码错误，请重新输入！</span>
+            </div>
+        </div>
+        <div class="wrong-msg" id="wrong-msg2" style="display:none">
+            <div class="wrong-msg-up">
+                <div class="wrong-message wrong-msg-style">
+                    <img src="/assets/images/wrong-msg.png"/>
+                    <span>您的账号已被冻结!</span>
+                </div>
+            </div>
+            <div class="wrong-font">
+               	 请拨打电话 400-000-000 我们为您解决问题。
+            </div>
+        </div>
+        <div class="login-middle">
+            <div class="login-middle-style">
+                <div class="register-bg">
+                    <div class="mail">
+                        <input type="text" id="username" maxlength="30" placeholder=" 请输入用户邮箱">
+                    </div>
+                    <div class="password">
+                        <input type="password" id="password" maxlength="16" placeholder=" 请输入登录密码">
+                    </div>
+                </div>
+            </div>
+            <div class="go-next">
+                <img src="/assets/images/GO.png" onclick = "islogin();" style="cursor: pointer;"/>
+            </div>
+        </div>
+        <div class="check">
+            <div style="float:left">
+               <input type="checkbox" checked="checked" id="rememberMe">
+            </div>
+            <div class="mail-remember" >记住邮箱</div>
+            <div class="password-forget" id="forgetpass" onclick='$("#warning-style").show()' style="cursor: pointer;">忘记密码?</div>
+        </div>
+         <div class="warning-style" id="warning-style" style="display:none">
+            <div class="warning">如忘记密码，请拨打电话 400-000-000 我们为您解决问题。</div>
+        </div>
+        </div>
+    </div>
+
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+		    localStorage.removeItem("crmClickedMenuId");
+			var localUserName = localStorage.getItem("username");
+			if(localUserName!=null) {
+				$('#username').val(localUserName);
+				//$("#rememberMe").prop("checked",true)
+			} else {
+				//$("#rememberMe").prop("checked",false)
+			}
+			
+			$(document).keydown(function(event){ 
+			    if(event.keyCode==13){ 
+			        islogin();
+			    }
+			});
+		});
+		
+		<!--登陆验证-->
+		function islogin() {
+			var username = $("#username").val().replace(/(^\s*)|(\s*$)/g, "");
+			var password = $("#password").val()//.replace(/(^\s*)|(\s*$)/g, "");
+			if(username =="" || password=="") {
+			    $("#none-style").show();
+				$("#wrong-msg1").show();
+
+				//add by hanpeng begin
+				$('.warning-style').hide();
+				$('#general-div').hide();
+                $('#username').removeClass();
+                $('#username').attr('style',"border: none");
+                $('#password').attr('style',"border: none");
+                $('#forgetpass').css('color','#86e8ee').css('border-bottom','1px solid #86e8ee');
+                //add by hanpeng end
+                
+				return;
+			}
+			$.ajax({
+				url : "/account/login",
+				method : 'post',
+				contentType : 'application/json',
+				data : JSON.stringify({
+					accountEmail : username,
+					password : hex_md5(password)
+				}),
+				success : function(result) {
+					if(result.status==901){
+						//alert("此用户不存在!");
+						$("#general-div").hide();
+						$("#wrong-msg2").hide();
+						$("#none-style").show();
+						$("#wrong-msg1").show();
+						
+						//add by hanpeng begin
+						$('.warning-style').hide();
+						$('#username').removeClass();
+						$('#username').attr('style',"border: none");
+                        $('#password').attr('style',"border: none");
+						$('#forgetpass').css('color','#86e8ee').css('border-bottom','1px solid #86e8ee');
+						//add by hanpeng end
+						return;
+					}else if(result.status == 902){
+						//alert("密码错误!");
+						$("#general-div").hide();
+						$("#wrong-msg2").hide();
+						$("#none-style").show();
+						$("#wrong-msg1").show();
+						//$("#password").focus(); 
+						
+						//add by hanpeng begin
+						$('.warning-style').hide();
+                        $('#username').removeClass();
+                        $('#username').attr('style',"border: none");
+                        $('#password').attr('style',"border: none");
+                        $('#forgetpass').css('color','#86e8ee').css('border-bottom','1px solid #86e8ee');
+                        //add by hanpeng end
+						return;
+					}else if(result.status == 903){
+						//alert("帐户冻结!");
+						$("#general-div").hide();
+						$("#none-style").hide();
+						$("#wrong-msg1").hide();
+						$("#wrong-msg2").show();
+						//$("#password").focus(); 
+						
+						//add by hanpeng begin
+						$('.warning-style').hide();
+						$('#username').removeClass().addClass("input-style wrong-style");
+                        $('#username').attr('style',"border: 1px solid #fb767f");
+                        $('#password').attr('style',"border: 1px solid #fb767f");
+                        $('#forgetpass').css('color','#86e8ee').css('border-bottom','1px solid #86e8ee');
+                        //add by hanpeng end
+						return;
+					}
+					if($("#rememberMe").prop("checked")){
+						localStorage.setItem("username",$("#username").val().replace(/(^\s*)|(\s*$)/g, ""));
+					} else {
+						localStorage.removeItem("username");
+					}
+					window.location.href = result.message;
+				}
+			});
+			
+		}
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,585 @@
+.body-style{
+    width:1440px;
+    height:789px;
+    margin:0;
+    background-color:#bfbfbf;
+    min-width:800px;
+    min-height:600px;
+}
+.login{
+    width:1440px;
+    height:70px;
+    background-color: #00b7ff
+}
+.login-logo{
+    width: 374px;
+    height: 63px;
+    margin-left: 533px;
+    padding-top: 6px;
+}
+.login-logo img{
+    width:100%;
+    height:auto;
+}
+.body-middle{
+    width:1440px;
+    height:10px;
+}
+.body-border{
+    width: 1209px;
+    height: 718px;
+    margin-left: 115px;
+    background-color: #ffffff;
+}
+.account-bg{
+    width:157px;
+    height:718px;
+    float:left;
+    background-image: url('../images/account-bg.png')
+}
+.account-bg-border{
+    width:149px;
+    height:154px;
+    /*margin-left:8px;*/
+    margin-top:8px;
+    border-radius: 5px 1px 1px 5px;
+    /*background-color:#ffffff*/
+}
+.account-bg-border img{
+    width:90px;
+    height:117px;
+    margin-left:30px;
+    margin-top:18px;
+}
+.data-icon{
+    width: 150px;
+    height: 60px;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 60px;
+    margin-left: 22px;
+}
+.data-icon img{
+    width: 19px;
+    height: 16px;
+    margin-left: 12px;
+    float: left;
+    margin-top: 23px;
+}
+.data-icon-style{
+    color:#ffffff;
+    font-size:14px;
+    margin-left:9%;
+    float:left;
+    padding-top:3px
+}
+.all-icon{
+    width: 150px;
+    height: 60px;
+    margin-top: 3px;
+    text-align: center;
+    line-height: 60px;
+    margin-left: 7px;
+}
+.all-icon img{
+    width: 18px;
+    height: 17px;
+    float: left;
+    margin-left: 26px;
+    margin-top: 25px;
+}
+.all-icon-style{
+    color: #ffffff;
+    font-size: 14px;
+    margin-left: 11px;
+    float: left;
+    padding-top: 3px;
+}
+.body-right{
+    width:1052px;
+    height:auto;
+    float:left;
+    background-color: #ffffff;
+    min-height:718px;
+}
+.account-info{
+    width:800px;
+    height:36px;
+    margin-top:28px;
+}
+.account-info-back{
+    width:1052px;
+    height:36px;
+    margin-top:15px;
+    background-color:#00b7ff
+}
+.account-info button{
+    width:119px;
+    height:36px;
+    background-color: #00b7ff;
+    border-radius:3px;
+    border:1px solid #00b7ff;
+    color:#ffffff;
+    font-size:16px;
+}
+.account-info-border{
+    width: 33px;
+    height: 22px;
+    border-right: 5px solid #00b7ff;
+    float: left;
+    margin-top: 6px;
+    box-sizing: border-box;
+}
+.account-info-font{
+    width: 215px;
+    font-size: 20px;
+    color: #000000;
+    margin-left: 8px;
+    margin-top: 6px;
+    float: left;
+    font-weight: bold;
+}
+.title{
+    width:1000px;
+    margin-top:30px;
+    font-size:14px
+}
+.title-font{
+    width:330px;
+    margin-left:30px;
+    float: left;
+    line-height:40px;
+}
+.title-font span{
+    font-weight: bold;
+    float:left
+}
+.chuangyi-font{
+    width:242px;
+    height:auto;
+    float:left;
+    margin-left:10px;
+}
+.chuangyi-font input{
+    height:30px;
+    width:245px;
+    border-radius:2px;
+    border:1px solid #cccccc
+}
+.ziyuan{
+    width:212px;
+    float: left;
+    line-height:40px;
+    margin-left:22px;
+    font-weight: bold;
+    float:left
+}
+.ziyuan span{
+    font-weight: bold;
+    float:left
+}
+.ziyuan select{
+    height:30px;
+    width:110px;
+    border-radius: 2px;
+    margin-left:16px;
+    border:1px solid #cccccc
+}
+.zhuangtai{
+    width:154px;
+    float: left;
+    line-height:40px;
+    margin-left:22px
+}
+.zhuangtai span{
+    font-weight: bold;
+    float:left
+}
+.zhuangtai select{
+    height:30px;
+    width:89px;
+    border-radius: 2px;
+    margin-left:9px;
+    border:1px solid #cccccc
+}
+.find{
+    width:59px;
+    float: left;
+    margin-left:30px;
+    margin-top:6px
+}
+.find button{
+    width:80px;
+    height:30px;
+    background-color: #00b7ff;
+    border-radius:3px;
+    border:1px solid #00b7ff;
+    color:#ffffff;
+    font-size:16px;
+}
+.show-all{
+    width:90px;
+    float: left;
+    margin-left:40px;
+    margin-top:6px
+}
+.show-all button{
+    width:80px;
+    height:30px;
+    background-color: #ffffff;
+    border-radius:3px;
+    border:1px solid #00b7ff;
+    color:#00b7ff;
+    font-size:16px;
+}
+.table-style{
+    width:977px;
+    height:auto;
+    margin-left:30px;
+    margin-top:40px;
+    text-align:center;
+    border:1px solid #e4e4e4
+}
+.table-style-roll{
+	width: 990px;
+    height: auto;
+    margin-left: 10px;
+    margin-top: 40px;
+    text-align: center;
+    border: 1px solid #e4e4e4;
+}
+.tr-a{
+    width:977px;
+    height:62px;
+    background:#f2f2f4
+}
+.td-a{
+    width:138px;
+    height:55px;
+    border:0px
+}
+.td-b{
+    width:220px;
+    height:100%;
+    border:0px
+}
+.td-c{
+    width:100px;
+    height:100%;
+    border:0px
+}
+.td-d{
+    width:90px;
+    height:100%;
+    border:0px
+}
+.td-e{
+    width:94px;
+    height:100%;
+    border:0px
+}
+.td-f{
+    width:212px;
+    height:100%;
+    border:0px
+}
+.td-o{
+    width:270px;
+    height:100%;
+    border:0px
+}
+.td-g{
+    width:200px;
+    height:100%;
+    border:0px
+}
+.td-z{
+    width:500px;
+    height:100%;
+    border:0px
+}
+.tr-b{
+    width:977px;
+    height:62px;
+    background:#ffffff
+}
+.tr-c{
+    width:977px;
+    height:62px;
+    background:#f4f5f7
+}
+.tr-d{
+    width:977px;
+    height:62px;
+    background: #f7f4b8
+}
+.td-e-style{
+    width:75px;
+    height:100%;
+    padding-top: 10px;
+    border:0px
+}
+.td-sy{
+    width: 100%;
+    padding-top: 10px;
+    height:39px
+}
+.td-sy button{
+    width:50px;
+    height:20px;
+    background-color: #00c9b8;
+    border-radius:3px;
+    border:1px solid #00c9b8;
+    color:#ffffff;
+    font-size:2px;
+}
+.td-f-style{
+    width:212px;
+    height:100%;
+    padding-left:5px;
+    padding-top: 0px;
+    border:0px
+}
+.td-f-style img{
+    width:100%;
+    height:auto
+}
+.td-g-style{
+    width:235px;
+    height:100%;
+    text-align: left;
+    padding-top: 0px;
+    border:0px
+}
+.button-one{
+    width:60px;
+    height:28px;
+    background-color: #ffffff;
+    border-radius:3px;
+    border:1px solid #40cbff;
+    color:#40cbff;
+    font-size:12px;
+}
+.button-two{
+    width:60px;
+    height:28px;
+    background-color: #ffffff;
+    border-radius:3px;
+    border:1px solid #00c9b8;
+    color:#00c9b8;
+    font-size:12px;
+}
+.button-three{
+    width:60px;
+    height:28px;
+    background-color: #ffffff;
+    border-radius:3px;
+    border:1px solid #ff8275;
+    color:#ff8275;
+    font-size:12px;
+}
+.button-color{
+    background-color: #ff4e5a;
+    border-radius:3px;
+    border:1px solid #ff4e5a;
+    color:#ffffff;
+}
+.td-sy-style{
+    width: 100%;
+    padding-top: 10px;
+}
+.chuangyi-style{
+    background-color:#ffffff;
+    border:1px solid #ffffff;
+    border-radius: 2px;
+}
+.data-icon-font{
+    color:#67ccff;
+}
+.date{
+    width:350px;
+    float: left;
+    line-height:40px;
+    margin-left:22px;
+    font-weight: bold;
+}
+.date span{
+    font-weight: bold;
+    float:left
+}
+.date select{
+    height:30px;
+    width:110px;
+    border-radius: 2px;
+    margin-left:16px;
+    border:1px solid #cccccc
+}
+.check{
+    width:200px;
+    float: left;
+    line-height:40px;
+    margin-left:22px;
+    font-weight: bold;
+    float:left
+}
+.check span{
+    font-weight: bold;
+    float:left
+}
+.check select{
+    height:30px;
+    width:110px;
+    border-radius: 2px;
+    margin-left:16px;
+    border:1px solid #cccccc
+}
+.check_1{
+    width:388px;
+    float: left;
+    line-height:40px;
+    margin-left:22px;
+    font-weight: bold;
+}
+.check_1 span{
+    font-weight: bold;
+    float:left
+}
+.check_1 input{
+    height:30px;
+    width:180px;
+    border-radius: 2px;
+    margin-left:9px;
+    border:1px solid #cccccc
+}
+.list{
+    width: 137px;
+    line-height: 40px;
+    margin-left: 15px;
+    font-weight: bold;
+    float: left;
+}
+.list select{
+    height:30px;
+    width:110px;
+    border-radius: 2px;
+    margin-left:16px;
+    border:1px solid #cccccc
+}
+.list select:focus{
+    -webkit-box-shadow: 0 0 5px #00b7ff;
+    -moz-box-shadow:0 0 5px #00b7ff;
+    box-shadow: 0 0 5px #00b7ff;
+    border-color:#00b7ff ;
+    outline:0;
+    background: #fff;
+}
+.user{
+    width:280px;
+    float: left;
+    line-height:40px;
+    margin-left:22px
+}
+.user span{
+    font-weight: bold;
+    float:left
+}
+.user input{
+    height:30px;
+    width:180px;
+    border-radius: 2px;
+    margin-left:9px;
+    border:1px solid #cccccc
+}
+.tc_bg {
+    width:100%;
+    height:100%;
+    position:fixed;
+    background-color:rgba(0,0,0,0.5);
+    top:0px;
+    z-index: 999;
+}
+.tc_clo { width:100%; text-align:right;}
+.tc_clo img{ margin:80px 280px 0 0; cursor: pointer;}
+.tc_idx {
+    width: 400px;
+    height: 270px;
+    padding:10px;
+    background:#FFF;
+    margin-top:200px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow:hidden;
+}
+.tc_idx img {
+    width:100%;
+    height:100%;
+}
+.account-info-backt{
+    width:1052px;
+    height:36px;
+    margin-top:50px;
+    background-color:#00b7ff
+}
+.account-info-backt button{
+    width:119px;
+    height:36px;
+    background-color: #00b7ff;
+    border-radius:3px;
+    border:1px solid #00b7ff;
+    color:#ffffff;
+    font-size:16px;
+}
+
+.table_comment{
+  		table-layout:fixed;
+  		width:983px;
+	    height: auto;
+	    margin-left: 30px;
+	    margin-top: 40px;
+	    text-align: center;
+	    border: 1px solid #e4e4e4;
+}
+
+.td_comment{
+    word-break:keep-all;/* 涓嶆崲琛�*/
+    white-space:nowrap;/* 涓嶆崲琛�*/
+    overflow:hidden;/* 鍐呭瓒呭嚭瀹藉害鏃堕殣钘忚秴鍑洪儴鍒嗙殑鍐呭 */
+    text-overflow:ellipsis;/* 褰撳璞″唴鏂囨湰婧㈠嚭鏃舵樉绀虹渷鐣ユ爣璁�...) 锛涢渶涓巓verflow:hidden;涓�捣浣跨敤*/
+    border:0px;
+    padding-left:7px;
+    padding-right:7px;
+}
+
+.money_button{
+	float: left;
+    margin-right: 80px;
+    margin-left: 90px;
+}
+
+.money_button .button_in_op{
+	width: 65px;
+	height: 28px;
+    line-height: 28px;
+    background-color: #00b9ff;
+    color: #ffffff;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #00b9ff;
+    margin: 2px 2px;
+    padding: 0 2px;
+}
+
+.money_button .button_in_hi{
+	width: 65px;
+    height: 28px;
+    line-height: 28px;
+    background-color: gray;
+    color: #fff;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid gray;
+    margin: 2px 2px;
+    padding: 0 2px;
+}

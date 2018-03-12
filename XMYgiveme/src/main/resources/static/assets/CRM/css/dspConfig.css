@@ -1,0 +1,88 @@
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: rgb(0, 183, 255);
+    background-color: transparent;
+}
+
+.nav-pills > li > a {
+    border-radius: 0px;
+    color: black;
+    /*word-wrap: break-word;*/
+    /*word-break: break-all;*/
+}
+
+.nav-pills > li + li {
+    margin-left: 0px;
+}
+
+.nav-pills > li {
+    margin-left: 0px;
+    background: rgb(238, 238, 238);
+    width: 120px;
+    vertical-align: middle;
+}
+
+.nav-pills > li.active {
+    margin-left: 0px;
+    background: white;
+}
+
+.tab-container {
+    width: 990px;
+    margin-top: 20px;
+}
+
+.tab {
+    margin-left: 23px;
+}
+
+.tab_border {
+    border-radius: 4px 4px 0px 0px !important;
+    border-top: 1px solid rgb(221, 221, 221);
+    border-right: 1px solid rgb(221, 221, 221);
+    border-left: 1px solid rgb(221, 221, 221);
+    margin: 0;
+    max-width: 100%;
+}
+
+.tab_page {
+    border-right: 1px solid rgb(221, 221, 221);
+}
+
+.border_r_none {
+    border-right: medium none !important;
+}
+
+.nav-tabs {
+    margin-top: -1px;
+}
+
+.table-list {
+    height: auto;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.tab-body {
+    min-height: 474px;
+    margin-left: 23px;
+    margin-top: -1px;
+    border: 1px solid #d9d9d9;
+    padding: 15px;
+}
+
+.fixed-table-body {
+    border: none;
+}
+
+.c_externalResIosId {
+    word-wrap: break-word;
+    /*word-break设置强行换行;    normal 亚洲语言和非亚洲语言的文本规则，允许在字内换行*/
+    word-break: break-all;
+}
+
+.c_externalResAndroidId {
+    word-wrap: break-word;
+    /*word-break设置强行换行;  normal 亚洲语言和非亚洲语言的文本规则，允许在字内换行*/
+    word-break: break-all;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>充值</title>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap-table/bootstrap-table.css"/>
+    <link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <style type="text/css">
+
+        button {
+            height: auto;
+        }
+    </style>
+    <script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+    <script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="/getMenus"></script>
+    <script type="text/javascript" src="/resources/js/web-common.js"></script>
+    <script type="text/javascript" src="/assets/scripts/recharge.js"></script>
+
+</head>
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header">
+        <img src="/assets/images/crm-logo.png"/>
+    </div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="content_t">
+                    <div class="content_t_l"></div>
+                    <div class="content_t_r">充值
+                    </div>
+                </div>
+                <!--内容部分 start-->
+                <div class="content_m">
+                    <div class="content_m_info">
+                        <div class="content_m_menu form-inline" style="margin-top: 20px;">
+                            <div class="f_left f_weight m_left_10">
+                                <label for="company">公司名称&nbsp;</label>
+                                <input type="text" id="company" style="width: 200px;"
+                                       class="input_1 form-control " placeholder="公司名称">
+                            </div>
+                            <div class="f_left f_weight m_left_10">
+                                <label for="accountEmail">登录邮箱&nbsp;</label>
+                                <input type="text" id="accountEmail" style="width: 200px;" class="input_1 form-control " placeholder="登录邮箱">
+                            </div>
+
+                            <div class="f_left f_weight m_left_10">
+                                <button type="button" id="searchBtn">查询</button>
+                            </div>
+                        </div>
+
+                        <div style="float: left; clear: both;">
+                            <div style="width:100%; height:22px; margin-top:10px; margin-bottom:10px;margin-left: 17px;">
+                            </div>
+                        </div>
+
+                        <table data-toggle="table" data-pagination="true" id="table" data-url="/account/list"
+                               data-side-pagination="server" data-method="post" data-page-size="20" data-escape="true"
+                               data-classes="table table-hover table-striped table-no-bordered" data-cache="false"
+                               data-pagination-pre-text="<i  class='glyphicon glyphicon-triangle-left'/>"
+                               data-pagination-next-text="<i  class='glyphicon glyphicon-triangle-right'/>">
+                            <thead>
+                            <tr>
+                                <th data-field="accountId" data-width="40px">用户ID</th>
+                                <th data-field="company" data-width="94px">公司名称</th>
+                                <th data-field="phone" data-width="94px">手机号</th>
+                                <th data-field="accountEmail" data-width="94px">邮箱</th>
+                                <th data-field="balanceStr" data-width="94px">余额</th>
+                                <th data-field="freezeState" data-formatter="statusFmt" data-width="40px">状态</th>
+                                <th data-field="accountId" data-formatter="operationFmt" data-width="94px">操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <!--内容部分 end-->
+                <div class="clearfloat"></div>
+            </div>
+            <!--主要内容 end-->
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <!--底部 start-->
+    <!--<div class="footer"></div>-->
+    <!--底部 end-->
+</div>
+
+<div class="modal fade " id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">充值</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="restPasswordForm">
+                    <div class="form-group">
+                        <label for="newPassword" class="col-sm-3 control-label">面额(元)</label>
+                        <div class="col-sm-9">
+                            <input type="number" onkeydown="if(value.length > 8) value = value.slice(0,8);" class="form-control" id="newPassword"
+                                   name="newPassword" placeholder="请输入最大9位的整数">
+                            <span style='color: red' id="newPasswordSpan"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordConfirm" class="col-sm-3 control-label">实收金额(元)</label>
+                        <div class="col-sm-9">
+                            <input type="number" onkeydown="if(value.length > 8) value = value.slice(0,8);" class="form-control" id="passwordConfirm"
+                                   name="passwordConfirm" placeholder="请输入最大9位的整数">
+                            <span style='color: red' id="passwordConfirmSpan"></span>
+
+                        </div>
+
+                    </div>
+                    <input type="hidden" name="accountId" id="accountId">
+                    <input type="hidden" name="accountEmail" id="accountEmail">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="toRestPassword(event)">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+</body>
+</html>

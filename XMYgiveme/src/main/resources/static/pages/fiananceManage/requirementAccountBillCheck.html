@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>飞凡DSP对账单</title>
+    <link href="/assets/stylesheets/log.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap-table/bootstrap-table.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/date-time/bootstrap-datepicker3.css">
+    <link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/stylesheets/users.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+    <script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/bootstrap-confirmation.js"></script>
+    <script type="text/javascript" src="/resources/js/web-common.js"></script>
+    <script type="text/javascript" src="/assets/scripts/MD5.js"></script>
+    <script type="text/javascript" src="/resources/js/recharge/requirementAccountBillCheck.js?v4"></script>
+</head>
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header">
+        <div class="net_header"><img src="/assets/images/crm-logo.png"/></div>
+    </div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar" style="margin-left:-1px;">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="account-info">
+                    <div class="account-info-border"></div>
+                    <div class="account-info-font" style="margin-left:8px;">飞凡DSP对账单</div>
+                </div>
+                <!--内容部分 start-->
+                <div class="content_m">
+                    <div class="content_m_info">
+                        <div class="content_m_menu form-inline" style="margin-top: 20px;">
+                            <div class="f_left  m_left_10">
+                                <label for="years">账期&nbsp;</label> <select id="years" class="form-control select_1"
+                                                                            style="width: 100px;">
+                                <option value="2016">2016年</option>
+                                <option value="2017">2017年</option>
+                                <option value="2018">2018年</option>
+                                <option value="2019">2019年</option>
+                                <option value="2020">2020年</option>
+                                <option value="2021">2021年</option>
+                                <option value="2022">2022年</option>
+                                <option value="2023">2023年</option>
+                                <option value="2024">2024年</option>
+                                <option value="2025">2025年</option>
+                                <option value="2026">2026年</option>
+                                <option value="2027">2027年</option>
+                                <option value="2028">2028年</option>
+                                <option value="2029">2029年</option>
+                                <option value="2030">2030年</option>
+                                <option value="2031">2031年</option>
+                                <option value="2032">2032年</option>
+                                <option value="2033">2033年</option>
+                                <option value="2034">2034年</option>
+                                <option value="2035">2035年</option>
+                                <option value="2036">2036年</option>
+                                <option value="2037">2037年</option>
+                                <option value="2038">2038年</option>
+                                <option value="2039">2039年</option>
+                                <option value="2040">2040年</option>
+                                <option value="2041">2041年</option>
+                                <option value="2042">2042年</option>
+                                <option value="2043">2043年</option>
+                                <option value="2044">2044年</option>
+                                <option value="2045">2045年</option>
+                                <option value="2046">2046年</option>
+                                <option value="2047">2047年</option>
+                                <option value="2048">2048年</option>
+                                <option value="2049">2049年</option>
+                                <option value="2050">2050年</option>
+                                <option value="2051">2051年</option>
+                                <option value="2052">2052年</option>
+                                <option value="2053">2053年</option>
+                                <option value="2054">2054年</option>
+                                <option value="2055">2055年</option>
+                                <option value="2056">2056年</option>
+                                <option value="2057">2057年</option>
+                                <option value="2058">2058年</option>
+                                <option value="2059">2059年</option>
+                                <option value="2060">2060年</option>
+                                <option value="2061">2061年</option>
+                                <option value="2062">2062年</option>
+                                <option value="2063">2063年</option>
+                                <option value="2064">2064年</option>
+                                <option value="2065">2065年</option>
+                                <option value="2066">2066年</option>
+                                <option value="2067">2067年</option>
+                                <option value="2068">2068年</option>
+                                <option value="2069">2069年</option>
+                                <option value="2070">2070年</option>
+                                <option value="2071">2071年</option>
+                                <option value="2072">2072年</option>
+                                <option value="2073">2073年</option>
+                                <option value="2074">2074年</option>
+                                <option value="2075">2075年</option>
+                                <option value="2076">2076年</option>
+                                <option value="2077">2077年</option>
+                                <option value="2078">2078年</option>
+                                <option value="2079">2079年</option>
+                                <option value="2080">2080年</option>
+                                <option value="2081">2081年</option>
+                                <option value="2082">2082年</option>
+                                <option value="2083">2083年</option>
+                                <option value="2084">2084年</option>
+                                <option value="2085">2085年</option>
+                                <option value="2086">2086年</option>
+                                <option value="2087">2087年</option>
+                                <option value="2088">2088年</option>
+                                <option value="2089">2089年</option>
+                                <option value="2090">2090年</option>
+                                <option value="2091">2091年</option>
+                                <option value="2092">2092年</option>
+                                <option value="2093">2093年</option>
+                                <option value="2094">2094年</option>
+                                <option value="2095">2095年</option>
+                                <option value="2096">2096年</option>
+                                <option value="2097">2097年</option>
+                                <option value="2098">2098年</option>
+                                <option value="2099">2099年</option>
+                                <option value="2100">2100年</option>
+                            </select>
+                            </div>
+                            <div class="f_left  m_left_10">
+                                <select id="month" class="form-control select_1"
+                                        style="width: 100px;">
+                                    <option value="01">1月</option>
+                                    <option value="02">2月</option>
+                                    <option value="03">3月</option>
+                                    <option value="04">4月</option>
+                                    <option value="05">5月</option>
+                                    <option value="06">6月</option>
+                                    <option value="07">7月</option>
+                                    <option value="08">8月</option>
+                                    <option value="09">9月</option>
+                                    <option value="10">10月</option>
+                                    <option value="11">11月</option>
+                                    <option value="12">12月</option>
+                                </select>
+                            </div>
+                            <div class="f_left  m_left_10">
+                                <label for="accountEmail">登录邮箱&nbsp;</label> <input type="text" id="accountEmail"
+                                                                                    style="width: 200px;"
+                                                                                    class="input_1 form-control "
+                                                                                    placeholder="登录邮箱">
+                            </div>
+                            <div class="f_left f_weight m_left_10">
+                                <button type="button" id="searchBtn" style="height:30px;">查询</button>
+                            </div>
+                        </div>
+                        <div style="float: left; clear: both;">
+                            <div style="width:100%; height:22px; margin-top:10px; margin-bottom:10px;margin-left: 17px;">
+                            </div>
+                        </div>
+                        <div id="table-div"></div>
+                    </div>
+                </div>
+                <!--内容部分 end-->
+                <div class="clearfloat"></div>
+            </div>
+            <!--主要内容 end-->
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <!--底部 start-->
+    <!--<div class="footer"></div>-->
+    <!--底部 end-->
+</div>
+</body>
+</html>

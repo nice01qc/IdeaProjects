@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>飞凡CRM管理系统</title>
+    <link href="../../CRM/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../../CRM/css/idea.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../CRM/css/z_tree/demo.css" type="text/css">
+    <link rel="stylesheet" href="../../CRM/css/z_tree/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="../../CRM/js/z_tree/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../../CRM/js/z_tree/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../../CRM/js/nav.js"></script>
+
+</head>
+
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"><img src="../../CRM/img/crm-logo.png" /></div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <div class="net_font" >Dashboard</div>
+            <!--<div class="sidebar_b">-->
+            <!--<div class="sidebar_btn"><img src="../../CRM/img/data-icon.png" />数据中心</div>-->
+            <!--<div class="sidebar_btn_on"><img src="../../CRM/img/originality-icon-c.png" width="17" />创意</div>-->
+            <!--<div class="sidebar_btn"><img src="../../CRM/img/cast-icon.png" />投放</div>-->
+            <!--<div class="sidebar_btn"><img src="../../CRM/img/money-icon.png" />财务</div>-->
+            <!--<div class="sidebar_btn"><img src="../../CRM/img/off-icon.png" />退出</div>-->
+            <!--</div>-->
+            <div class="zTreeDemoBackground left">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+             <div class="content_t"><div class="content_t_l"></div><div class="content_t_r">新建用户</div></div>
+            </div>
+            <div class="content_m">
+                <!--第一部分-->
+                <div class="content_m_info" style="float: none">
+                    <div class="module">
+                        <div class="module_l">资源位类型</div>
+                        <div class="module_c">
+                            <select class="select_s">
+                                <option>CRM</option>
+                            </select>
+                            <select class="select_s">
+                                <option>管理员</option>
+                            </select>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">万达邮箱</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">确认密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_c module_pos">
+                            <button class="button_2">开通</button>
+                            <button class="button_5">取消</button>
+                            <!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                </div>
+                <!--第二部分左-->
+                <div class="content_m_info content_m_info_pos">
+                    <div class="module">
+                        <div class="module_l">资源位类型</div>
+                        <div class="module_c">
+                            <select class="select_s">
+                                <option>SSP</option>
+                            </select>
+                            <select class="select_s">
+                                <option>联盟用户</option>
+                            </select>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">万达邮箱</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                </div>
+                <!--第二部分右-->
+                <div class="content_m_info content_m_info_pos">
+                    <div class="module">
+                        <div class="module_l">用户类型</div>
+                        <div class="module_c">
+                            <select class="select_s">
+                                <option>SSP</option>
+                            </select>
+                            <select class="select_s">
+                                <option>高级用户</option>
+                            </select>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">万达邮箱</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <span class="main_span_1" >此邮箱已存在</span>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                </div>
+                <!--第三部分左-->
+                <div class="content_m_info content_m_info_pos">
+                    <div class="module">
+                        <div class="module_l">用户类型</div>
+                        <div class="module_c">
+                            <select class="select_s">
+                                <option>SSP</option>
+                            </select>
+                            <select class="select_s">
+                                <option>联盟用户</option>
+                            </select>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">万达邮箱</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">确认密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">分成</div>
+                        <div class="module_c"><input class="input_3" type="text" />%</div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">公司名称</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <span class="main_span_2">非必须填</span>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_c module_pos">
+                            <button class="button_2">开通</button>
+                            <button class="button_5">取消</button>
+                            <!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                </div>
+                <!--第三部分右-->
+                <div class="content_m_info content_m_info_pos">
+                    <div class="module">
+                        <div class="module_l">用户类型</div>
+                        <div class="module_c">
+                            <select class="select_s">
+                                <option>SSP</option>
+                            </select>
+                            <select class="select_s">
+                                <option>高级用户</option>
+                            </select>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">邮箱</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <span class="main_span_1" >此邮箱已存在</span>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">确认密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">公司名称</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <span class="main_span_2" >非必填项</span>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_c module_pos">
+                            <button class="button_2">开通</button>
+                            <button class="button_5">取消</button>
+                            <!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                </div>
+                <!--第四部分-->
+                <div class="content_m_info ">
+                    <div class="module">
+                        <div class="module_l">用户类型</div>
+                        <div class="module_c">
+                            <select class="select_s">
+                                <option>DSP</option>
+                            </select>
+                            <select class="select_s">
+                                <option>一般用户</option>
+                            </select>
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">邮箱</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">确认密码</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_l">公司名称</div>
+                        <div class="module_c"><input class="input_2" type="text" /></div>
+                        <span class="main_span_2" >非必填项</span>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="module">
+                        <div class="module_c module_pos">
+                            <button class="button_2">开通</button>
+                            <button class="button_5">取消</button>
+                            <!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+                        </div>
+                        <div class="clearfloat"></div>
+                    </div>
+                </div>
+
+            </div>
+            <!--主要内容 end-->
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <!--底部 start-->
+    <!--<div class="footer"></div>-->
+    <!--底部 end-->
+</div>
+</body>
+</html>

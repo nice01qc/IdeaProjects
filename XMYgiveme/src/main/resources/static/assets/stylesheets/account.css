@@ -1,0 +1,257 @@
+.body-style{
+    width:100%;
+    height:100%;
+    margin:0;
+    background-color:#bfbfbf;
+    min-width:1189px;
+}
+.login{
+    width:100%;
+    height:10%;
+    background-color: #00b7ff
+}
+.login-logo{
+    width:26%;
+    height:65%;
+    margin-left:37%;
+    padding-top:1%
+}
+.login-logo img{
+    width:100%; height:100%
+}
+.body-middle{
+    width:100%; height:2%
+}
+.body-left{
+    width:84%;
+    height:88%;
+    margin-left:8%;
+    background-color:#ffffff
+}
+.account-bg{
+    width:13%;
+    height:100%;
+    float:left;
+    background-image: url('../img/account-bg.png')
+}
+.account-bg-border{
+    width:95%;
+    height:22%;
+    margin-left:5%;
+    margin-top:5%;
+    border-radius: 5px 1px 1px 5px;
+    background-color:#ffffff
+}
+.account-bg-border img{
+    width:60%;
+    height:76%;
+    margin-left:20%;
+    margin-top:12%;
+}
+.data-icon{
+    width:74%;
+    height:10%;
+    margin-left:16%;
+    margin-top:40%
+}
+.data-icon img{
+    width:22%;
+    height:24%;
+    margin-left:5%;
+    float:left;
+}
+.data-icon-style{
+    color:#ffffff;
+    font-size:14px;
+    margin-left:9%;
+    float:left;
+    padding-top:2%
+}
+.originality-icon{
+    width:60%;
+    height:10%;
+    margin-left:20%;
+}
+.originality-icon img{
+    width:20%;
+    height:29%;
+    margin-left:5%;
+    float:left;
+}
+.originality-icon-style{
+    color:#ffffff;
+    font-size:14px;
+    margin-left:11%;
+    float:left;
+    padding-top:2%
+}
+.cast-icon{
+    width:60%;
+    height:10%;
+    margin-left:20%;
+}
+.cast-icon img{
+    width:22%;
+    height:27%;
+    margin-left:5%;
+    float:left;
+}
+.cast-icon-style{
+    color:#ffffff;
+    font-size:14px;
+    margin-left:9%;
+    float:left;
+    padding-top:2%
+}
+.money-icon{
+    width:60%;
+    height:10%;
+    margin-left:20%;
+}
+.money-icon img{
+    width:22%;
+    height:26%;
+    margin-left:5%;
+    float:left;
+}
+.money-icon-style{
+    color:#ffffff;
+    font-size:14px;
+    margin-left:9%;
+    float:left;
+    padding-top:2%
+}
+.off-icon{
+    width:60%;
+    height:10%;
+    margin-left:20%;
+}
+.off-icon img{
+    width:22%;
+    height:27%;
+    margin-left:5%;
+    float:left;
+}
+.off-icon-style{
+    color:#ffffff;
+    font-size:14px;
+    margin-left:9%;
+    float:left;
+    padding-top:2%
+}
+.body-right{
+    width:87%;
+    height:100%;
+    float:left;
+}
+.account-info{
+    width:100%;
+    height:3%;
+    margin-top:3%;
+}
+.account-info-border{
+    width:3%;
+    height:100%;
+    border-right:5px solid #00b7ff;
+    float:left;
+}
+.account-info-font{
+    width:12%;
+    height:100%;
+    font-size:20px;
+    color:#000000;
+    margin-left:1%;
+    float:left
+}
+.tab{
+    background:#eeeeee;
+    ling-height:3em;
+    color:#00b7ff;
+    font-size:1em;
+    display:table;
+    width:40%;
+    height:6%;
+    margin-top:4%;
+    margin-left:3%;
+    border:1px solid #d9d9d9;
+    border-radius: 5px 5px 1px 1px;
+    border-bottom-style: none
+}
+.tab-left{
+    width:50%;
+    height:100%;
+    text-align:center;
+    display:table-cell;
+    line-height:3em;
+    vertical-align: middle;
+    background-color:#ffffff
+}
+.tab-right{
+    width:50%;
+    height:100%;
+    text-align:center;
+    display:table-cell;
+    line-height:3em;
+    vertical-align: middle;
+}
+.account-body{
+    width:94%;
+    height:67%;
+    margin-left:3%;
+    border:1px solid #d9d9d9;
+    box-shadow: 0 0 10px rgba(158, 160, 169, 0.5);
+}
+.account-table{
+    width:40%;
+    height:70%;
+    padding-top:8%;
+    margin-left:30%;
+    text-align:center
+}
+.mail{
+    width:90%;
+    height:75%;
+    border-radius:2px;
+    border:1px solid #e8e8e8;
+    background-color:#f2f2f2
+}
+.name{
+    width:90%;
+    height:75%;
+    border-radius:2px;
+    border:1px solid #e8e8e8;
+}
+.phone{
+    width:90%;
+    height:75%;
+    border-radius:2px;
+    border:1px solid #e8e8e8;
+}
+.company-name{
+    width:90%;
+    height:75%;
+    border-radius:2px;
+    border:1px solid #e8e8e8;
+}
+.button-tab{
+    width:10%;
+    height:9%;
+    margin-left:45%;
+    margin-top:3%
+}
+.button-tab button{
+    background-color: #33beff;
+    width:73%;
+    height:100%;
+    border:1px solid #33beff;
+    border-radius:5px;
+    color:#ffffff;
+    font-size:18px;
+}
+.below-water{
+    background-image: url('../img/below-water.png');
+    width: 100%;
+    height: 3%;
+    margin-top: 6%;
+    background-repeat: no-repeat;
+}

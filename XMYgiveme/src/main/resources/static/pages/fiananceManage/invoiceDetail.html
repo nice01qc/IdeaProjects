@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head lang="en">
+<meta charset="UTF-8">
+<title>发票信息</title>
+<link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/assets/scripts/fancyBox/jquery.fancybox.css">
+<link rel="stylesheet" type="text/css" href="/assets/scripts/fakeLoader/fakeLoader.css" />
+<link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css" />
+<link href="/resources/css/launch.css" rel="stylesheet" type="text/css" />
+<link href="/resources/css/invoice.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+label {
+	font-weight: normal;
+}
+
+.col-xs-5ths, .col-sm-5ths, .col-md-5ths, .col-lg-5ths {
+	position: relative;
+	min-height: 1px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+@media ( min-width : 768px) {
+	.col-sm-5ths {
+		width: 20%;
+		float: left;
+	}
+}
+
+@media ( min-width : 992px) {
+	.col-md-5ths {
+		width: 20%;
+		float: left;
+	}
+}
+
+@media ( min-width : 1200px) {
+	.col-lg-5ths {
+		width: 20%;
+		float: left;
+	}
+}
+</style>
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/fancyBox/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/assets/scripts/fakeLoader/fakeLoader.js"></script>
+<script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+<script type="text/javascript" src="/resources/js/web-common.js"></script>
+<script type="text/javascript" src="/resources/js/finance/invoiceDetail.js"></script>
+</head>
+<body>
+	<div class="net_container">
+		<!--顶部logo start-->
+		<div class="net_header">
+			<img src="/assets/images/crm-logo.png" />
+		</div>
+		<!--顶部logo end-->
+		<!--顶部menu start-->
+		<!--<div class="menu">This is the Menu</div>-->
+		<!--顶部menu end-->
+		<!--内容部分 start-->
+		<div class="net_mainContent">
+			<!--左侧导航 start-->
+			<div class="net_sidebar" style="margin-left: -1px;">
+				<ul class="mtree transit" id="mtree">
+				</ul>
+			</div>
+			<!--左侧导航 end-->
+			<!--主要内容 start-->
+			<div class="content_bg">
+				<div class="fakeloader"></div>
+				<div class="net_content">
+					<div class="content_t">
+						<div class="content_t_l"></div>
+						<div class="content_t_r">
+							财务库 > 发票详情
+							<button type="button" style="margin-left: 20px;" id="confirmInvoice">确认发票内容</button>
+							<button type="button" style="margin-left: 20px;" id="expressInvoice">寄出发票</button>
+						</div>
+					</div>
+				</div>
+				<div class="content_m">
+					<!--第一部分-->
+					<div class="content_m_info form-inline" style="float: none; width: auto;">
+						<div class="module">
+							<div class="module_res">发票类型&nbsp;</div>
+							<div class="module_c">
+								<span id="invoiceCategory"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module">
+							<div class="module_res">发票内容&nbsp;</div>
+							<div class="module_c">
+								<span id="invoiceContent"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module">
+							<div class="module_res">申请金额&nbsp;</div>
+							<div class="module_c">
+								<span id="rechargeInfo_proceedsAmount"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" style="width: 650px;">
+							<div class="module_res">收货信息&nbsp;</div>
+							<div class="module_c">
+								<div style="clear: both;">
+									<div>
+										<div style="float: left;">
+											<label for="consigneeName" style="width: 80px;">姓名</label>
+										</div>
+										<div style="float: left;">
+											<p id="consigneeName" style="width: 120px;"></p>
+										</div>
+										<div style="float: left;">
+											<div style="float: left;">
+												<label for="consigneeTel" style="width: 80px;"> &nbsp;&nbsp;联系方式</label>
+											</div>
+											<div style="float: left;">
+												<p id="consigneeTel" style="width: 150px;"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div style="float: left;">
+											<label for="consigneeAddress" style="width: 83px;">收货地址</label>
+										</div>
+										<div style="float: left;">
+											<p id="consigneeAddress" style="width: 350px;"></p>
+										</div>
+									</div>
+									<div>
+										<div style="float: left;">
+											<label for="expressCompanyName" style="width: 83px;">快递公司</label>
+										</div>
+										<div style="float: left;">
+											<p id="expressCompanyName" style="width: 350px;"></p>
+										</div>
+									</div>
+									<div>
+										<div style="float: left;">
+											<label for="expressNumber" style="width: 83px;">快递单号</label>
+										</div>
+										<div style="float: left;">
+											<p id="expressNumber" style="width: 350px;"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" style="width: 650px;">
+							<div class="module_res">公司资料&nbsp;</div>
+							<div class="module_c">
+								<div style="clear: both;">
+									<div>
+										<div style="float: left;">
+											<label for="companyName" style="width: 83px;">公司名称</label>
+										</div>
+										<div style="float: left;">
+											<p id="companyName" style="width: 350px;"></p>
+										</div>
+									</div>
+
+									<div>
+										<div style="float: left;">
+											<label for="taxpayerNumber" style="width: 83px;">纳税人编号</label>
+										</div>
+										<div style="float: left;">
+											<p id="taxpayerNumber" style="width: 350px;"></p>
+										</div>
+									</div>
+
+									<div>
+										<div style="float: left;">
+											<label for="companyAddress" style="width: 83px;">公司地址</label>
+										</div>
+										<div style="float: left;">
+											<p id="companyAddress" style="width: 350px;"></p>
+										</div>
+									</div>
+
+									<div>
+										<div style="float: left;">
+											<label for="companyTel" style="width: 83px;">电话</label>
+										</div>
+										<div style="float: left;">
+											<p id="companyTel" style="width: 350px;"></p>
+										</div>
+									</div>
+
+									<div>
+										<div style="float: left;">
+											<label for="bankName" style="width: 83px;">开户行</label>
+										</div>
+										<div style="float: left;">
+											<p id="bankName" style="width: 350px;"></p>
+										</div>
+									</div>
+
+									<div>
+										<div style="float: left;">
+											<label for="bankAccount" style="width: 83px;">银行账号</label>
+										</div>
+										<div style="float: left;">
+											<p id="bankAccount" style="width: 350px;"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module">
+							<div class="module_res">&nbsp;</div>
+							<div class="module_c">
+								<div class="row" style="width: 800px; clear: left;">
+									<div class="col-lg-5ths col-sm-5ths">
+										<a class="fancybox" rel="gallery1" style="cursor: pointer;"> <img id="businessLicenseId"
+											class="img-thumbnail" alt="营业执照" />
+										</a>
+									</div>
+									<div class="col-md-5ths col-sm-5ths">
+										<a class="fancybox" rel="gallery1" style="cursor: pointer;"> <img id="organizationCodeCertificateId"
+											class="img-thumbnail" alt="组织机构代码证" />
+										</a>
+									</div>
+									<div class="col-md-5ths col-sm-5ths">
+										<a class="fancybox" rel="gallery1" style="cursor: pointer;"> <img id="taxRegistrationCertificateId"
+											class="img-thumbnail" alt="税务登记证" />
+										</a>
+									</div>
+									<div class="col-md-5ths col-sm-5ths">
+										<a class="fancybox" rel="gallery1" style="cursor: pointer;"> <img id="bankAccountsPermitsId"
+											class="img-thumbnail" alt="银行开户许可证" />
+										</a>
+									</div>
+									<div class="col-md-5ths col-sm-5ths">
+										<a class="fancybox" rel="gallery1" style="cursor: pointer;"> <img id="generalTaxpayerQualificationId"
+											class="img-thumbnail" alt="一般纳税人资格证" />
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module">
+							<div class="module_c module_pos">
+								<button class="button_5" type="button" onclick="window.history.back()">返回</button>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+					</div>
+				</div>
+				<!--主要内容 end-->
+				<div class="clearfloat"></div>
+			</div>
+		</div>
+		<!--内容部分 end-->
+		<!--底部 start-->
+		<!--<div class="footer"></div>-->
+		<!--底部 end-->
+	</div>
+
+
+	<div class="modal fade" id="expressModal" tabindex="-1" role="dialog" aria-labelledby="expressModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">快递信息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" id="expressForm">
+						<div class="form-group">
+							<label for="expressCompanyName" class="col-sm-2 control-label">快递公司</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" size="40" maxlength="40"  id="expressCompanyNameWin" name="expressCompanyName" placeholder="请输入快递公司"><span
+									style='color: red'></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="expressNumber" class="col-sm-2 control-label">快递单号</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" size="40" maxlength="40" id="expressNumberWin" name="expressNumber" placeholder="请输入快递单号"><span
+									style='color: red'></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" id="invoiceId" name="invoiceId" />
+					<input type="hidden" id="rechargeId" name="rechargeId" />
+					<button type="button" class="btn btn-primary" onclick="completeExpress(event)">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

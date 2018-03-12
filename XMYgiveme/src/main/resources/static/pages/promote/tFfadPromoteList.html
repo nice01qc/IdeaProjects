@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>投放管理</title>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/date-time/bootstrap-datepicker3.css">
+    <link href="/assets/stylesheets/review.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/css/idea.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/log.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <link href="../../resources/css/pagination.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../resources/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="/resources/js/web-common.js"></script>
+    <style type="text/css">
+        .content_m_menu input {
+            height: 30px;
+            padding-left: 6px;
+            border-radius: 2px;
+        }
+
+        .content_m_menu select {
+            height: 30px;
+            padding-left: 6px;
+            border-radius: 2px;
+        }
+
+        .text-box:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 5px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 5px rgba(102, 175, 233, .6);
+        }
+    </style>
+</head>
+
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"><img src="/assets/images/crm-logo.png"/></div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="account-info">
+                    <div class="account-info-border"></div>
+                    <div class="account-info-font" style="margin-left:8px;">投放管理</div>
+                </div>
+                <div class="content_m">
+                    <form id="query">
+                        <div class="content_m_menu form-inline" style="margin-top: 20px;">
+                            <div class="f_left  m_left_10">
+                                <label for="promoteName">投放名称&nbsp;</label>
+                                <input type="text" id="promoteName" name="promoteName" style="width: 200px;"
+                                       class="input_1 form-control " placeholder="投放名称">
+                            </div>
+                            <div class="f_left  m_left_10">
+                                <label for="promoteId">投放ID&nbsp;&nbsp;</label>
+                                <input type="number"
+                                       onkeyup="this.value=this.value.replace(/^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$/,'')"
+                                       id="promoteId" name="promoteId" style="width: 200px;" class="input_1 form-control "
+                                       placeholder="投放ID">
+                            </div>
+                            <div class="f_left  m_left_10">
+                                <label for="status">执行状态&nbsp;</label>
+                                <select id="status" name="status" class="form-control select_1" style="width: 100px;">
+                                    <option value="1">有效</option>
+                                    <option value="0">停止</option>
+                                    <option value="2">过期</option>
+                                </select>
+                            </div>
+                            <div class="f_left  m_left_10">
+                                <label for="onShelf">上下架状态&nbsp;</label>
+                                <select id="onShelf" name="onShelf" class="form-control select_1" style="width: 100px;">
+                                    <option value="0">上架</option>
+                                    <option value="1">下架</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="content_m_menu form-inline">
+                            <div class="f_left  m_left_10" style="padding-top: 10px;">
+                                <label for="createDate">创建时间&nbsp;</label>
+                                <input type="text" id="createDate" name="createDate" data-date-format="yyyy-mm-dd"
+                                       readonly="readonly" style="width: 200px;" class="form-control date-picker input_2"
+                                       placeholder="创建时间">
+                            </div>
+                            <div class="f_left  m_left_10" style="padding-top: 10px;">
+                                <label for="startTime"> 投放时间&nbsp;</label><input type="text" data-date-format="yyyy-mm-dd"
+                                                                                 readonly="readonly" id="startTime"
+                                                                                 name="startTime"
+                                                                                 class="form-control date-picker input_2"
+                                                                                 placeholder="开始日期"
+                                                                                 style="width: 150px;"> <label
+                                    for="endTime">&nbsp;&nbsp;-&nbsp;&nbsp;</label><input type="text"
+                                                                                          id="endTime" name="endTime"
+                                                                                          class="form-control date-picker input_2"
+                                                                                          data-date-format="yyyy-mm-dd"
+                                                                                          readonly="readonly"
+                                                                                          style="width: 150px;"
+                                                                                          placeholder="结束日期">
+                            </div>
+                        </div>
+                        <div class="content_m_menu form-inline">
+                            <div class="f_left  m_left_10" style="padding-top: 10px;">
+                                <label for="creationId">&nbsp;使用创意ID&nbsp;</label>
+                                <input type="number"
+                                       onkeyup="this.value=this.value.replace(/^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$/,'')"
+                                       id="creationId" name="creationId" style="width: 200px;" class="input_1 form-control "
+                                       placeholder="使用创意ID">
+                            </div>
+                            <div class="f_left  m_left_10" style="padding-top: 10px;">
+                                <label for="creationName">使用创意名称&nbsp;</label>
+                                <input type="text" id="creationName" name="creationName" style="width: 200px;"
+                                       class="input_1 form-control " placeholder="使用创意名称">
+                            </div>
+                            <div class="f_left  m_left_10" style="padding-top: 10px;">
+                                <button type="button" id="queryButton" style="color:#ffffff;height:30px;">查询</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div style="clear: both;">
+                        <div style="width:100%; height:22px; margin-top:10px; margin-bottom:10px;margin-left: 17px;">
+                        </div>
+                    </div>
+                    <table border="1" cellspacing="0" class="table-style-roll">
+                        <thead>
+                        <tr class="tr-a">
+                            <td class="td-a">投放ID</td>
+                            <td class="td-a">投放名称</td>
+                            <td class="td-a">结算方式</td>
+                            <td class="td-a">创建时间</td>
+                            <td class="td-b">投放时间</td>
+                            <td class="td-a">使用创意ID</td>
+                            <td class="td-a">使用创意名称</td>
+                            <td class="td-a">执行状态</td>
+                            <td class="td-a">上下架</td>
+                            <td class="td-a">详细信息</td>
+                        </tr>
+                        </thead>
+                        <tbody id="listTableBody"></tbody>
+                    </table>
+                    <div id="Pagination" class="pagination">
+                        <div class="pre-page"><i class="glyphicon glyphicon-triangle-left"></i></div>
+                        <div class="page-info">0 / 0</div>
+                        <div class="next-page"><i class="glyphicon glyphicon-triangle-right"></i></div>
+                        <div id='pageNumDiv'>
+                            <input type='text' placeholder="页码" class='text-box' id='current_page' value=''/>
+                            <button class='button-next' id='pageNumClick'>跳转</button>
+                        </div>
+                    </div>
+                </div>
+                <!--主要内容 end-->
+                <div class="clearfloat"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--内容部分 end-->
+<!--底部 start-->
+<!--<div class="footer"></div>-->
+<!--底部 end-->
+<script>
+    var items_per_page = 20;
+    var current_page = 1;
+    var pageTotal = 0;
+    $(document).ready(function () {
+
+        getDataList();
+
+        //跳转
+        $("#pageNumClick").click(function () {
+            var goToPageNumStr = $("#current_page").val();
+            $("#current_page").val("");
+            if (goToPageNumStr != '' && !isNaN(goToPageNumStr)) {
+                var goToPageNum = parseInt(goToPageNumStr);
+                if (goToPageNum <= 0) {
+                    goToPageNum = 1;
+                } else if (goToPageNum > pageTotal) {
+                    goToPageNum = pageTotal;
+                }
+                //判断是否跳转到当前页
+                if (goToPageNum == current_page) {
+                    return false;
+                } else {
+                    current_page = goToPageNum;
+                    scrollToTableHead();
+                    getDataList();
+                }
+            }
+        });
+        //下一页
+        $(".next-page").click(function () {
+            if (current_page + 1 <= pageTotal) {
+                current_page = current_page + 1;
+                scrollToTableHead();
+                getDataList();
+            }
+        });
+        //上一页
+        $(".pre-page").click(function () {
+            if (current_page - 1 > 0) {
+                current_page = current_page - 1;
+                scrollToTableHead();
+                getDataList();
+            }
+        });
+        //查询
+        $("button#queryButton").click(function () {
+            if (Date.parse($('#startTime').val()) > Date.parse($('#endTime').val())) {
+                alert("开始时间不能大于结束时间。");
+                return false;
+            }
+            current_page = 1;
+            getDataList();
+        });
+
+        $(function () {
+            $(".date-picker").datepicker({
+                language: "zh-CN",
+                autoclose: true,
+                todayHighlight: true,
+                clearBtn: true
+            });
+
+            $("#startTime").datepicker().on("changeDate", function (e) {
+                $("#endTime").datepicker("setStartDate", $("#startTime").datepicker("getDate"));
+            });
+
+            $("#endTime").datepicker().on("changeDate", function (e) {
+                $("#startTime").datepicker("setEndDate", $("#endTime").datepicker("getDate"));
+            });
+
+        });
+
+    });
+
+    function Details(promoteId) {
+        window.location.href = "/pages/promote/pos_delivery_rtp.html?promoteId=" + promoteId;
+    }
+
+    function getDataList() {
+        $.ajax({
+            type: "post",
+            url: "/promote/list",
+            data: {
+                'promoteName': $('#promoteName').val(), 'promoteId': $('#promoteId').val(),
+                'status': $('#status').val(), 'onShelf': $('#onShelf').val(), 'creationId': $('#creationId').val(),
+                'creationName': $('#creationName').val(), 'endTime': $('#endTime').val(), 'startTime': $('#startTime').val(),
+                'createDate': $('#createDate').val(), 'pageNo': current_page, 'pageSize': items_per_page
+            },
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            success: function (result) {
+                writeTable(result);
+                updatePageBtnStatus();
+            }
+        });
+    }
+
+
+    function OnShelf(promoteId, onShelf, promoteName) {
+        $.ajax({
+            type: "post",
+            url: "/promote/update",
+            data: {'promoteId': promoteId, 'onShelf': onShelf, 'promoteName': promoteName},
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            success: function (rs) {
+                if (rs.status == 200) {
+                } else {
+                    alert(rs.message);
+                }
+                getDataList();
+            }
+        });
+    }
+
+    function writeTable(data) {
+        var html = "";
+        var shelf = 0;
+        $.each(data.rows, function (i, n) {
+            if (data.rows[i].onShelf == 0) {
+                data.rows[i].onShelf = "下架";
+                shelf = 0;
+            } else {
+                data.rows[i].onShelf = "上架";
+                shelf = 1;
+            }
+            if (data.rows[i].status == 0) {
+                data.rows[i].status = "停止";
+            } else if (data.rows[i].status == 1) {
+                data.rows[i].status = "有效";
+            } else {
+                data.rows[i].status = "过期";
+            }
+            if (data.rows[i].settleType == 0) {
+                data.rows[i].settleType = "CPM";
+            } else if (data.rows[i].settleType == 1) {
+                data.rows[i].settleType = "CPC";
+            } else {
+                data.rows[i].settleType = "独占";
+            }
+            var redButton = "";
+            var blueButton = "";
+            if (data.rows[i].onShelf == "上架" && data.rows[i].status != "过期") {
+                redButton = "<br><button class='button_operation_red'>已下架</button>";
+            } else {
+                redButton = "";
+            }
+            if (data.rows[i].comment == null)data.rows[i].comment = "";
+            if (i % 2 == 0) {
+                html += '<tr class="tr-b">';
+            } else {
+                html += '<tr class="tr-a">';
+            }
+            var timePeriod = "";
+            var startTimeArr = data.rows[i].startTime.split(",");
+            var endTimeArr = data.rows[i].endTime.split(",");
+            for (var j = 0; j < startTimeArr.length; j++) {
+                timePeriod += returnDate(startTimeArr[j], 0) + "至<br/>" + returnDate(endTimeArr[j], 0) + "<br/>"
+            }
+            html += "<td class='td-a'>" + data.rows[i].promoteId +
+                    "</td><td class='td-a'>" + data.rows[i].promoteName +
+                    "</td><td class='td-a'>" + data.rows[i].settleType +
+                    "</td><td class='td-a'>" + returnDate(data.rows[i].createTime, 1) +
+                    "</td><td class='td-a'>" + timePeriod +
+                    "</td><td class='td-a'>" + data.rows[i].creationId +
+                    "</td><td class='td-b'>" + data.rows[i].creationName +
+                    "</td><td class='td-a'>" + data.rows[i].status + redButton +
+                    "</td><td class='td-a'>";
+            if (data.rows[i].status != "过期")
+                html += '<button class="button_operation_blue"   onclick="OnShelf(' + data.rows[i].promoteId + ',' + shelf + ',\'' + data.rows[i].promoteName + '\')">' + data.rows[i].onShelf + '</button>';
+            html += "</td><td class='td-a'>" + '<button class="button_operation_blue" onclick="Details(' + data.rows[i].promoteId + ')">详情</button>';
+            html += "</td></tr>";
+        });
+        if (html == '') {
+            html = '<tr class="tr-b" ><td  class="td-a" colspan =10>没有找到匹配的记录</td></tr>'
+            $("#Pagination").hide();
+        } else {
+            $("#Pagination").show();
+        }
+        $('#listTableBody').html(html);
+        if (data.total == 0) {
+            $('.page-info').text('0 / 0');
+        } else {
+            pageTotal = Math.ceil(data.total / items_per_page);
+            $('.page-info').text(current_page + ' / ' + pageTotal);
+        }
+        $("#current_page").val('');
+    }
+
+    function returnDate(date, number) {
+        var datestr = new Date(date);
+        var month = datestr.getMonth() + 1 < 10 ? "0" + (datestr.getMonth() + 1) : datestr.getMonth() + 1;
+        var day = datestr.getDate() < 10 ? "0" + datestr.getDate() : datestr.getDate();
+        var hours = datestr.getHours() < 10 ? "0" + datestr.getHours() : datestr.getHours();
+        var minutes = datestr.getMinutes() < 10 ? "0" + datestr.getMinutes() : datestr.getMinutes();
+        var seconds = datestr.getSeconds() < 10 ? "0" + datestr.getSeconds() : datestr.getSeconds();
+        if (number == 0) {
+            return datestr.getFullYear() + '-' + month + '-' + day;
+        } else {
+            return datestr.getFullYear() + '-' + month + '-' + day + " " + hours + ":" + minutes;
+        }
+    }
+
+    /**
+     * 更新翻页按钮状态
+     * @returns
+     */
+    function updatePageBtnStatus() {
+        $(".pagination .next-page").removeClass("unused");
+        $(".pagination .pre-page").removeClass("unused");
+        if (current_page == pageTotal) {
+            $(".pagination .next-page").addClass("unused");
+        }
+        if (current_page == 1) {
+            $(".pagination .pre-page").addClass("unused");
+        }
+    }
+</script>
+</body>
+</html>

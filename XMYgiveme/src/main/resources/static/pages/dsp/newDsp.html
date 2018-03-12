@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="/assets/stylesheets/log.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css" />
+    <link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stylesheets/idea.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+    <script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="/assets/scripts/MD5.js"></script>
+    <script type="text/javascript" src="/resources/js/web-common.js"></script>
+    <style rel="stylesheet" type="text/css">
+        .content_m_info .module .module_l {
+            width: 190px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+<div class="net_container" id="containerdiv">
+    <!--顶部logo start-->
+    <div class="net_header">
+        <img src="/assets/images/crm-logo.png" />
+    </div>
+    <!--顶部logo end-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="account-info">
+                    <div class="account-info-border" style="margin-left: -2px;"></div>
+                    <div class="account-info-font" id="dsp-title"></div>
+                </div>
+                <div class="net_content">
+                    <div class="content_m">
+                        <div id="dsp-form" class="content_m_info" style="margin-left: -21px;width:100%;">
+                            <div class="module">
+                                <div class="module_l"><span style="color: red;">*</span>DSP名称：</div>
+                                <div class="module_c">
+                                    <input type="text" data-pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{1,20}$"
+                                           class="form-control" style="width: 350px;" name="name" placeholder="DSP名称(必填)">
+                                </div>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">输入1-20位的汉字、字母或数字</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l"><span style="color: red;">*</span>接入方式：</div>
+                                <div class="module_c">
+                                    <select name="accessMode" class="form-control" required="required">
+                                        <option value="">请选择</option>
+                                        <option value="0">向对方获取广告</option>
+                                        <option value="1">实时竞价</option>
+                                    </select>
+                                </div>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">请选择接入方式</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l">appkey/appid/accountid：</div>
+                                <div class="module_c">
+                                    <input type="text" class="form-control" data-pattern="^\S{0,255}$" style="width: 350px;"
+                                           name="appkey" placeholder="填写对方给飞凡分配的appkey、appid等(非必填)">
+                                </div>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">请填写最多255位不含空格、制表符等的密钥</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l">appsecret/token：</div>
+                                <div class="module_c">
+                                    <input type="text" class="form-control" data-pattern="^\S{0,255}$" style="width: 350px;"
+                                           name="appsecret" placeholder="填写对方给飞凡分配的appsecret、token等(非必填)">
+                                </div>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">请填写最多255位不含空格、制表符等的密钥</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l">协议CPM：</div>
+                                <div class="module_c">
+                                    <input type="text" class="form-control" data-pattern="^\d*(\.(\d){2})?$" style="width: 240px;"
+                                           name="cpm" placeholder="合同规定的CPM结算价格(非必填)">
+                                </div>
+                                <span style="margin-left: 10px;">/ 千次曝光</span>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">请填写整数或含两位小数</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l">审核状态feedback地址：</div>
+                                <div class="module_c">
+                                    <input type="text" maxlength="200" class="form-control" data-pattern="^(https?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?)?$"
+                                           style="width: 350px" name="feedbackUrl" placeholder="填写对方接受状态更新通知的地址(非必填)">
+                                </div>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">请填写http或https开头的最长200的汉字、字母或数字</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l"><span style="color: red;">*</span>创意事前审核：</div>
+                                <div class="module_c">
+                                    <select name="creationReview" class="form-control" required="required">
+                                        <option value="">请选择</option>
+                                        <option value="Y">是</option>
+                                        <option value="N">否</option>
+                                    </select>
+                                </div>
+                                <span style="margin-left: 20px;" class="tip hide text-danger">请选择是否事前审核</span>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="clearfloat"></div>
+                        </div>
+                        <div class="clearfloat"></div>
+                        <button class="button_22" type="button" id="submit-btn" style="margin: 40px auto auto 190px;"></button>
+                    </div>
+                </div>
+            </div>
+            <!--主要内容 end-->
+            <div class="clearfloat"></div>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <!--底部 start-->
+    <!--<div class="footer"></div>-->
+    <!--底部 end-->
+    <script type="text/javascript" src="/resources/js/dsp/addDsp.js"></script>
+</div>
+</body>
+</html>

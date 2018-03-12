@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.wanda.ffanad.crm.mappers.ext.TFfanadAdxDspEntityMapperExt">
+	<!--查询该dsp名称的数量 -->
+	<select id="getDspNameCount" resultType="java.lang.Integer">
+		select
+		count(1) as 'count'
+		from
+		t_ffanad_adx_dsp tfad
+		where
+		tfad.name=#{name,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 新增adxdsp -->
+	<insert id="insertAdxDsp" parameterType="com.wanda.ffanad.base.dal.entities.TFfanadAdxDspEntity">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="tad.id">
+	          SELECT LAST_INSERT_ID() AS id
+	    </selectKey>
+		insert into
+		t_ffanad_adx_dsp
+		(
+			name,
+			alias,
+			access_mode,
+			appkey,
+			appsecret,
+			cpm,
+			feedback_url,
+			creation_review,
+			status,
+			ffan_adx_appkey,
+			ffan_adx_appsecret,
+			creater_id,
+			creater_name,
+			updater_id,
+			updater_name,
+			create_time,
+			update_time,
+			is_deleted,
+			comments
+		)
+		values
+		(
+			 #{tad.name,jdbcType=VARCHAR}, 
+			 #{tad.alias,jdbcType=VARCHAR}, 
+			 #{tad.accessMode,jdbcType=TINYINT},
+			 #{tad.appkey,jdbcType=VARCHAR},
+			 #{tad.appsecret,jdbcType=VARCHAR},
+			 #{tad.cpm,jdbcType=BIGINT},
+			 #{tad.feedbackUrl,jdbcType=VARCHAR},
+			 #{tad.creationReview,jdbcType=CHAR},
+			 #{tad.status,jdbcType=CHAR},
+			 #{tad.ffanAdxAppkey,jdbcType=VARCHAR},
+			 #{tad.ffanAdxAppsecret,jdbcType=VARCHAR},
+			 #{tad.createrId,jdbcType=BIGINT},
+			 #{tad.createrName,jdbcType=VARCHAR},
+			 #{tad.updaterId,jdbcType=BIGINT},
+			 #{tad.updaterName,jdbcType=VARCHAR},
+			 #{tad.createTime,jdbcType=TIMESTAMP},
+			 #{tad.updateTime,jdbcType=TIMESTAMP},
+			 #{tad.isDeleted,jdbcType=CHAR},
+			 null
+		) 
+	</insert>
+	
+	<!-- dsp列表页where条件 -->
+ 	<sql id="DspPageCondition">
+ 			<if test="adpv.dspName != null and adpv.dspName!=&quot;&quot;">
+				and tfad.name
+				like CONCAT('%',#{adpv.dspName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="adpv.accessMode != null and adpv.accessMode!=&quot;&quot;">
+				and tfad.access_mode = #{adpv.accessMode,jdbcType=TINYINT}
+			</if>
+			<if test="adpv.status != null and adpv.status!=&quot;&quot;">
+				and tfad.status = #{adpv.status,jdbcType=TINYINT}
+			</if>
+ 	</sql>
+	<!--查询列表页参数下的dsp总数-->
+	<select id="getTotalCountDspPage" resultType="java.lang.Integer">
+		select 
+			count(1) as 'count'
+		from 
+			t_ffanad_adx_dsp tfad
+		where
+			1=1
+			<include refid="DspPageCondition" />
+	</select>
+	
+	<!--查询列表页参数下的dsp列表-->
+	<select id="getDspPageList" resultType="com.wanda.ffanad.crm.dto.resp.AdxDspListResVo">
+		select 
+			tfad.id			as 'id',
+			tfad.name 		as 'name',
+			tfad.ffan_adx_appkey	as 'dspId',
+			tfad.ffan_adx_appsecret	as 'token',
+			tfad.access_mode		as 'accessMode',
+			tfad.cpm				as 'cpm',
+			tfad.creation_review	as 'creationReview',
+			tfad.status		as 'status'
+		from 
+			t_ffanad_adx_dsp tfad
+		where
+			1=1
+			<include refid="DspPageCondition" />
+			order by tfad.create_time desc
+			limit
+			#{adpv.pageStartNo,jdbcType=INTEGER},#{adpv.limit,jdbcType=INTEGER}
+	</select>
+
+	<!--根据上传的参数，查询符合条件的待更新数据数量,暂未使用-->
+	<select id="getModifyDspCount" resultType="java.lang.Integer">
+		select 
+			count(1) as 'count'
+		from 
+			t_ffanad_adx_dsp tfad
+		where
+			tfad.id=#{adpv.id,jdbcType=BIGINT}
+			and
+			tfad.appkey=#{adpv.appkey,jdbcType=VARCHAR}
+			and
+			tfad.appsecret=#{adpv.appsecret,jdbcType=VARCHAR}	
+	</select>
+	
+	<!-- 更新dsp-->
+	<update id="modifyDsp">
+		update
+			t_ffanad_adx_dsp tfad
+		set
+			tfad.name=#{tad.name,jdbcType=VARCHAR},
+			tfad.appkey=#{tad.appkey,jdbcType=VARCHAR},
+			tfad.appsecret=#{tad.appsecret,jdbcType=VARCHAR},
+			tfad.access_mode=#{tad.accessMode,jdbcType=TINYINT},
+			tfad.cpm= #{tad.cpm,jdbcType=BIGINT},
+			tfad.feedback_url=#{tad.feedbackUrl,jdbcType=VARCHAR},
+			tfad.creation_review=#{tad.creationReview,jdbcType=CHAR},
+			tfad.updater_id=#{tad.updaterId,jdbcType=BIGINT},
+			tfad.updater_name=#{tad.updaterName,jdbcType=VARCHAR},
+		    tfad.update_time=#{tad.updateTime,jdbcType=TIMESTAMP}
+		where
+			tfad.id=#{tad.id,jdbcType=BIGINT}	
+	 </update>
+	 
+	 <!-- 更新dsp停用启用-->
+	<update id="updateDspStatus">
+		update
+			t_ffanad_adx_dsp tfad
+		set
+			tfad.status=#{tad.status,jdbcType=CHAR},
+			tfad.updater_id=#{tad.updaterId,jdbcType=BIGINT},
+			tfad.updater_name=#{tad.updaterName,jdbcType=VARCHAR},
+		    tfad.update_time=#{tad.updateTime,jdbcType=TIMESTAMP}
+		where
+			tfad.id=#{tad.id,jdbcType=BIGINT}
+	 </update>
+	 
+	 <!--获取所有的dsp名称-->
+	<select id="getAllDsp" resultType="java.lang.String">
+		select 
+			name		
+		from 
+			t_ffanad_adx_dsp
+			order by name
+	</select>
+	
+	<!-- 更新dsptoken-->
+	<update id="updateDspToken">
+		update
+			t_ffanad_adx_dsp tfad
+		set
+			tfad.ffan_adx_appsecret=#{tad.ffanAdxAppsecret,jdbcType=VARCHAR},
+			tfad.updater_id=#{tad.updaterId,jdbcType=BIGINT},
+			tfad.updater_name=#{tad.updaterName,jdbcType=VARCHAR},
+		    tfad.update_time=#{tad.updateTime,jdbcType=TIMESTAMP}
+		where
+			tfad.id=#{tad.id,jdbcType=BIGINT}
+	 </update>
+	 
+	 <!--根据dspID获取dsp-->
+	<select id="getDspById" resultType="com.wanda.ffanad.crm.dto.resp.AdxDspDetailResVo">
+		select 
+			tfad.id			as 'id',
+			tfad.name 		as 'name',
+			tfad.ffan_adx_appkey	as 'dspId',
+			tfad.ffan_adx_appsecret	as 'token',
+			tfad.access_mode		as 'accessMode',
+			tfad.cpm				as 'cpm',
+			tfad.creation_review	as 'creationReview',
+			tfad.status				as 'status',
+			tfad.appkey				as 'appkey',
+			tfad.appsecret			as 'appsecret',
+			tfad.feedback_url		as 'feedbackUrl'
+		from 
+			t_ffanad_adx_dsp tfad
+		where
+			tfad.id=#{adsv.id,jdbcType=BIGINT}
+	</select>
+</mapper>

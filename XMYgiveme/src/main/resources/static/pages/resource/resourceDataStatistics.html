@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>资源数据统计</title>
+    <link href="/assets/CRM/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/CRM/css/log.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/CRM/css/idea.css" rel="stylesheet" type="text/css" /> 
+    <link href="/assets/CRM/css/resource.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/createLib.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/accountInfoUpdate.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/main.css" />
+   	<link rel="stylesheet" href="/assets/scripts/bootstrap-table/bootstrap-table.css"  type="text/css" />
+    <link rel="stylesheet" href="/assets/scripts/bootstrap/css/bootstrap.min.css"  type="text/css" /> 
+    <link rel="stylesheet" type="text/css" href="/resources/css/dataCenter.css" />
+</head>
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"></div>  
+    <div class="net_mainContent">
+     <!--左侧导航 start-->
+		<div class="net_sidebar">
+			<ul class="mtree transit" id="mtree" style="opacity: 1;">
+			</ul>
+		</div>
+		
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="content_t"><div class="content_t_l"></div><div class="content_t_r">资源数据统计</div></div>
+            		<input type="button" id="returnList"  value="返回列表" style="margin-left:90%;background-color:#00b7ff;border:none; color:#fff; padding:5px 10px;border-radius: 3px;">
+            </div>
+            <div class="tab_dataCenter" style="margin: -37px 16px 0px 16px;">
+	            <ul class="nav nav-pills nav-justified tab_border" id="secondTitle">
+	            <li role="presentation" value="" class="active tab_page"><a href="#" style="border-radius:3px 3px 0 0">用户</a></li>
+			
+				</ul>
+            </div>
+            <div class="wire_blue"></div>
+            <div class="tab_dataCenter_sublevel">
+            	
+            	<div class="tab_title_right_time"><span id="beginDate"></span> 至 <span id="endDate"></span></div>
+				 <div class="dropdown">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						日期
+						<span class="caret"></span>
+					  </button>
+					  <ul id="timeDropList" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li class="active" value="-3"><a href="#">最近3天</a></li>
+						<li value="-7"><a href="#">最近7天</a></li>
+						<li value="-30"><a href="#">最近30天</a></li>
+						<li value="-90"><a href="#">最近90天</a></li>
+						<li value="-180"><a href="#">最近半年</a></li>
+					  </ul>
+				 </div>
+            </div>
+         
+	        <div class="BORDER-STY">
+	            <div class="MER-all">
+	                <table class="MER-table" cellpadding="0" >
+	                    <tr class="MERtr">
+	                        <td class="MER-td">请求</td>
+	                        <td class="MER-td">展示</td>
+	                        <td class="MER-td">点击</td>
+	                        <td class="MER-td">填充率</td>
+	                        <td class="MER-td">点击率</td>
+	                        <td class="MER-td">收入</td>
+	                    </tr>
+	                    <tr class="MER-tr-o">
+	                        <td class="MER-td-o" id="totalRequest"></td>
+	                        <td class="MER-td-o" id="totalDisplay"></td>
+	                        <td class="MER-td-o" id="totalClick"></td>
+	                        <td class="MER-td-o" id="totalFillRate"></td>
+	                        <td class="MER-td-o" id="totalClickRate"></td>
+	                        <td class="MER-td-o" id="totalAmount"></td>
+	                    </tr>
+	                </table>
+	            </div>
+	        </div>
+			<div class="greatUser">
+				<select id="displayfilter" onchange="displayFilterChanged(this.value)">
+					<option selected="selected" value="0">请求</option>
+					<option value="1">展示</option>
+					<option value="2">点击</option>
+					<option value="3">填充率</option>
+					<option value="4">点击率</option>
+					<option value="5">收入</option>
+				</select>
+			</div>
+			<div id="container" class="data_pic" ></div>
+		</div>
+	</div>
+</div>
+ <script src="/assets/scripts/jquery-2.2.3.min.js"></script>
+<script  src="/assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/scripts/bootstrap-table/bootstrap-table.js"></script>
+<script type="text/javascript" src="/resources/js/highcharts.js"></script>
+<script type="text/javascript" src="/resources/js/no-data-to-display.js"></script>
+<script type="text/javascript" src="/resources/js/web-common.js"></script>
+<script src="/resources/js/resource/resourcedata.js"></script>
+
+</body>
+</html>

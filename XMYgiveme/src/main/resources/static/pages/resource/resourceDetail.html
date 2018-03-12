@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>资源详情</title>
+    <link href="../../assets/CRM/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/resourse_detail.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../assets/scripts/mtree/css/mtree.css">
+    <script type="text/javascript" src="../../assets/scripts/jquery.js"></script>
+    <script src='../../assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="../../resources/js/web-common.js"></script>
+    <script type="text/javascript" src="resourceDetail.js"></script>
+    <style type="text/css">
+        table {
+            width: 1000px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- input  type="hidden"  id="resourceId"  value="1"/-->
+<input type="hidden" id="resourceId" value="${id}"/>
+
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"><img src="../../assets/CRM/img/crm-logo.png"/></div>
+    <!--顶部logo end-->
+    <!--顶部menu start-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="content_t">
+                    <div class="content_t_l"></div>
+                    <div class="content_t_r">资源详情</div>
+                    <div class="m_top_20">
+                        <button id="returnList">返回列表</button>
+                    </div>
+                </div>
+
+                <!--内容部分 start-->
+                <div class="content_m">
+                    <table border="0" cellspacing="1" cellpadding="0">
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">资源名称</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <div class="cont l_height_66">
+                                        <input class="input_1" type="text" id="resName" readonly="readonly"/>
+                                    </div>
+                                    <div class="cont m_left_10 l_height_66"></div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">资源位别名</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10" id="resNameAlias">
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="trOriginPlatform" style="display: none">
+                            <td>
+                                <span class="span_required_mark">&nbsp;</span>
+                                <span class="span_font_14">关联来源</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10" id="spOriginPlatform">
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="trOriginName" style="display: none">
+                            <td>
+                                <span class="span_required_mark">&nbsp;</span>
+                                <span class="span_font_14">关联名称</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10" id="spOriginName">
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="trOriginId" style="display: none">
+                            <td>
+                                <span class="span_required_mark">&nbsp;</span>
+                                <span class="span_font_14" id="related-no">关联序号</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10" id="spOriginId">
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">终端类型</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <input id="resApp" name="resAppType" type="radio" disabled/><label FOR="resApp"
+                                                                                                       style="margin-right: 10px">飞凡APP</label>
+                                    <input id="cbiOs" class="c_res_app" name="resAppIds" type="checkbox" value="1"
+                                           disabled/><label
+                                        for="cbiOs" style="margin-right: 5px">iOS</label>
+                                    <input id="cbAndroid" class="c_res_app" name="resAppIds" type="checkbox" value="2"
+                                           disabled/><label
+                                        for="cbAndroid" style="margin-right: 20px">安卓</label>
+                                    <input id="resMobile" name="resAppType" type="radio" disabled/><label
+                                        for="resMobile">M站</label>
+                                    <input class="c_res_mobile" name="resAppIds" type="checkbox" value="3" disabled
+                                           style="display: none"/>
+                                    <!--M站-->
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">支持出价</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10">
+                                    	<input type="radio" checked="true" value="0" disabled="disabled" name="resBidtype"/>RTB
+                                    </span>
+                                    <span class="m_right_10">
+                                    	<input type="radio" value="1" disabled="disabled" name="resBidtype"/>独占
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">地域定向方式</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10">
+                                    	<input type="radio" checked="true" value="2" disabled="disabled" name="resAreaOrient"/>按广场投放
+                                    </span>
+                                    <span class="m_right_10">
+                                    	<input type="radio" value="1" disabled="disabled" name="resAreaOrient"/>按城市投放
+                                    </span>
+                                    <span class="m_right_10">
+                                    	<input type="radio" value="3" disabled="disabled" name="resAreaOrient"/>按门店投放
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">图片规格：</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <div>
+                                        宽：<input class="input_2" type="text" id="resWidth" readonly="readonly"/>px&nbsp;
+                                        高：<input class="input_2" type="text" id="resLength" readonly="readonly"/>px
+                                        <span class="span_font_12 span_grey m_left_10">*&nbsp;物料图片要求严格遵守此规格，若无图片则不需要设置</span>
+                                    </div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">&nbsp;</span>
+                                <span class="span_font_14">所属频道</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <span class="m_right_10" id="channelName">
+                                    </span>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">轮播张数</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <div>
+                                        <input class="input_2" type="text" id="resCarouselNum" readonly="readonly"/>张
+                                    </div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">&nbsp;</span>
+                                <span class="span_font_14">竞业描述</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <div class="cont"><textarea class="textarea_1" id="resContent" readonly="readonly"></textarea>
+                                    </div>
+                                    <div class="cont m_left_10 l_height_111">0/300</div>
+                                    <div class="cont m_left_10 m_top_35">
+                                        <div><span class="span_font_12 span_grey">*&nbsp;字数限制：不超过300个汉字</span></div>
+                                        <div><span class="span_font_12 span_grey">*&nbsp;请详细描述资源位投放竟业行业和品牌</span></div>
+                                    </div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="span_required_mark">*</span>
+                                <span class="span_font_14">示意图</span>
+                            </td>
+                            <td>
+                                <div class="content_m_info">
+                                    <div class="m_top_20"><img class="upload_img" src="" id="resImgPath"/></div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<div class="content_b">-->
+                <!--<button class="button_on">返回</button>-->
+                <!--<button class="button_off m_left_30">提交</button>-->
+                <!--</div>-->
+                <!--内容部分 end-->
+            </div>
+            <!--主要内容 end-->
+            <div class="clearfloat"></div>
+            <br/>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <!--底部 start-->
+    <!--<div class="footer"></div>-->
+    <!--底部 end-->
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>添加频道</title>
+    <link href="../../assets/CRM/css/log.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/idea.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/resource.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/scripts/mtree/css/mtree.css" rel="stylesheet">
+    <link href="../../resources/css/pagination.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../assets/scripts/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../../assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src='../../assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+    <script type="text/javascript" src="../../assets/scripts/MD5.js"></script>
+    <script type="text/javascript" src="../../resources/js/web-common.js"></script>
+</head>
+<body>
+<div class="net_container" id="containerdiv">
+    <!--顶部logo start-->
+    <div class="net_header">
+        <img src="../../assets/images/crm-logo.png" />
+    </div>
+    <!--顶部logo end-->
+    <!--<div class="menu">This is the Menu</div>-->
+    <!--顶部menu end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="body-right">
+                <div class="account-info">
+                    <div class="account-info-border"></div>
+                    <div class="account-info-font">添加频道</div>
+                </div>
+                <div class="search-form-grid" style="padding: 30px;">
+                    <form role="form" class="form-inline" id="add-channel-form">
+                        <div class="form-group" style="margin-right: 40px;">
+                            <label for="channel-name-param">频道名称：</label>
+                            <input type="text" name="channelName" class="form-control" id="channel-name-param" maxlength="30">
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="add-channel-btn" disabled data-loading-text="处理中...">确认添加</button>
+                        </div>
+                    </form>
+                    <div id="channel-list-grid"></div>
+                    <div id="channel-list-pagination"></div>
+
+                    <button type="button" id="back-btn" data-loading-text="跳转中..." style="margin-top: 20px;">返回</button>
+                </div>
+                <!--主要内容 end-->
+                <div class="clearfloat"></div>
+            </div>
+        </div>
+    </div>
+    <!--内容部分 end-->
+    <script type="text/javascript" src="../../resources/js/table-with-search-component.js"></script>
+    <script type="text/javascript" src="./addChannel.js"></script>
+</div>
+</body>
+</html>

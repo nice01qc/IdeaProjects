@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新建用户</title>
+<link href="/assets/stylesheets/log.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css" />
+<link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="/assets/stylesheets/idea.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+<script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+
+<script type="text/javascript" src="/resources/js/user/addUser.js"></script>
+<script type="text/javascript" src="/assets/scripts/MD5.js"></script>
+<script type="text/javascript" src="/resources/js/web-common.js"></script>
+</head>
+
+<body>
+	<div class="net_container" id="containerdiv">
+		<!--顶部logo start-->
+		<div class="net_header">
+			<img src="/assets/images/crm-logo.png" />
+		</div>
+		<!--顶部logo end-->
+		<!--<div class="menu">This is the Menu</div>-->
+		<!--顶部menu end-->
+		<!--内容部分 start-->
+		<div class="net_mainContent">
+			<!--左侧导航 start-->
+			<div class="net_sidebar">
+				<ul class="mtree transit" id="mtree">
+				</ul>
+			</div>
+			<!--左侧导航 end-->
+			<!--主要内容 start-->
+			<div class="content_bg">
+				<div class="net_content">
+					<div class="account-info" >
+	                    <div class="account-info-border" ></div>
+	                    <div class="account-info-font" >新建用户</div>
+	                </div>
+				</div>
+				<div class="content_m" style="margin:7px;">
+					<div class="content_m_info" style="float: none">
+						<div class="module">
+							<div class="module_l">用户类型</div>
+							<div class="module_c">
+								<form method=post action="" name="form1" class="form-inline">
+									<select name="usertype" id="usertype" class="select_1 form-control">
+									</select> <select name="role" id="role" class="select_1 form-control">
+									</select>
+								</FORM>
+							</div>
+							<span id="usertt" style="color: red;margin-left: 5px;"></span> <span id="userrr" style="color: red"></span>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" id="crmemail">
+							<div class="module_l">万达邮箱</div>
+							<div class="module_c">
+								<input class=" form-control" type="text" maxlength="30" id="crmemailtxt" style="width: 240px;float: left;" placeholder="请输入万达邮箱"/><span
+									id="ccrmemail" style="color: red;margin-left: 5px;"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" id="sdemail" style="display: none">
+							<div class="module_l">邮箱</div>
+							<div class="module_c">
+								<input class=" form-control" maxlength="30" type="text" id="sdemailtxt" style="width: 240px;float: left;" placeholder="请输入邮箱"/><span
+									id="ssdemail" style="color: red;margin-left: 5px;"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" id="pass">
+							<div class="module_l">密码</div>
+							<div class="module_c">
+								<input class=" form-control" type="password" maxlength="16" id="passtxt" style="width: 240px;float: left;" placeholder="请输入密码"/><span
+									id="ppass" style="color: red;margin-left: 5px;"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" id="cpass">
+							<div class="module_l">确认密码</div>
+							<div class="module_c">
+								<input class=" form-control" type="password" maxlength="16" id="cpasstxt" style="width: 240px;float: left;" placeholder="请确认密码"/><span
+									id="ccpass" style="color: red;margin-left: 5px;"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" id="pshare" style="display: none">
+							<div class="module_l">分成</div>
+							<div class="module_c">
+
+								<div class="input-group" style="width: 240px;float: left;">
+									<input class=" form-control" maxlength="5" type="number" id="psharetxt" min="0" max="100" style="width: 240px;" placeholder="请输入分成" />
+									<span class="input-group-addon"  >%</span>
+								</div>
+								<span id="ppshare" style="color: red;margin-left: 5px;"></span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" id="company" style="display: none">
+							<div class="module_l">公司名称</div>
+							<div class="module_c" style="width: 300px;">
+								<input class=" form-control" maxlength="20" type="text" id="companytxt" style="width: 240px;float: left;" placeholder="可输入公司名称"/><span
+									style="color: #cdcdcd">非必填</span>
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module">
+							<div class="module_c module_pos" id="btcrm">
+								<button class="button_2" onclick="openaccount();">开通</button>
+								<!--<button class="button_2" onclick = "cancel();">取消</button>-->
+								<!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" style="display: none" id="btlm">
+							<div class="module_c module_pos">
+								<button class="button_2" onclick="openaccountlm();">开通</button>
+								<!--<button class="button_2" onclick = "cancel();">取消</button>-->
+								<!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" style="display: none" id="btdsp">
+							<div class="module_c module_pos">
+								<button class="button_2" onclick="openaccountdsp();">开通</button>
+								<!--<button class="button_2" onclick = "cancel();">取消</button>-->
+								<!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" style="display: none" id="btgj">
+							<div class="module_c module_pos">
+								<button class="button_2" onclick="openaccountsspgj();">开通</button>
+								<!--<button class="button_2" onclick = "cancel();">取消</button>-->
+								<!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+						<div class="module" style="display: none" id="btdmp">
+							<div class="module_c module_pos">
+								<button class="button_2" onclick="openaccountdmp();">开通</button>
+								<!--<button class="button_2" onclick = "cancel();">取消</button>-->
+								<!--<div class="module_c_info">
+                            	<div>资源ID：123456789012345678</div>
+                                <div>资源名称：春节广告投放春节广告投放。</div>
+                            </div>-->
+							</div>
+							<div class="clearfloat"></div>
+						</div>
+					</div>
+
+				</div>
+				<!--主要内容 end-->
+				<div class="clearfloat"></div>
+			</div>
+		</div>
+		<!--内容部分 end-->
+		<!--底部 start-->
+		<!--<div class="footer"></div>-->
+		<!--底部 end-->
+
+		<script type="text/javascript">
+            var acouid = parseInt(0);
+            function openaccount() {
+                var usertype = $("#usertype").val().replace(/(^\s*)|(\s*$)/g, "");
+                var role = $("#role").val().replace(/(^\s*)|(\s*$)/g, "");
+                var crmemail = $("#crmemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var sdemail = $("#sdemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var pass = $("#passtxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var cpass = $("#cpasstxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var company = $("#companytxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                //var regpass = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{8,16}$/;
+
+                if (usertype == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#usertype").focus();
+                    return;
+                }
+                if (role == 0) {
+                    $("#userrr").html("请选择用户类型或用户角色");
+                    $("#role").focus();
+                    return;
+                }
+
+                if (crmemail == '') {
+                    $("#usertt").html("");
+                    $("#ccrmemail").html("邮箱不能为空");
+                    $("#crmemailtxt").select();
+                    return;
+                }
+                if (crmemail != '') {
+                    var reg = /^[\s\S]*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                    if (!reg.test(crmemail)) {
+                        $("#ccrmemail").html("邮箱格式不正确");
+                        $("#crmemailtxt").select();
+                        return;
+                    } else if (!(/^[\s\S]*@(wanda)\.cn(\r\n|\r|\n)?$/).test(crmemail)) {
+                        $("#ccrmemail").html("请使用万达邮箱");
+                        $("#crmemailtxt").select();
+                        return;
+                    } else {
+                        $.ajax({
+                            url : "/account/email",
+                            method : 'post',
+                            contentType : 'application/json',
+                            data : JSON.stringify({
+                                accountEmail : crmemail
+                            }),
+                            success : function(result) {
+                                if (result == 1) {
+                                    $("#ccrmemail").html("此邮箱已存在");
+                                    $("#crmemailtxt").focus();
+                                    $("input").val("");
+                                    return;
+                                } else {
+                                    $("#ccrmemail").html("");
+                                    if (pass == "") {
+                                        $("#ppass").html("密码不能为空");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (pass.length<8 || pass.length>16) {
+                                        $("#ppass").html("");
+                                        $("#ppass").html("密码需8~16位字符");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (cpass != pass) {
+                                        $("#ppass").html("");
+                                        $("#ccpass").html("确认密码与密码输入不一致");
+                                        $("#cpasstxt").select();
+                                        return;
+                                    } else {
+                                        $.ajax({
+                                            url : "/account/addcrmemail",
+                                            method : 'post',
+                                            contentType : 'application/json',
+                                            data : JSON.stringify({
+                                                userType : usertype,
+                                                userRoles : role,
+                                                accountEmail : crmemail,
+                                                password : hex_md5(pass),
+                                                adminId : parseInt(acouid)
+                                            }),
+                                            success : function(result) {
+                                                if (result > 0) {
+                                                    alert("添加成功！");
+                                                    //$("#containerdiv").hide();
+                                                    cancel();
+                                                    return;
+                                                } else {
+                                                    alert("您的帐户已被冻结！");
+                                                    window.location.href = "login.html";
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+            }
+            function openaccountlm() {
+                var usertype = $("#usertype").val().replace(/(^\s*)|(\s*$)/g, "");
+                var role = $("#role").val().replace(/(^\s*)|(\s*$)/g, "");
+                var sdemail = $("#sdemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var pass = $("#passtxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var cpass = $("#cpasstxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var pshare = $("#psharetxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var company = $("#companytxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                //var regpass = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{8,16}$/;
+                var proshare = parseFloat(0);
+
+                if (usertype == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#usertype").focus();
+                    return;
+                }
+                if (role == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#role").focus();
+                    return;
+                }
+                if (sdemail == '') {
+                    $("#usertt").html("");
+                    $("#ssdemail").html("邮箱不能为空！");
+                    $("#sdemailtxt").select();
+                    return;
+                }
+
+                if (sdemail != '') {
+                    //document.getElementById("ccrmemail").style.dispaly = "none";
+                    var reg = /^[\s\S]*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                    if (!reg.test(sdemail)) {
+                        $("#ssdemail").html("邮箱格式不正确");
+                        $("#sdemailtxt").select();
+                        return;
+                    } else {
+                        $.ajax({
+                            url : "/account/dsemail",
+                            method : 'post',
+                            contentType : 'application/json',
+                            data : JSON.stringify({
+                                accountEmail : sdemail,
+                                userType : usertype
+                            }),
+                            success : function(result) {
+                                if (result == 1) {
+                                    $("#ssdemail").html("此邮箱已存在");
+                                    $("#sdemailtxt").select();
+                                    $("input").val("");
+                                    return;
+                                } else {
+                                    $("#ssdemail").html("");
+                                    if (pass == "") {
+                                        $("#ppass").html("密码不能为空");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (pass.length<8 || pass.length>16) {
+                                        $("#ppass").html("");
+                                        $("#ppass").html("密码需8~16位字符");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (cpass != pass) {
+                                        $("#ppass").html("");
+                                        $("#ccpass").html("确认密码与密码输入不一致");
+                                        $("#cpasstxt").select();
+                                        return;
+                                    }
+                                    $("#ccpass").html("");
+                                    if (pshare == "") {
+                                        $("#ppshare").html("分成不能为空");
+                                        $("#psharetxt").select();
+                                        return;
+                                    }
+                                    if (parseFloat(pshare) < 0 || parseFloat(pshare) > 100) {
+                                        $("#ppshare").html("分成需在0~100之间");
+                                        $("#psharetxt").select();
+                                        return;
+                                    }
+                                    var reNum = /^\d+?$/;
+                                    if (!reNum.test(pshare)) {
+                                        $("#ppshare").html("分成只可输入正整数");
+                                        $("#psharetxt").select();
+                                        return;
+                                    } else {
+                                        proshare = parseFloat(pshare) / 100;
+                                        $("#ccpass").html("");
+                                        $("#ppsharetxt").html("");
+                                        $.ajax({
+                                            url : "/account/addcrmemail",
+                                            method : 'post',
+                                            contentType : 'application/json',
+                                            data : JSON.stringify({
+                                                userType : usertype,
+                                                userRoles : role,
+                                                accountEmail : sdemail,
+                                                password : hex_md5(pass),
+                                                profitShare : proshare,//proshare,
+                                                company : company,
+                                                adminId : parseInt(acouid)
+                                            }),
+                                            success : function(result) {
+                                                if (result > 0) {
+                                                    alert("添加成功！");
+                                                    //window.location.href = "crmuserlist.html";
+                                                    //$("#containerdiv").hide();
+                                                    cancel();
+                                                    return;
+                                                } else {
+                                                    alert("您的帐户已被冻结！");
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            function openaccountdsp() {
+                var usertype = $("#usertype").val().replace(/(^\s*)|(\s*$)/g, "");
+                var role = $("#role").val().replace(/(^\s*)|(\s*$)/g, "");
+                var sdemail = $("#sdemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var pass = $("#passtxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var cpass = $("#cpasstxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var company = $("#companytxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                //var regpass = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{8,16}$/;
+
+                if (usertype == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#usertype").focus();
+                    return;
+                }
+                if (role == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#role").focus();
+                    return;
+                }
+                if (sdemail == '') {
+                    $("#usertt").html("");
+                    $("#ssdemail").html("邮箱不能为空！");
+                    $("#sdemailtxt").select();
+                    return;
+                }
+                if (crmemail != '') {
+                    var reg = /^[\s\S]*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                    if (!reg.test(sdemail)) {
+                        $("#ssdemail").html("邮箱格式不正确");
+                        $("#sdemailtxt").select();
+                        return;
+                    } else {
+                        $.ajax({
+                            url : "/account/dsemail",
+                            method : 'post',
+                            contentType : 'application/json',
+                            data : JSON.stringify({
+                                accountEmail : sdemail,
+                                userType : usertype
+                            }),
+                            success : function(result) {
+                                if (result == 1) {
+                                    $("#ssdemail").html("此邮箱已存在");
+                                    $("#sdemailtxt").select();
+                                    $("input").val("");
+                                    return;
+                                } else {
+                                    $("#ssdemail").html("");
+                                    if (pass == "") {
+                                        $("#ppass").html("密码不能为空");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (pass.length<8 || pass.length>16) {
+                                        $("#ppass").html("");
+                                        $("#ppass").html("密码需8~16位字符");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (cpass != pass) {
+                                        $("#ppass").html("");
+                                        $("#ccpass").html("确认密码与密码输入不一致");
+                                        $("#cpasstxt").select();
+                                        return;
+                                    } else {
+                                        $("#ccpass").html("");
+                                        $.ajax({
+                                            url : "/account/addcrmemail",
+                                            method : 'post',
+                                            contentType : 'application/json',
+                                            data : JSON.stringify({
+                                                userType : usertype,
+                                                userRoles : role,
+                                                accountEmail : sdemail,
+                                                password : hex_md5(pass),
+                                                company : company,
+                                                adminId : parseInt(acouid)
+                                            }),
+                                            success : function(result) {
+                                                if (result > 0) {
+                                                    alert("添加成功！");
+                                                    //window.location.href = "crmuserlist.html";
+                                                    //$("#containerdiv").hide();
+                                                    cancel();
+                                                    return;
+                                                } else {
+                                                    alert("您的帐户已被冻结！");
+                                                    window.location.href = "backcrmlogin.html";
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+
+            function openaccountsspgj() {
+                var usertype = $("#usertype").val().replace(/(^\s*)|(\s*$)/g, "");
+                var role = $("#role").val().replace(/(^\s*)|(\s*$)/g, "");
+                var crmemail = $("#crmemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var pass = $("#passtxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var cpass = $("#cpasstxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var company = $("#companytxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                //var regpass = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{8,16}$/;
+
+                if (usertype == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#usertype").focus();
+                    return;
+                }
+                if (role == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#role").focus();
+                    return;
+                }
+                if (crmemail == '') {
+                    $("#usertt").html("");
+                    $("#ccrmemail").html("邮箱不能为空！");
+                    $("#crmemailtxt").select();
+                    return;
+                }
+                if (crmemail != '') {
+                    var reg = /^[\s\S]*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                    if (!reg.test(crmemail)) {
+                        $("#ccrmemail").html("邮箱格式不正确");
+                        $("#crmemailtxt").focus();
+                        return;
+                    } else if (!(/^[\s\S]*@(wanda)\.cn(\r\n|\r|\n)?$/).test(crmemail)) {
+                        $("#ccrmemail").html("请使用万达邮箱");
+                        $("#crmemailtxt").focus();
+                        return;
+                    } else {
+                        $.ajax({
+                            url : "/account/dsemail",
+                            method : 'post',
+                            contentType : 'application/json',
+                            data : JSON.stringify({
+                                accountEmail : crmemail,
+                                userType : usertype
+                            }),
+                            success : function(result) {
+                                if (result == 1) {
+                                    $("#ccrmemail").html("此邮箱已存在");
+                                    $("#crmemailtxt").select();
+                                    return;
+                                } else {
+
+                                    $("#ccrmemail").html("");
+                                    if (pass == "") {
+                                        $("#ppass").html("密码不能为空");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (pass.length<8 || pass.length>16) {
+                                        $("#ppass").html("");
+                                        $("#ppass").html("密码需8~16位字符");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (cpass != pass) {
+                                        $("#ppass").html("");
+                                        $("#ccpass").html("确认密码与密码输入不一致");
+                                        $("#cpasstxt").select();
+                                        return;
+                                    } else {
+                                        $("#ccpass").html("");
+                                        $.ajax({
+                                            url : "/account/addcrmemail",
+                                            method : 'post',
+                                            contentType : 'application/json',
+                                            data : JSON.stringify({
+                                                userType : usertype,
+                                                userRoles : role,
+                                                accountEmail : crmemail,
+                                                password : hex_md5(pass),
+                                                company : company,
+                                                adminId : parseInt(acouid)
+                                            }),
+                                            success : function(result) {
+                                                if (result > 0) {
+                                                    alert("添加成功！");
+                                                    //window.location.href = "crmuserlist.html";
+                                                    cancel();
+                                                    return;
+                                                } else {
+                                                    alert("您的帐户已被冻结！");
+                                                    window.location.href = "backcrmlogin.html";
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+            
+            function openaccountdmp() {
+                var usertype = $("#usertype").val().replace(/(^\s*)|(\s*$)/g, "");
+                var role = $("#role").val().replace(/(^\s*)|(\s*$)/g, "");
+                var crmemail = $("#crmemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var sdemail = $("#sdemailtxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                var pass = $("#passtxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var cpass = $("#cpasstxt").val()//.replace(/(^\s*)|(\s*$)/g, "");
+                var company = $("#companytxt").val().replace(/(^\s*)|(\s*$)/g, "");
+                //var regpass = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{8,16}$/;
+
+                if (usertype == 0) {
+                    $("#usertt").html("请选择用户类型或用户角色");
+                    $("#usertype").focus();
+                    return;
+                }
+                if (role == 0) {
+                    $("#userrr").html("请选择用户类型或用户角色");
+                    $("#role").focus();
+                    return;
+                }
+
+                if (crmemail == '') {
+                    $("#usertt").html("");
+                    $("#ccrmemail").html("邮箱不能为空");
+                    $("#crmemailtxt").select();
+                    return;
+                }
+                if (crmemail != '') {
+                    var reg = /^[\s\S]*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                    if (!reg.test(crmemail)) {
+                        $("#ccrmemail").html("邮箱格式不正确");
+                        $("#crmemailtxt").select();
+                        return;
+                    } else if (!(/^[\s\S]*@(wanda)\.cn(\r\n|\r|\n)?$/).test(crmemail)) {
+                        $("#ccrmemail").html("请使用万达邮箱");
+                        $("#crmemailtxt").select();
+                        return;
+                    } else {
+                        $.ajax({
+                            url : "/account/dsemail",
+                            method : 'post',
+                            contentType : 'application/json',
+                            data : JSON.stringify({
+                            	accountEmail : crmemail,
+                                userType : usertype
+                            }),
+                            success : function(result) {
+                                if (result == 1) {
+                                    $("#ccrmemail").html("此邮箱已存在");
+                                    $("#crmemailtxt").focus();
+                                    $("input").val("");
+                                    return;
+                                } else {
+                                    $("#ccrmemail").html("");
+                                    if (pass == "") {
+                                        $("#ppass").html("密码不能为空");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (pass.length<8 || pass.length>16) {
+                                        $("#ppass").html("");
+                                        $("#ppass").html("密码需8~16位字符");
+                                        $("#passtxt").select();
+                                        return;
+                                    }
+                                    if (cpass != pass) {
+                                        $("#ppass").html("");
+                                        $("#ccpass").html("确认密码与密码输入不一致");
+                                        $("#cpasstxt").select();
+                                        return;
+                                    } else {
+                                        $.ajax({
+                                            url : "/account/addcrmemail",
+                                            method : 'post',
+                                            contentType : 'application/json',
+                                            data : JSON.stringify({
+                                                userType : usertype,
+                                                userRoles : role,
+                                                accountEmail : crmemail,
+                                                password : hex_md5(pass),
+                                                adminId : parseInt(acouid)
+                                            }),
+                                            success : function(result) {
+                                                if (result > 0) {
+                                                    alert("添加成功！");
+                                                    //$("#containerdiv").hide();
+                                                    cancel();
+                                                    return;
+                                                } else {
+                                                    alert("您的帐户已被冻结！");
+                                                    window.location.href = "login.html";
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+            }
+
+            function cancel() {
+                //document.getElementById("usertype").value = "0";
+                //document.getElementById("role").value = "0";
+                document.getElementById("crmemailtxt").value = "";
+                document.getElementById("passtxt").value = "";
+                document.getElementById("cpasstxt").value = "";
+                document.getElementById("sdemailtxt").value = "";
+                document.getElementById("psharetxt").value = "";
+                $("#companytxt").val("");
+                $("#usertt").html("");
+                $("#userrr").html("");
+                $("#ccrmemail").html("");
+                $("#ssdemail").html("");
+                $("#ppass").html("");
+                $("#ccpass").html("");
+                $("#ppshare").html("");
+
+                //document.getElementById("containerdiv").style.display="none";
+                //$("#containerdiv").hide();
+            }
+            /*function showcontain(){
+            $.ajax({
+            	url : "/account/admin",
+            	method : 'post',
+            	contentType : 'application/json',
+            	data : JSON.stringify({
+            		adminId: parseInt(acouid)
+            	}),
+            	dataType: 'json', 
+            	success : function(result) {
+            		if(result>0){
+            			
+            			
+            			
+            		}else{
+            			return;
+            		}
+            	}
+            });
+            
+            }*/
+        </script>
+	</div>
+</body>
+</html>

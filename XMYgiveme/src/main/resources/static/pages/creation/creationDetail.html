@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>创意审核</title>
+    <link href="../../assets/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/CRM/css/log.css" rel="stylesheet" type="text/css"/>
+    <!-- link href="../../assets/CRM/css/idea.css" rel="stylesheet" type="text/css" /-->
+    <link href="../../assets/CRM/css/ideabak.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../assets/CRM/jqGrid/ui.jqgrid.css"/>
+    <link id="uiThemes" rel="stylesheet" type="text/css" media="screen"
+          href="../../assets/CRM/jqGrid/jquery-ui-1.10.3.custom.min.css"/>
+    <link href="../../assets/CRM/css/resourse_detail.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../assets/scripts/mtree/css/mtree.css">
+    <link rel="stylesheet" href="../../assets/scripts/wangEditor2.1/css/wangEditor.min.css">
+    <style type="text/css">
+        .button_up {
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="net_container">
+    <!--顶部logo start-->
+    <div class="net_header"><img src="../../assets/CRM/img/crm-logo.png"/></div>
+    <!--顶部logo end-->
+    <!--内容部分 start-->
+    <div class="net_mainContent">
+        <!--左侧导航 start-->
+        <div class="net_sidebar">
+            <ul class="mtree transit" id="mtree">
+            </ul>
+        </div>
+        <!--左侧导航 end-->
+        <!--主要内容 start-->
+        <div class="content_bg">
+            <div class="net_content">
+                <div class="content_t">
+                    <div class="content_t_l"></div>
+                    <div class="content_t_r">创意详情</div>
+                    <div class="m_top_20">
+                        <button id="returnList">返回列表</button>
+                    </div>
+                </div>
+                <!--内容部分 start-->
+                <div class="content_m">
+                    <div class="content_m_info" style="margin:0px; padding-bottom: 30px; width: auto;min-width: 540px;">
+                        <div class="module">
+                            <div class="module_l">创意名称：</div>
+                            <div class="module_c">
+                                <div class="module_c">
+                                    <input class="input_1" type="text" id="creationName" readonly/>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="clearfloat"></div>
+                        </div>
+                        <div class="module">
+                            <div class="module_l">资源位类型：</div>
+                            <div class="module_c">
+                                <select class="select_l" id="resourceLocationType" readonly>
+                                    <option>定制轮播</option>
+                                </select>
+                                <div class="module_c_info" style="display: none"></div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="clearfloat"></div>
+                        </div>
+                        <div id="div-feed" hidden="true">
+                            <div class="module feedShow">
+                                <div class="module_l">信息流类型</div>
+                                <div class="module_c">
+                                    <select id="feedType" name="feedType" class="select_l" disabled >
+                                        <option value="1">单图</option>
+                                        <option value="2">三小图</option>
+                                    </select>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module feedShow single-pic-feed three-pic-feed">
+                                <div class="module_l">主标题</div>
+                                <div class="module_c">
+                                    <input class="input_1" type="text" id="title" size="12" maxlength="12" readonly/>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div id="divSubTitle" class="module feedShow single-pic-feed">
+                                <div class="module_l">副标题</div>
+                                <div class="module_c">
+                                    <input class="input_1" type="text" id="subTitle" size="18" maxlength="18" readonly/>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module feedShow single-pic-feed three-pic-feed">
+                                <div class="module_l">广告主名称</div>
+                                <div class="module_c">
+                                    <input class="input_1" type="text" id="advertiser" size="10" maxlength="10" readonly/>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                        </div>
+                        <div id="not-h5-edit-area">
+                            <div class="module">
+                                <div class="module_l">创意内容：</div>
+                                <!--三个上传图片 start-->
+                                <div class="module_c" id="threePic">
+                                    <div class="module_c_txt">
+                                        320 * 50px的图片
+                                        <input id="firstPic" type="hidden" value="320#50"></div>
+                                    <div class="module_c_input">
+                                        <div id="fileList" style="float:left" class="input_2">
+                                            <img src="" width="260px" height="28px" id="fileListPic"
+                                                 onclick="showBigPic(this);">
+                                        </div>
+                                        <div class="clearfloat"></div>
+                                    </div>
+                                    <div class="module_c_txt">
+                                        640 * 100px的图片
+                                        <input id="secondPic" type="hidden" value="640#100"></div>
+                                    <div class="module_c_input">
+                                        <div id="fileList2" style="float:left" class="input_2">
+                                            <img src="" width="260px" height="28px" id="fileList2Pic"
+                                                 onclick="showBigPic(this);">
+                                        </div>
+                                        <div class="clearfloat"></div>
+                                    </div>
+                                    <div class="module_c_txt">
+                                        1080 * 169px的图片<input id="thirdPic" type="hidden" value="1080#169">
+                                    </div>
+                                    <div class="module_c_input">
+                                        <div id="fileList3" style="float:left" class="input_2">
+                                            <img src="" width="260px" height="28px" id="fileList3Pic"
+                                                 onclick="showBigPic(this);">
+                                        </div>
+                                        <div class="clearfloat"></div>
+                                    </div>
+                                </div>
+                                <!--三个上传图片  end-->
+                                <!--两个上传图片 start-->
+                                <div id="twoPic" hidden="true">
+                                    <div class="module_c">
+                                        <div class="module_c_txt" id="twoPicFirstTxt">
+                                            <label id="fourPicShow"></label>
+                                            px的图片
+                                            <input id="fourPic" type="hidden" value="640#1136"></div>
+                                        <div class="module_c_pic" id="twoPicFirstPic">
+                                            <div id="fileList21" class="module_c_pic_l kuang1">
+                                                <img src="" width="300px" height="340px"
+                                                     style=" border:1px solid #e6e6e6; padding:5px;" id="fileList21Pic"
+                                                     onclick="showBigPic(this);">
+                                            </div>
+                                            <div class="clearfloat"></div>
+                                        </div>
+                                        <div id="cancelPic">
+                                            <div class="module_c_txt">
+                                                <label id="fivePicShow"></label>
+                                                px的图片
+                                                <input id="fivePic" type="hidden" value="640#50">
+                                            </div>
+                                            <div class="module_c_pic">
+                                                <div id="fileList22" class="module_c_pic_l kuang2">
+                                                    <img src="" width="300px" height="235px"
+                                                         style=" border:1px solid #e6e6e6; padding:5px;"
+                                                         id="fileList22Pic"
+                                                         onclick="showBigPic(this);">
+                                                </div>
+                                                <div class="clearfloat"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--两个上传图片  end-->
+                                <!--一个上传图片 start-->
+                                <div id="onePic" hidden="true">
+                                    <div class="module_c">
+                                        <div class="module_c_txt">
+                                            <span id="mySize">640*50</span>px的图片
+                                            <input id="sixPic" type="hidden" value="640#50">
+                                        </div>
+                                        <div class="module_c_pic">
+                                            <div id="fileList33" class="module_c_pic_t kuang3">
+                                                <img src="" width="400px" height="300px"
+                                                     style=" border:1px solid #e6e6e6; padding:5px;" id="fileList33Pic"
+                                                     onclick="showBigPic(this);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--一个上传图片   end-->
+                                <!--一feed流单图 start-->
+                                <div id="feedSinglePicInfo" hidden="true" style="float: left;">
+                                    <div class="module_c">
+                                        <div class="module_c_txt">
+                                            <span id="mySize">220*220</span>px的png、jpg格式图片
+                                            <input id="feedSinglePicSize" type="hidden" value="220#220"/>
+                                        </div>
+                                        <div class="module_c_pic">
+                                            <div id="feedSinglePic" class="module_c_pic_t feed_pic_container">
+                                                <img onclick="showBigPic(this);" width="212px" height="212px"
+                                                     id="feedSinglePicImg" style="border:1px solid #e6e6e6;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--一feed流单图    end-->
+                                <!--一feed流三小图 start-->
+                                <div id="feedThreePicInfo" hidden="true" style="float: left;">
+                                    <div class="module_c">
+                                        <div class="module_c_txt">
+                                            <span id="mySize">220*220</span>px的png、jpg格式图片
+                                            <input id="feedThreePicSize" type="hidden" value="220#220"/>
+                                        </div>
+                                        <div class="module_c_pic" style="display: inline-block;">
+                                            <div id="feedThreePic1" class="module_c_pic_t feed_pic_container">
+                                                <img onclick="showBigPic(this);" width="212px" height="212px"
+                                                     id="feedThreePic1Img" style="border:1px solid #e6e6e6;"/>
+                                            </div>
+                                            <div class="module_c_pic_b">
+                                                <input id="feedThreePic1Url" type="hidden"/>
+                                                <input id="feedThreePic1UrlId" type="hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="module_c_pic" style="display: inline-block;">
+                                            <div id="feedThreePic2" class="module_c_pic_t feed_pic_container">
+                                                <img onclick="showBigPic(this);" width="212px" height="212px"
+                                                     id="feedThreePic2Img" style="border:1px solid #e6e6e6;"/>
+                                            </div>
+                                            <div class="module_c_pic_b">
+                                                <input id="feedThreePic2Url" type="hidden"/>
+                                                <input id="feedThreePic2UrlId" type="hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="module_c_pic" style="display: inline-block;">
+                                            <div id="feedThreePic3" class="module_c_pic_t feed_pic_container">
+                                                <img onclick="showBigPic(this);" width="212px" height="212px"
+                                                     id="feedThreePic3Img" style="border:1px solid #e6e6e6;"/>
+                                            </div>
+                                            <div class="module_c_pic_b">
+                                                <input id="feedThreePic3Url" type="hidden"/>
+                                                <input id="feedThreePic3UrlId" type="hidden"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module" id="ideaHref">
+                                <div class="module_l">创意链接</div>
+                                <div class="module_c redony">
+                                    <select class="select_s" id="creationLinkType">
+                                        <option>外部链接</option>
+                                    </select>
+                                    <div class="clearfloat"></div>
+                                </div>
+                                <div class="module">
+                                    &nbsp;<input class="input_3" type="text" id="creationLinkContent" readonly/>
+                                </div>
+                                <div class="clearfloat"></div>
+                                <div class="none_style"></div>
+                            </div>
+                        </div>
+
+                        <!--h5编辑区域-->
+                        <div id="h5-edit-area" style="display:none;">
+                            <div class="module">
+                                <div class="module_l">标题栏</div>
+                                <div class="module_c">
+                                    <input class="input_1" type="text" id="h5-page-title" readonly/>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module" style="width: 1000px;">
+                                <div class="module_l">正文</div>
+                                <div class="module_c" style="width: 700px;">
+                                    <div id="h5-page-content" style="height: 400px;"></div>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l">生成链接</div>
+                                <div class="module_c" style="margin-left: 110px;margin-top: -30px;">
+                                    <span id="generatedLink"></span>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="module">
+                                <div class="module_l">创建人</div>
+                                <div class="module_c">
+                                    <span id="creatorName"></span>
+                                </div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <div class="content_b m_left_110">
+                                <button class="button_off m_left_65" data-loading-text="Loading..." autocomplete="off"
+                                        id="h5-preview-btn">预览
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="right-model-area">
+                        <div id="onePhone">
+                            <div class="content_m_phone">
+                                <div class="content_m_phone_t">
+                                    <div class="content_m_phone_t_bg_s">
+                                        <img class="textarea_b" id="onePhonePic" hidden="true"/>
+                                        <img class="textarea_m" id="shuGuDingWeiZhi" hidden="true"/>
+                                        <img class="textarea_t" id="shuLunBo" hidden="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="twoPhone" hidden="true">
+                            <div id="twoShu" class="content_m_phone">
+                                <div class="content_m_phone_t">
+                                    <div class="content_m_phone_t_bg_s">
+                                        <img class="textarea_all" id="shuQuanPing" hidden="true"/>
+                                        <img class="textarea_all_small" id="shuChaPing" hidden="true"/>
+                                    </div>
+                                </div>
+                                <div class="content_m_phone_b">
+                                    <button class="button_1" onclick="controlPicShow(1)">竖屏</button>
+                                    <button class="button_2" onclick="controlPicShow(2)">横屏</button>
+                                </div>
+                            </div>
+                            <div class="content_m_phone" id="twoHeng">
+                                <div class="content_m_phone_t">
+                                    <div class="content_m_phone_t_bg_h">
+                                        <img class="textarea_dow" id="myPhoneHeng"/>
+                                    </div>
+                                </div>
+                                <div class="content_m_phone_b">
+                                    <button class="button_off m_left_30" onclick="controlPicShow(1)">竖屏</button>
+                                    <button class="button_on" onclick="controlPicShow(2)">横屏</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--右侧两个pad图片 云pos闲时   start-->
+                        <div id="twoPadFree" hidden="true">
+                            <div id="padHengFree" class="content_m_phone">
+                                <div class="content_m_pad_t">
+                                    <div class="content_m_pad_t_bg_s">
+                                        <img class="textarea_all" id="freePadheng"/>
+                                        <!-- <img class="textarea_all_small" id="shuChaPingFree" hidden="true"/> -->
+                                    </div>
+                                </div>
+                                <div class=content_m_pad_b>
+                                    <button class="button_on m_left_30" onclick="controlPadPicShow(1)">竖屏</button>
+                                    <button class="button_off" onclick="controlPadPicShow(2)">横屏</button>
+                                </div>
+                            </div>
+                            <div class="content_m_phone" id="padShuFree">
+                                <div class="content_m_pad_t">
+                                    <div class="content_m_pad_t_bg_h">
+                                        <img class="textarea_dow" id="freePadShu"/>
+                                    </div>
+                                </div>
+                                <div class="content_m_pad_b">
+                                    <button class="button_off m_left_30" onclick="controlPadPicShow(1)">竖屏</button>
+                                    <button class="button_on" onclick="controlPadPicShow(2)">横屏</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--右侧两个pad图片 云pos闲时   end-->
+                        <!--右侧两个pad图片 云pos忙时   start-->
+                        <div id="twoPadBusy" hidden="true">
+                            <div id="padShuBusy" class="content_m_phone">
+                                <div class="content_m_pad_t">
+                                    <div class="content_m_pad_t_bg_s">
+                                        <img class="textarea_left_half" id="busyPadShu"/>
+                                        <!-- <img class="textarea_all_small" id="shuChaPing" hidden="true"/> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--右侧两个pad图片 云pos忙时   end-->
+                        <!--右侧一个储物柜   start-->
+                        <div id="chuWuGui" hidden="true">
+                            <div class="content_m_phone">
+                                <div class="content_m_phone_t">
+                                    <div class="content_m_phone_chuWuGui">
+                                        <img class="chuWuGuiImg" id="chuWuGuiQuanPing" hidden="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--右侧一个储物柜   end-->
+                    </div>
+                    <div class="clearfloat"></div>
+                </div>
+            </div>
+        </div>
+        <!--主要内容 end-->
+        <div class="clearfloat"></div>
+    </div>
+
+    <!-- 预览 -->
+    <div class="modal fade" id="preview-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title">预览</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="view-content">
+                        <iframe class="h5-preivew-iframe" scrolling="auto">
+                            您的浏览器不支持嵌入式框架，或者当前配置为不显示嵌入式框架。
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tc_bg" id="bigPicList" style="display: none;">
+        <div class="tc_clo">
+            <img src="../../resources/img/cancel.png" id="canelPng"/>
+        </div>
+        <div class="tc_idx">
+            <img src="" id="showPic" width=100%; height=100%/>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../assets/scripts/jquery.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+<script src='../../assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+<script type="text/javascript" src="../../resources/js/web-common.js"></script>
+<script src="../../assets/CRM/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="../../assets/CRM/jqGrid/grid.locale-cn.js"></script>
+<script src="../../assets/scripts/layer/layer.js"></script>
+<script src="../../assets/scripts/wangEditor2.1/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="creationDetail.js"></script>
+</body>
+</html>

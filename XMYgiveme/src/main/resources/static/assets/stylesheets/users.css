@@ -1,0 +1,31 @@
+td {
+	word-wrap: break-word;
+	word-break: break-all
+}
+
+.table-top{
+	width: 982px;
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    font-size: 18px;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    background-color: #f2f2f4;
+    margin-left: 1px;
+    margin-bottom: -1px;
+    margin-top: 30px;
+}
+
+.popover-content{
+	text-align: center;
+}
+
+.btn-group-sm>.btn, .btn-sm{
+	margin:0px 10px;
+}
+
+.h4, h4{
+	word-break: break-all;
+}

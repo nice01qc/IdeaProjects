@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>操作日志</title>
+	<link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/scripts/bootstrap-table/bootstrap-table.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/scripts/date-time/bootstrap-datepicker3.css">
+	<link href="/assets/stylesheets/main.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/stylesheets/users.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/assets/scripts/mtree/css/mtree.css">
+	<style type="text/css">
+	button {
+	height:auto;
+	}
+	</style>
+	<script type="text/javascript" src="/assets/scripts/jquery-2.2.3.min.js"></script>
+	<script src='/assets/scripts/mtree/js/jquery.velocity.min.js'></script>
+	<script type="text/javascript" src="/assets/scripts/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/scripts/bootstrap-table/bootstrap-table.js"></script>
+	<script type="text/javascript" src="/assets/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" src="/getMenus"></script>
+	<script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="/assets/scripts/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
+	<script type="text/javascript" src="/assets/scripts/bootstrap-confirmation.js"></script>
+	<script type="text/javascript" src="/resources/js/web-common.js"></script>
+
+</head>
+<body>
+  <div class="net_container">
+		<!--顶部logo start-->
+		<div class="net_header">
+			<img src="/assets/images/crm-logo.png" />
+			<!-- div class="sidebar_m"><span id="sessionUsername"></span></div-->
+		</div>
+		<!--顶部logo end-->
+		<!--顶部menu start-->
+		<!--<div class="menu">This is the Menu</div>-->
+		<!--顶部menu end-->
+		<!--内容部分 start-->
+		<div class="net_mainContent">
+			<!--左侧导航 start-->
+			<div class="net_sidebar">
+				<ul class="mtree transit" id="mtree">
+				</ul>
+			</div>	
+			
+			<div class="content_bg">
+				<div class="net_content">
+					  <div class="content_t">
+	                	  <div class="content_t_l"></div><div class="content_t_r" style="margin-top: -2px;font-weight: bold;">操作日志</div> 
+	                  </div>
+		              <div class="content_m">
+				           <div class="content_m_info">
+	                         <table class="table table-striped tableList" id="logTable"></table>
+                         </div>
+                      </div>
+                 </div>
+             </div>
+       </div>
+</div>
+                                	
+<script type="text/javascript">
+
+
+	$(document).ready(function() {
+		 
+		$('#logTable').bootstrapTable({
+			url: '/api/v1/operationLog',
+			pagination : true,
+			paginationLoop: false,
+			paginationPreText: '<i class="glyphicon glyphicon-triangle-left"></i>',
+			paginationNextText: '<i class="glyphicon glyphicon-triangle-right"></i>',
+			sidePagination:'server',
+			showRefresh: true,
+			dataType: "json",
+			"queryParamsType": "limit",
+			pageNumber: 1,
+			pageSize: 20,
+			queryParams: queryParams,
+			onResetView: function() {
+				var options = $('#logTable').bootstrapTable('getOptions');
+				if(options.pageNumber == 1) {
+					$('.pagination li.page-pre a').addClass('unused');
+				}
+				if(options.pageNumber == options.totalPages) {
+					$('.pagination li.page-next a').addClass('unused');
+				}
+			},
+		    columns: [
+		   /*{
+		        field: 'logPage',
+		        title: '页面',
+		    },{
+		        field: 'logOperation',
+		        title: '操作'
+		    }, */{
+		        field: 'logCreatedTimeStr',
+		        title: '操作时间',
+		        width:150
+		    }, 
+		    {
+		        field: 'logUserEmail',
+		        title: '操作人'
+		    },
+		    {
+		        field: 'logAction',
+		        title: '操作行为',
+		        width:120
+		    },
+		    {
+		        field: 'logTarget',
+		        title: '操作对象'
+		    },
+		    {
+		        field: 'logRemark',
+		        title: '其他',
+		        width:350
+		    }
+	    	]
+		});
+		function queryParams(params) {
+			return {
+				limit: params.limit,
+				offset: params.offset
+			};
+		}
+	});
+</script>
+</body>
+</html>
