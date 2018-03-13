@@ -3,6 +3,7 @@ package com.elasticcloudservice.predict;
 import com.filetool.util.FileUtil;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,9 @@ public class Predict {
     public static String[] predictVm(String[] ecsContent, String[] inputContent) {
 
         /** =========do your work here========== **/
-
+        // 每个flavor 的加速值，用于二次方项
+        //                       1   2   3   4  5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20
+        double acceleration[] = {0 , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 };
         String[] results = null;
 
         List<String> history = new ArrayList<String>();
@@ -33,7 +36,7 @@ public class Predict {
 // -------------------------------------------------------------------------------------------
         InputNode[] inputNodes = new InputNode[inputContent.length];
 
-        getInputNodes(inputNodes,inputContent);
+        getInputNodes(inputNodes, inputContent);
 
 //        for (int i = 0; i < inputContent.length; i++) {
 //            inputContent[i] = inputContent[i].replaceAll("[ \t]+", " ");
@@ -46,12 +49,48 @@ public class Predict {
 
 //        test1(inputNodes);
 
-        String[] inputContentTwo = FileUtil.read("C:\\Users\\newbie\\IdeaProjects\\sdk-java\\code\\ecs\\src\\inputFilePath2.txt",null);
-        InputNode[] inputNodesTwo = new InputNode[inputContentTwo.length];
-        getInputNodes(inputNodesTwo,inputContentTwo);
+//        String[] inputContentTwo = FileUtil.read("C:\\Users\\newbie\\IdeaProjects\\sdk-java\\code\\ecs\\src\\inputFilePath2.txt",null);
+//        InputNode[] inputNodesTwo = new InputNode[inputContentTwo.length];
+//        getInputNodes(inputNodesTwo,inputContentTwo);
+//
+//
+        test2(inputNodes, TimeType.DAY);
 
 
-        test2(inputNodesTwo, TimeType.DAY);
+
+
+
+
+
+        List<TimeNum> list1 = new LinkedList<>();
+        classifyOneByFlavor(inputNodes, list1, "flavor8", TimeType.DAY);    // 选出数据 list1
+        numCumulation(list1);   // 累加list1的值
+        zeroBegin(list1);       // 减去第一个值
+        double fitresult[] = new double[2]; // 拟合结果存放
+
+        computeLinearFittingPara(list1, fitresult); // 计算拟合结果
+
+        System.out.println(list1);
+        System.out.println(fitresult[0] + "\t" + fitresult[1]);
+        System.out.println(reappearProbabilityByDay(inputNodes,list1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //以上用于测试
         return results;
@@ -173,14 +212,160 @@ public class Predict {
         }
     }
 
-    static enum TimeType {MINUTE, HOUR, DAY, DAY3, WEEK}
+    enum TimeType {MINUTE, HOUR, DAY, DAY3, WEEK}
+    // 计算线性回归方程
+    static class RegressionLine {
+        private double sumX;
+        private double sumY;
+        private double sumXX;
+        private double sumXY;
+        private double sumYY;
+        private double sumDeltaY2;
+        private double sst;
+        private double E;
+        private String[] xy;
+        private ArrayList listX;
+        private ArrayList listY;
+        private int XMax, YMax;
+        private float a0;
+        private float a1;
+        private int pn;
+        private boolean coefsValid;
+
+        public RegressionLine() {
+            XMax = 0;
+            YMax = 0;
+            pn = 0;
+            xy = new String[2];
+            listX = new ArrayList();
+            listY = new ArrayList();
+        }
+
+        public float getb() {
+            validateCoefficients();
+            return a0;
+        }
+
+        public float getw() {
+            validateCoefficients();
+            return a1;
+        }
+
+        public void addDataPoint(float x, float y) {
+            sumX += x;
+            sumY += y;
+            sumXX += x * x;
+            sumXY += x * y;
+            sumYY += y * y;
+
+            if (x > XMax) {
+                XMax = (int) x;
+            }
+            if (y > YMax) {
+                YMax = (int) y;
+            }
+
+            // 把每个点的具体坐标存入ArrayList中，备用
+
+            xy[0] = (int) x + "";
+            xy[1] = (int) y + "";
+            if (x != 0 && y != 0) {
+
+                try {
+                    listX.add(pn, xy[0]);
+                    listY.add(pn, xy[1]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            ++pn;
+            coefsValid = false;
+        }
+
+        public float at(int x) {
+            if (pn < 2)
+                return Float.NaN;
+
+            validateCoefficients();
+            return a0 + a1 * x;
+        }
+
+        private void validateCoefficients() {
+            if (coefsValid)
+                return;
+
+            if (pn >= 2) {
+                float xBar = (float) sumX / pn;
+                float yBar = (float) sumY / pn;
+
+                a1 = (float) ((pn * sumXY - sumX * sumY) / (pn * sumXX - sumX
+                        * sumX));
+                a0 = (float) (yBar - a1 * xBar);
+            } else {
+                a0 = a1 = Float.NaN;
+            }
+
+            coefsValid = true;
+        }
+
+        public double getR() {
+            for (int i = 0; i < pn - 1; i++) {
+                float Yi = (float) Integer.parseInt(listY.get(i).toString());
+                float Y = at(Integer.parseInt(listX.get(i).toString()));
+                float deltaY = Yi - Y;
+                float deltaY2 = deltaY * deltaY;
+                sumDeltaY2 += deltaY2;
+
+            }
+
+            sst = sumYY - (sumY * sumY) / pn;
+            E = 1 - sumDeltaY2 / sst;
+
+            return round(E, 4);
+        }
+
+        public double round(double v, int scale) {
+
+            if (scale < 0) {
+                throw new IllegalArgumentException(
+                        "The scale must be a positive integer or zero");
+            }
+
+            BigDecimal b = new BigDecimal(Double.toString(v));
+            BigDecimal one = new BigDecimal("1");
+            return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+        }
+
+        public float round(float v, int scale) {
+
+            if (scale < 0) {
+                throw new IllegalArgumentException(
+                        "The scale must be a positive integer or zero");
+            }
+
+            BigDecimal b = new BigDecimal(Double.toString(v));
+            BigDecimal one = new BigDecimal("1");
+            return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).floatValue();
+
+        }
+
+//        private static void printLine(RegressionLine line) {
+//            System.out.println("\n回归线公式:  y = " + line.getw() + "x + "
+//                    + line.getb());
+//            System.out.println("误差：     R^2 = " + line.getR());
+//        }
+
+    }
 
     /**
      * 分解和提取原始数据
-     * @param inputNodes    把每条数据转换成InputNode存放的地方
-     * @param inputContent  存放的原始数据数组
+     *
+     * @param inputNodes   把每条数据转换成InputNode存放的地方
+     * @param inputContent 存放的原始数据数组
      */
-    public static void getInputNodes(InputNode[] inputNodes, String[] inputContent){
+    public static void getInputNodes(InputNode[] inputNodes, String[] inputContent) {
         for (int i = 0; i < inputContent.length; i++) {
             inputContent[i] = inputContent[i].replaceAll("[ \t]+", " ");
             String[] array = inputContent[i].split(" ");
@@ -188,6 +373,7 @@ public class Predict {
             inputNodes[i] = node;
         }
     }
+
     // 用于输出一条数据，便于MATLAB调试
     public static void classifyAllByFlavor(final InputNode[] inputNodes, String[] results, String aim, TimeType timeType) {
         HashMap<String, Integer> hashMap = new HashMap<>();
@@ -202,9 +388,9 @@ public class Predict {
                 key = x.getHour() + "";
             } else if (timeType == TimeType.MINUTE) {
                 key = x.getMinute() + "";
-            } else if(timeType == TimeType.WEEK){
+            } else if (timeType == TimeType.WEEK) {
                 key = x.getWeek() + "";
-            }else{
+            } else {
                 key = x.getDay3() + "";
             }
             if (hashMap.containsKey(key)) {
@@ -231,10 +417,11 @@ public class Predict {
 
     /**
      * 每次通过aim（flavor）和 TimeType，筛选出一组数据
+     *
      * @param inputNodes
-     * @param results   存放结果的list
-     * @param aim  flavor类型
-     * @param timeType  时间单位
+     * @param results    存放结果的list
+     * @param aim        flavor类型
+     * @param timeType   时间单位
      */
     public static void classifyOneByFlavor(final InputNode[] inputNodes, List<TimeNum> results, String aim, TimeType timeType) {
         HashMap<String, Integer> hashMap = new HashMap<>();
@@ -249,9 +436,9 @@ public class Predict {
                 key = x.getHour() + "";
             } else if (timeType == TimeType.MINUTE) {
                 key = x.getMinute() + "";
-            } else if(timeType == TimeType.WEEK){
+            } else if (timeType == TimeType.WEEK) {
                 key = x.getWeek() + "";
-            }else{
+            } else {
                 key = x.getDay3() + "";
             }
 
@@ -361,6 +548,51 @@ public class Predict {
         }
     }
 
+    /**
+     * 递增
+     *
+     * @param list
+     */
+    public static void numCumulation(List<TimeNum> list) {
+        if (list.isEmpty()) return;
+        for (int i = 1; i < list.size(); i++) {
+            list.get(i).num += list.get(i - 1).num;
+        }
+    }
+
+    /**
+     * 计算线性拟合参数
+     *
+     * @param xylist 要拟合的数据
+     * @param result w,b返回结果存放处
+     */
+    public static void computeLinearFittingPara(final List<TimeNum> xylist, double[] result) {
+        if (xylist.isEmpty()) return;
+        double w = 0.1, b = -100, eta = 0.9;
+        RegressionLine regressionLine = new RegressionLine();
+        for (TimeNum timeNum : xylist) {
+            float xtime = Float.valueOf(timeNum.time);
+            float ynum = (float) timeNum.num;
+            regressionLine.addDataPoint(xtime,ynum);
+        }
+        result[0] = regressionLine.getw();
+        result[1] = regressionLine.getb();
+    }
+
+    /**
+     * 计算此flavor平均每天出现的概率
+     * @param inputNodes
+     * @param timeNumLists
+     * @return
+     */
+    public static double reappearProbabilityByDay(final InputNode[] inputNodes, final List<TimeNum> timeNumLists){
+        if (inputNodes == null || timeNumLists == null) return 0.0;
+        double result = 0.0;
+        double inputNodessize = inputNodes[inputNodes.length-1].getDay() - inputNodes[0].getDay();
+        result = timeNumLists.size() / inputNodessize;
+        System.out.println(timeNumLists.size() + "\t" + inputNodessize);
+        return result;
+    }
 
     // 测试1
     public static void test1(InputNode[] inputNodes) {
@@ -371,7 +603,7 @@ public class Predict {
             String aim = "flavor" + i;
             classifyAllByFlavor(inputNodes, results, aim, TimeType.DAY);
         }
-        FileUtil.write("C:\\Users\\newbie\\IdeaProjects\\sdk-java\\code\\ecs\\src\\mydata.txt", results, false);
+        FileUtil.write("C:\\Users\\nice01qc\\IdeaProjects\\sdk-java\\code\\ecs\\src\\mydata.txt", results, false);
 
         System.out.println("Minute: " + inputNodes[0].getMinute());
         System.out.println("Hour:" + inputNodes[0].getHour());
@@ -388,7 +620,7 @@ public class Predict {
             // 归一化
             zeroBegin(list);
             // 过滤数据处理
-            filterDataAndReplaceByMean(list,6);
+            filterDataAndReplaceByMean(list, 6);
             if (list.isEmpty()) continue;
             resultList.add(String.valueOf(i) + '\t' + "0");
             for (int j = 0; j < list.size(); j++) {
@@ -396,8 +628,7 @@ public class Predict {
             }
         }
 
-        FileUtil.write("C:\\Users\\newbie\\IdeaProjects\\sdk-java\\code\\ecs\\src\\mydata.txt", resultList, false);
+        FileUtil.write("C:\\Users\\nice01qc\\IdeaProjects\\sdk-java\\code\\ecs\\src\\mydata.txt", resultList, false);
     }
-
 
 }
