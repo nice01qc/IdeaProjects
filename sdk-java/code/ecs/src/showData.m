@@ -146,11 +146,10 @@ for i=7:11
    hold on;
 end
 
-
-
-
-
-
-
-
-
+figure(8)
+for i=8:8
+   plot(times(i,:),nums(i,:),'LineWidth',1.5); 
+   title('1 ge');
+   grid on;
+   hold on;
+end

@@ -2,8 +2,8 @@ ecsDataPath.txt
 inputFilePath.txt
 resultFilePath.txt
 
-C:\Users\newbie\Desktop\sdk-java\code\ecs\src\ecsDataPath.txt
-C:\Users\newbie\Desktop\sdk-java\code\ecs\src\inputFilePath.txt
+C:\Users\newbie\IdeaProjects\sdk-java\code\ecs\src\ecsDataPath.txt
+C:\Users\newbie\IdeaProjects\sdk-java\code\ecs\src\inputFilePath.txt
 C:\Users\newbie\Desktop\sdk-java\code\ecs\src\resultFilePath.txt
 
 

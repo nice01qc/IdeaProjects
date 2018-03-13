@@ -30,32 +30,28 @@ public class Predict {
                 history.add(uuid + " " + flavorName + " " + createTime);
             }
         }
-
+// -------------------------------------------------------------------------------------------
         InputNode[] inputNodes = new InputNode[inputContent.length];
-        for (int i = 0; i < inputContent.length; i++) {
-            inputContent[i] = inputContent[i].replaceAll("[ \t]+", " ");
-            String[] array = inputContent[i].split(" ");
-            InputNode node = new InputNode(array[0], array[1], array[2] + " " + array[3]);
-            inputNodes[i] = node;
-        }
+
+        getInputNodes(inputNodes,inputContent);
+
+//        for (int i = 0; i < inputContent.length; i++) {
+//            inputContent[i] = inputContent[i].replaceAll("[ \t]+", " ");
+//            String[] array = inputContent[i].split(" ");
+//            InputNode node = new InputNode(array[0], array[1], array[2] + " " + array[3]);
+//            inputNodes[i] = node;
+//        }
 
         // 一下用于测试
 
 //        test1(inputNodes);
-        test2(inputNodes, TimeType.DAY3);
-//        List<TimeNum> list = new LinkedList<>();
-//        classifyOneByFlavor(inputNodes,list,"flavor3",TimeType.MINUTE);
-//        zeroBegin(list);
-//        System.out.println(variance(list));
-//        System.out.println(newVariance(list));
-//        filterData(list,2);
-//        System.out.println(list);
 
-//
-//        System.out.println("Minute: " + inputNodes[0].getMinute());
-//        System.out.println("Hour:" + inputNodes[0].getHour());
-//        System.out.println("Day:" + inputNodes[0].getDay());
-//        System.out.println("Day3:" + inputNodes[0].getDay3());
+        String[] inputContentTwo = FileUtil.read("C:\\Users\\newbie\\IdeaProjects\\sdk-java\\code\\ecs\\src\\inputFilePath2.txt",null);
+        InputNode[] inputNodesTwo = new InputNode[inputContentTwo.length];
+        getInputNodes(inputNodesTwo,inputContentTwo);
+
+
+        test2(inputNodesTwo, TimeType.DAY);
 
         //以上用于测试
         return results;
@@ -179,6 +175,19 @@ public class Predict {
 
     static enum TimeType {MINUTE, HOUR, DAY, DAY3, WEEK}
 
+    /**
+     * 分解和提取原始数据
+     * @param inputNodes    把每条数据转换成InputNode存放的地方
+     * @param inputContent  存放的原始数据数组
+     */
+    public static void getInputNodes(InputNode[] inputNodes, String[] inputContent){
+        for (int i = 0; i < inputContent.length; i++) {
+            inputContent[i] = inputContent[i].replaceAll("[ \t]+", " ");
+            String[] array = inputContent[i].split(" ");
+            InputNode node = new InputNode(array[0], array[1], array[2] + " " + array[3]);
+            inputNodes[i] = node;
+        }
+    }
     // 用于输出一条数据，便于MATLAB调试
     public static void classifyAllByFlavor(final InputNode[] inputNodes, String[] results, String aim, TimeType timeType) {
         HashMap<String, Integer> hashMap = new HashMap<>();
@@ -220,7 +229,13 @@ public class Predict {
         }
     }
 
-    // 每次通过aim（flavor）和 TimeType，筛选出一组数据
+    /**
+     * 每次通过aim（flavor）和 TimeType，筛选出一组数据
+     * @param inputNodes
+     * @param results   存放结果的list
+     * @param aim  flavor类型
+     * @param timeType  时间单位
+     */
     public static void classifyOneByFlavor(final InputNode[] inputNodes, List<TimeNum> results, String aim, TimeType timeType) {
         HashMap<String, Integer> hashMap = new HashMap<>();
 
@@ -373,7 +388,7 @@ public class Predict {
             // 归一化
             zeroBegin(list);
             // 过滤数据处理
-            filterDataAndReplaceByMean(list,10);
+            filterDataAndReplaceByMean(list,6);
             if (list.isEmpty()) continue;
             resultList.add(String.valueOf(i) + '\t' + "0");
             for (int j = 0; j < list.size(); j++) {
