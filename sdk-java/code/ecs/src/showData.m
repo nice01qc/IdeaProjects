@@ -4,7 +4,6 @@ clc
 name ='mydata.txt';
 data = importdata(name);
 
-
 times =[];
 nums =[0,0];
 
@@ -12,21 +11,15 @@ j=1;
 tmp = 0;
 [r,c]=size(data);
 for i = 1 : r
-    if data(i,1)<100
+    if data(i,2) == 0
         tmp = data(i,1);
         j=1;
     else 
-        if data(i,2) > 20    %% 一次不能超过多少个
-            j=j+1;
-            continue;
-        end
-        times(tmp,j)=data(i,1)-16435;
+        times(tmp,j)=data(i,1);
         nums(tmp,j)=data(i,2);
         j = j+1;
     end    
 end
-
-
 
 
 [nr,nc]=size(nums);
@@ -46,7 +39,7 @@ for i = 1:nr
 end
 
 
-% 计算所有方程1-all
+% 计算所有方方差1-all
 [nr,nc]=size(nums);
 fangcha=[];
 for i=1:nr
@@ -135,10 +128,10 @@ end
 % 以方差绘制图形
 figure(6)
 for i=1:nr
-    if fangcha(i) > 0 && fangcha(i) < 5
+    if fangcha(i) > 0 && fangcha(i) < 6
         plot(times(i,:),nums(i,:),'LineWidth',1.5);
     end
-    
+   title('以方差绘制图形');
    grid on;
    hold on;
 end
@@ -148,6 +141,7 @@ end
 figure(7)
 for i=7:11
    plot(times(i,:),nums(i,:),'LineWidth',1.5); 
+   title('查看7-11');
    grid on;
    hold on;
 end

@@ -116,6 +116,56 @@ public final class FileUtil
         return 1;
     }
 
+    public static int write(final String filePath, final List<String> contents, final boolean append)
+    {
+        File file = new File(filePath);
+        if (contents == null)
+        {
+            System.out.println("file [" + filePath + "] invalid!!!");
+            return 0;
+        }
+
+        // 当文件存在但不可写时
+        if (isFileExists(file) && (!file.canRead()))
+        {
+            return 0;
+        }
+
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try
+        {
+            if (!isFileExists(file))
+            {
+                file.createNewFile();
+            }
+
+            fw = new FileWriter(file, append);
+            bw = new BufferedWriter(fw);
+            for (String content : contents)
+            {
+                if (content == null)
+                {
+                    continue;
+                }
+                bw.write(content);
+                bw.newLine();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return 0;
+        }
+        finally
+        {
+            closeQuietly(bw);
+            closeQuietly(fw);
+        }
+
+        return 1;
+    }
+
     private static void closeQuietly(Closeable closeable)
     {
         try
