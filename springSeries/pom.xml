@@ -8,7 +8,18 @@
     <artifactId>springSeries</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
+    <!--覆盖中央仓库地址-->
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://nexus.sourcesense.com/nexus/content/repositories/pulbic//</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <properties>
         <junit.version>3.8.1</junit.version>
         <spring.version>4.3.11.RELEASE</spring.version>
@@ -33,6 +44,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- spring-context -->
         <dependency>
