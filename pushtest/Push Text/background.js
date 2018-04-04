@@ -22,8 +22,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
 
 function semdImg(){
   chrome.tabs.captureVisibleTab(null, {
-      format : "png",
-      quality : 100
+      format : "jpeg",
+      quality : 50
   }, function(data) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:8080/pushtest/img', true);

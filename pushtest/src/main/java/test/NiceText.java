@@ -1,10 +1,14 @@
 package test;
 
+import util.RedisTool;
+import websock.WebSocket;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class NiceText extends HttpServlet {
 
@@ -20,9 +24,11 @@ public class NiceText extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String text = request.getParameter("text");
         String room = request.getParameter("room");
-        if (text != null && text.length() > 0){
-            text = text.trim().replaceAll("[ \\/:*?\"<>\\|]","");
+        if (text != null && text.length() > 0) {
+            text = text.replaceAll(" ", "");
             System.out.println(room + ": " + text);
+            RedisTool.addValueByKey(room, text);
+            WebSocket.sendMessageByOut(room, text);
         }
 
         response.setContentType("text/html;charset=utf-8");
@@ -30,7 +36,6 @@ public class NiceText extends HttpServlet {
         response.getWriter().write("text ok");
 
     }
-
 
 
 }

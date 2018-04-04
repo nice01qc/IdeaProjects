@@ -1,0 +1,15 @@
+redis-server.exe redis.windows.conf
+
+redis-cli.exe -h 127.0.0.1 -p 6379
+
+linux:
+$ wget http://download.redis.io/releases/redis-2.8.17.tar.gz
+$ tar xzf redis-2.8.17.tar.gz
+$ cd redis-2.8.17
+$ make
+
+
+$ cd src
+$ ./redis-server redis.conf
+$ cd src
+$ ./redis-cli

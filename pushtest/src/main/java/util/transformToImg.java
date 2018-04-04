@@ -7,21 +7,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class transformToImg {
+public class TransformToImg {
 
 
-
-
-
-    public static boolean GenerateImage(String imgStr,String imgName,String imgPath) throws IOException {
+    public static boolean GenerateImage(String imgData, String imgName, String imgPath) throws IOException {
         //对Base64字符串解码并生成图片
-        if (imgStr == null) {
+        if (imgData == null) {
             return false;
         } //图像数据为空
         BASE64Decoder decoder = new BASE64Decoder();
 
         //Base64解码
-        byte[] b = decoder.decodeBuffer(imgStr);
+        byte[] b = decoder.decodeBuffer(imgData);
         File headPath = new File(imgPath);
         if (!headPath.exists()) {
             headPath.mkdirs();
@@ -36,12 +33,5 @@ public class transformToImg {
         return true;
     }
 
-    public static void main(String[] args) throws IOException {
-        String imgStr = "452345";
-        System.out.println(GenerateImage(imgStr,"one","C:\\Users\\nice01qc\\Desktop"));
-    }
 
-
-
-
-    }
+}

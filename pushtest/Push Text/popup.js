@@ -9,7 +9,11 @@ if (localRootNum) {
 
 
 mybutton.onclick=function(){
-  
+  if (myroom.value == "" || myroom.value == null || myroom.value == undefined){
+    alert("房间号不能为空！");
+    return;
+  }
+
   chrome.runtime.sendMessage({
     directive: 'room',
     roomNum: myroom.value
