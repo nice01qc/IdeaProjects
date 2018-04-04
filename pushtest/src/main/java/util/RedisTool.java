@@ -13,8 +13,7 @@ public class RedisTool {
     static {
         initialPool();
         jedis = jedisPool.getResource();
-
-
+        jedis.set("imgdir","C:\\Users\\nice01qc\\Desktop\\");
     }
 
     // 初始化非切片池
@@ -36,6 +35,16 @@ public class RedisTool {
     // 清空给定key
     public static Long delByKey(String key) {
         return jedis.del(key);
+    }
+
+    // 增加某个key
+    public static Long increKeyValue(String key){
+        return jedis.incr(key);
+    }
+
+    // 是否存在某个key
+    public static boolean isExit(String key){
+        return jedis.exists(key);
     }
 
     // 添加数据

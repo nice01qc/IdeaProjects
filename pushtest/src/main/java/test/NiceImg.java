@@ -1,5 +1,6 @@
 package test;
 
+import util.RedisTool;
 import util.TransformToImg;
 
 import javax.servlet.ServletConfig;
@@ -32,10 +33,20 @@ public class NiceImg extends HttpServlet {
         String imgdata = request.getParameter("img");
         String room = request.getParameter("room");
 
-        if (imgdata != null && imgdata.length() > 200 && room != null &&  !room.equals("")) {
+        if (imgdata != null && imgdata.length() > 200 && room != null && !room.equals("")) {
+
             int index = imgdata.indexOf("base64,") + "base64,".length();
             imgdata = imgdata.substring(index);
-            TransformToImg.GenerateImage(imgdata,getImgName(room),path + room);
+            TransformToImg.GenerateImage(imgdata, getImgName(room), path + room);
+
+            if (RedisTool.isExit(room)) {    // 把room信息加入到数据库
+                RedisTool.increKeyValue(room);
+            } else {
+                RedisTool.addValueByKey(room, "1");
+            }
+
+
+
         }
 
         response.setContentType("text/html;charset=utf-8");
@@ -44,13 +55,13 @@ public class NiceImg extends HttpServlet {
 
     }
 
-    private String getImgName(String room){
-        Integer localRoom = (Integer)servletConfig.getServletContext().getAttribute("room");
-        if (localRoom != null && !localRoom.equals("")){
-            servletConfig.getServletContext().setAttribute("room",new Integer(localRoom+1));
+    private String getImgName(String room) {
+        Integer localRoom = (Integer) servletConfig.getServletContext().getAttribute("room");
+        if (localRoom != null && !localRoom.equals("")) {
+            servletConfig.getServletContext().setAttribute("room", new Integer(localRoom + 1));
             return room + "-" + localRoom;
-        }else {
-            servletConfig.getServletContext().setAttribute("room",new Integer(1));
+        } else {
+            servletConfig.getServletContext().setAttribute("room", new Integer(1));
             return room + "-" + 1;
         }
     }
