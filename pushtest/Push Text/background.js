@@ -26,13 +26,8 @@ function semdImg(){
       quality : 50
   }, function(data) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8080/pushtest/img', true);
+    xhr.open('POST', 'http://118.25.1.128:8080/pushtest//img', true);
 
-    xhr.onload = function(e) {
-        if (this.status == 200) {
-        alert(this.response);
-        }
-    };
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("img="+encodeURIComponent(data) + "&room=" + encodeURIComponent(room));
 
@@ -42,13 +37,8 @@ function semdImg(){
 
 function semdtext(text){
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8080/pushtest/text', true);
+    xhr.open('POST', 'http://118.25.1.128:8080/pushtest/text', true);
 
-    xhr.onload = function(e) {
-        if (this.status == 200) {
-        alert(this.response);
-        }
-    };
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("text="+encodeURIComponent(text) + "&room=" + encodeURIComponent(room));
 }

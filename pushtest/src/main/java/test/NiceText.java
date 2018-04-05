@@ -31,9 +31,9 @@ public class NiceText extends HttpServlet {
             WebSocket.sendMessageByOut(room, text);
         }
 
-        response.setContentType("text/html;charset=utf-8");
-
-        response.getWriter().write("text ok");
+//        response.setContentType("text/html;charset=utf-8");
+//
+//        response.getWriter().write("text ok");
 
     }
 

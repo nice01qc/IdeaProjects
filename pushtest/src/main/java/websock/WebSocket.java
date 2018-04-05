@@ -43,8 +43,8 @@ public class WebSocket {
         if (!room.matches("^[0-9a-zA-Z]+$")) return;
         this.room = room;
         // 发送以存储的文字
-        if (RedisTool.isExit(room+"text")){
-            List<String> listroom = RedisTool.getAllByKey(room+"text");
+        if (RedisTool.isExit(room + "text")) {
+            List<String> listroom = RedisTool.getAllByKey(room + "text");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
                     sendMessageByOut(room, x);
@@ -53,12 +53,10 @@ public class WebSocket {
         }
 
         // 发送以存储的图片
-        if (!RedisTool.isExit(room+"num")) return;
-        int imgNum = Integer.parseInt(RedisTool.getByKey(room+"num"));
-        String imgpath = RedisTool.getByKey("imgdir") + room + File.separator;
+        if (!RedisTool.isExit(room + "num")) return;
+        int imgNum = Integer.parseInt(RedisTool.getByKey(room + "num"));
         for (int i = 1; i <= imgNum; i++) {
-//            sendMessageByOut(room, imgpath + room + "-" + i + ".jpeg");
-            sendMessageByOut(room,"http://img1.imgtn.bdimg.com/it/u=594559231,2167829292&fm=27&gp=0.jpg");
+            WebSocket.sendMessageByOut(room, RedisTool.getByKey("webdir") + room + "/" + room + "-" + i + ".jpeg");
         }
     }
 

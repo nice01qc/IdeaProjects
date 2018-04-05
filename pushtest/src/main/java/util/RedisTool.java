@@ -14,7 +14,8 @@ public class RedisTool {
         initialPool();
         jedis = jedisPool.getResource();
         emptyRedis();
-        jedis.set("imgdir", "C:\\Users\\nice01qc\\Desktop\\");
+        jedis.set("imgdir", "/var/www/html/");
+        jedis.set("webdir","http://118.25.1.128/");
     }
 
     // 初始化非切片池

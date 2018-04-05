@@ -40,13 +40,8 @@ public class NiceImg extends HttpServlet {
             imgdata = imgdata.substring(index);
             String imgName = getImgName(room);
             TransformToImg.GenerateImage(imgdata, imgName, path + room);
-//            WebSocket.sendMessageByOut(room,path + room + File.separator + imgName + ".jpeg");
-            WebSocket.sendMessageByOut(room,"http://img1.imgtn.bdimg.com/it/u=594559231,2167829292&fm=27&gp=0.jpg");
+            WebSocket.sendMessageByOut(room,path + room + File.separator + imgName + ".jpeg");
         }
-
-        response.setContentType("text/html;charset=utf-8");
-
-        response.getWriter().write("ok");
 
     }
 
