@@ -14,8 +14,6 @@ public class RedisTool {
         initialPool();
         jedis = jedisPool.getResource();
         emptyRedis();
-        jedis.set("imgdir", "/var/www/html/");
-        jedis.set("webdir","http://118.25.1.128/");
     }
 
     // 初始化非切片池
@@ -34,11 +32,6 @@ public class RedisTool {
         return jedis.flushDB();
     }
 
-    // 清空给定key
-    public static Long delByKey(String key) {
-        return jedis.del(key);
-    }
-
     // 是否存在某个key
     public static boolean isExit(String key) {
         return jedis.exists(key);
@@ -48,18 +41,10 @@ public class RedisTool {
     public static Long listAddValueByKey(String key, String value) {
         return jedis.lpush(key, value);
     }
-    public static String stringSetValueByKey(String key,String value){
-        return jedis.set(key,value);
-    }
 
     // 设置过期时间
     public static Long setExpire(String key, int seconds) {
         return jedis.expire(key, seconds);
-    }
-
-    // 通过key获取信息
-    public static String getByKey(String key) {
-        return jedis.get(key);
     }
 
     // 获取所有数据

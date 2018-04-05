@@ -1,7 +1,6 @@
 package test;
 
 import util.RedisTool;
-import util.TransformToImg;
 import websock.WebSocket;
 
 import javax.servlet.ServletConfig;
@@ -9,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 
 public class NiceImg extends HttpServlet {
@@ -28,43 +26,16 @@ public class NiceImg extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String path = RedisTool.getByKey("imgdir");
-
         request.setCharacterEncoding("utf-8");
         String imgdata = request.getParameter("img");
         String room = request.getParameter("room");
 
         if (imgdata != null && imgdata.length() > 200 && room != null && room.matches("[0-9a-zA-Z]+")) {
 
-            int index = imgdata.indexOf("base64,") + "base64,".length();
-            imgdata = imgdata.substring(index);
-            String imgName = getImgName(room);
-            TransformToImg.GenerateImage(imgdata, imgName, path + room);
-            WebSocket.sendMessageByOut(room,path + room + File.separator + imgName + ".jpeg");
+            RedisTool.listAddValueByKey(room + "img", imgdata);
+            WebSocket.sendMessageByOut(room,imgdata);
         }
 
-    }
-
-    private String getImgName(String room) {
-        if (room == null || room.equals("")) {
-            System.out.println("NiceImg.getImgName 中 room 不合格");
-            return "";
-        }
-        String result = null;
-        String num;
-        if (RedisTool.isExit(room+"num")) {
-            num = String.valueOf(Integer.parseInt(RedisTool.getByKey(room+"num")) + 1);
-            RedisTool.stringSetValueByKey(room+"num", num);
-        } else {
-            RedisTool.stringSetValueByKey(room+"num", "1");
-            num = "1";
-        }
-
-        RedisTool.setExpire(room+"num", 60 * 60 * 4);
-
-        result = room + "-" + num;
-
-        return result;
     }
 
 

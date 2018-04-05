@@ -19,7 +19,7 @@
 
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
-        if (event.data.match(/(.jpeg)$|(.png)$|(.jpg)$/g)) {
+        if (event.data.match(/jpeg;base64/g)) {
             setImg(event.data);
         }else{
             setMessageInnerHTML(event.data);    // 此处处理此处代码

@@ -53,10 +53,13 @@ public class WebSocket {
         }
 
         // 发送以存储的图片
-        if (!RedisTool.isExit(room + "num")) return;
-        int imgNum = Integer.parseInt(RedisTool.getByKey(room + "num"));
-        for (int i = 1; i <= imgNum; i++) {
-            WebSocket.sendMessageByOut(room, RedisTool.getByKey("webdir") + room + "/" + room + "-" + i + ".jpeg");
+        if (RedisTool.isExit(room + "img")) {
+            List<String> listroom = RedisTool.getAllByKey(room + "img");
+            if (listroom != null && !listroom.isEmpty()) {
+                for (String x : listroom) {
+                    sendMessageByOut(room, x);
+                }
+            }
         }
     }
 
