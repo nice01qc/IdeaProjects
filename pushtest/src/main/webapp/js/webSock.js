@@ -19,7 +19,7 @@
 
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
-        if (event.data.match(/^-[0-9]+$/)) {
+        if (event.data.match(/(.jpeg)$|(.png)$|(.jpg)$/g)) {
             setImg(event.data);
         }else{
             setMessageInnerHTML(event.data);    // 此处处理此处代码
@@ -52,6 +52,9 @@
         var div = document.createElement("div");
         var textNode = document.createTextNode(innerHTML);
         div.append(textNode);
+        div.ondblclick=function(){
+            this.parentNode.removeChild(this);
+        }
         message.append(div);
     }
 
@@ -59,6 +62,9 @@
     function setImg(imgdir){
         var imgArea = document.getElementById('imgArea');
         var img = document.createElement("img");
-        img.src = imgdir+".jpeg";
+        img.src = imgdir;
+        img.ondblclick=function(){
+            this.parentNode.removeChild(this);
+        }
         imgArea.append(img);
     }

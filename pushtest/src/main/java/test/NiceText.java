@@ -26,8 +26,8 @@ public class NiceText extends HttpServlet {
         String room = request.getParameter("room");
         if (text != null && text.length() > 0) {
             text = text.replaceAll(" ", "");
-            System.out.println(room + ": " + text);
-            RedisTool.addValueByKey(room, text);
+            System.out.println(room + " : " + text);
+            RedisTool.listAddValueByKey(room + "text", text);
             WebSocket.sendMessageByOut(room, text);
         }
 

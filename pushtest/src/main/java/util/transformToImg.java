@@ -24,7 +24,7 @@ public class TransformToImg {
             headPath.mkdirs();
         }
         //定义图片路径
-        String imgFilePath = imgPath + "\\" + imgName + ".jpeg";
+        String imgFilePath = imgPath + File.separator + imgName + ".jpeg";
         //新生成的图片
         OutputStream out = new FileOutputStream(imgFilePath);
         out.write(b);

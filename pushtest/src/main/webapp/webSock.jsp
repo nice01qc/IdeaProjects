@@ -14,10 +14,12 @@
 </head>
 <body>
     <div id="textArea">
-    	输入接收消息房间号：<br/><input id="room" type="text"/>
-    	<button onclick="sendRoom()">发送消息</button><hr/>
-    	<button onclick="closeWebSocket()">关闭WebSocket连接</button><hr/>
-    	<div id="message"></div>
+    	<span>输入接收消息房间号：</span><br/><input id="room" type="text"/>
+    	<button onclick="sendRoom()">确定</button>
+    	<button onclick="closeWebSocket()">关闭连接</button><hr/>
+    	<div id="message">
+    		<div id="firstdiv">以下消息双击可以删除,图片也可以</div>
+    	</div>
     </div>
     <div id="imgArea"></div>
 

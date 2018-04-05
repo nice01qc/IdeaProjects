@@ -13,7 +13,8 @@ public class RedisTool {
     static {
         initialPool();
         jedis = jedisPool.getResource();
-        jedis.set("imgdir","C:\\Users\\nice01qc\\Desktop\\");
+        emptyRedis();
+        jedis.set("imgdir", "C:\\Users\\nice01qc\\Desktop\\");
     }
 
     // 初始化非切片池
@@ -37,19 +38,17 @@ public class RedisTool {
         return jedis.del(key);
     }
 
-    // 增加某个key
-    public static Long increKeyValue(String key){
-        return jedis.incr(key);
-    }
-
     // 是否存在某个key
-    public static boolean isExit(String key){
+    public static boolean isExit(String key) {
         return jedis.exists(key);
     }
 
     // 添加数据
-    public static Long addValueByKey(String key, String value) {
+    public static Long listAddValueByKey(String key, String value) {
         return jedis.lpush(key, value);
+    }
+    public static String stringSetValueByKey(String key,String value){
+        return jedis.set(key,value);
     }
 
     // 设置过期时间
@@ -57,9 +56,14 @@ public class RedisTool {
         return jedis.expire(key, seconds);
     }
 
+    // 通过key获取信息
+    public static String getByKey(String key) {
+        return jedis.get(key);
+    }
+
     // 获取所有数据
-    public static List<String> getAllByKey(String key){
-        return jedis.lrange(key,0,-1);
+    public static List<String> getAllByKey(String key) {
+        return jedis.lrange(key, 0, -1);
     }
 
 

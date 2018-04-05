@@ -7,13 +7,15 @@
 
 <div id="imgArea"></div>
 
+<img src="C:\Users\nice01qc\Desktop\123\123-1.jpeg">
+
 <script type="text/javascript">
 	
+	var text = "http://img1.imgtn.bdimg.com/it/u=594559231,2167829292&fm=27&gp=0.jpg";
 
-		var imgArea = document.getElementById('imgArea');
-        var img = document.createElement("img");
-        img.src = "C:\\Users\\nice01qc\\Desktop\\1.jpg";
-        imgArea.append(img);
+	alert(text.match(/(.jpeg)$|(.png)$|(.jpg)$/g));
+
+
 </script>
 
 
