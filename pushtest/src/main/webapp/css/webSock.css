@@ -56,7 +56,18 @@
 }
 #imgArea img{
 	display: inline-block;
-	width: 1200px;
+	width: 1000px;
 	margin: 5px 10px;
 	border: 2px solid #666666;
+}
+
+span#imgNum{
+	background: #DC143C;
+	opacity: 0.9;
+	padding:3px 5px;
+}
+span#TextNum{
+	background: #32CD32;
+	opacity: 0.9;
+	padding:3px 5px;
 }

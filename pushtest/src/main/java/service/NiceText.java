@@ -1,6 +1,7 @@
-package test;
+package service;
 
 import util.RedisTool;
+import websock.ManageSocket;
 import websock.WebSocket;
 
 import javax.servlet.ServletException;
@@ -21,20 +22,29 @@ public class NiceText extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.setCharacterEncoding("utf-8");
+
         String text = request.getParameter("text");
         String room = request.getParameter("room");
         if (text != null && text.length() > 0) {
             text = text.replaceAll(" ", "");
-            System.out.println(room + " : " + text);
             RedisTool.listAddValueByKey(room + "text", text);
+            increTextNum();
+            RedisTool.setExpire(room + "text", 60 * 60);
             WebSocket.sendMessageByOut(room, text);
+            WebSocket.sendMessageByOut(room, "TextNum:" + request.getServletContext().getAttribute("allTextNum"));
+            ManageSocket.updateTextNum();
         }
 
-//        response.setContentType("text/html;charset=utf-8");
-//
-//        response.getWriter().write("text ok");
+    }
 
+
+    private void increTextNum() {
+        int allImgNum = 1;
+        String key = "allTextNum";
+        if (RedisTool.isExit(key)) {
+            allImgNum = Integer.parseInt(RedisTool.getStringValue(key)) + 1;
+        }
+        RedisTool.setStringValue(key, String.valueOf(allImgNum));
     }
 
 

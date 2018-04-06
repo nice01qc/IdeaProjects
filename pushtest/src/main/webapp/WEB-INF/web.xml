@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>NiceImg</servlet-name>
-        <servlet-class>test.NiceImg</servlet-class>
+        <servlet-class>service.NiceImg</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NiceImg</servlet-name>
@@ -16,12 +16,38 @@
 
     <servlet>
         <servlet-name>NiceText</servlet-name>
-        <servlet-class>test.NiceText</servlet-class>
+        <servlet-class>service.NiceText</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NiceText</servlet-name>
         <url-pattern>/text</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>FilterImg</filter-name>
+        <filter-class>filter.FilterImg</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterImg</filter-name>
+        <servlet-name>NiceImg</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>FilterText</filter-name>
+        <filter-class>filter.FilterText</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterText</filter-name>
+        <servlet-name>NiceText</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>SecretFilt</filter-name>
+        <filter-class>filter.SecretFilt</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecretFilt</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>f
 
 </web-app>

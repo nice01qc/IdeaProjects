@@ -9,21 +9,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WebSocket</title>
+    <title>message</title>
     <link href="css/webSock.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div id="textArea">
     	<span>输入接收消息房间号：</span><br/><input id="room" type="text"/>
     	<button onclick="sendRoom()">确定</button>
-    	<button onclick="closeWebSocket()">关闭连接</button><hr/>
+    	<button onclick="closeWebSocket()">关闭连接</button>
+    	<span id="imgNum"></span><span id="TextNum"></span><hr/>
     	<div id="message">
     		<div id="firstdiv">以下消息双击可以删除,图片也可以</div>
     	</div>
     </div>
     <div id="imgArea"></div>
 
+<script src="js/webSock.js"></script>
 </body>
 
-<script src="js/webSock.js"></script>
 </html>

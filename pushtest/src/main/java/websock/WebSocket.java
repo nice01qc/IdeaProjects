@@ -41,6 +41,10 @@ public class WebSocket {
     public void onMessage(String message, Session session) {
         String room = message.trim();
         if (!room.matches("^[0-9a-zA-Z]+$")) return;
+        // 把房间号加入到redis
+        RedisTool.setAddValueByKey("clientRoom", room);
+        // 更新房间号
+        ManageSocket.updateroom(room);
         this.room = room;
         // 发送以存储的文字
         if (RedisTool.isExit(room + "text")) {
@@ -77,7 +81,6 @@ public class WebSocket {
 
     // 外部调用方法
     public static void sendMessageByOut(String room, String message) {
-
         for (WebSocket item : webSocketSet) {
             if (!item.room.equals(room)) continue;
             try {
@@ -86,6 +89,28 @@ public class WebSocket {
                 e.printStackTrace();
                 continue;
             }
+        }
+    }
+
+    // 清理所有房间
+    public static void clearAllRoom() {
+        for (WebSocket webSocket : webSocketSet) {
+            webSocket = null;
+        }
+        webSocketSet.clear();
+        RedisTool.delKey("clientRoom");
+    }
+
+    // 清理指定房间名
+    public static void clearOneRoom(String room) {
+        for (WebSocket webSocket : webSocketSet) {
+            if (webSocket.room.equals(room)) {
+                webSocketSet.remove(webSocket);
+                break;
+            }
+        }
+        if (RedisTool.isExit("clientRoom")) {
+            RedisTool.delSetData("clientRoom", room);
         }
     }
 

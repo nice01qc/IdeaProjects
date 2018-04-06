@@ -1,7 +1,7 @@
     var websocket = null;
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://118.25.1.128:8080/pushtest/websocket");
+        websocket = new WebSocket("ws://118.25.1.128/pushtest/websocket");
     }
     else {
         alert('当前浏览器 Not support websocket')
@@ -21,6 +21,10 @@
     websocket.onmessage = function (event) {
         if (event.data.match(/jpeg;base64/g)) {
             setImg(event.data);
+        }else if(event.data.match(/^imgNum:[0-9]+$/g)){
+            document.getElementById("imgNum").innerHTML=event.data;
+        }else if(event.data.match(/^TextNum:[0-9]+$/g)){
+            document.getElementById("TextNum").innerHTML=event.data;
         }else{
             setMessageInnerHTML(event.data);    // 此处处理此处代码
         }
@@ -42,8 +46,16 @@
     //发送消息
     function sendRoom() {
         var message = document.getElementById('room').value;
-        websocket.send(message);
-        alert("ok get room, you can receive message ! or the room is reseted !");
+
+        if (message.match(/^[a-zA-Z0-9]+$/g)) {
+        	websocket.send(message);
+        	alert("ok get room, you can receive message ! or the room is reseted !");
+        	var messagenode = document.getElementById('message');
+        	messagenode.innerHTML="<div>以下消息双击可以删除,图片也可以</div>";
+        }else{
+        	alert("房间号码无效!");
+        }
+        
     }
 
     //将消息显示在网页上
