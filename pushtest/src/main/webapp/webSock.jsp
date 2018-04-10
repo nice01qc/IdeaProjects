@@ -13,7 +13,14 @@
     <link href="css/webSock.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+
+
+
     <div id="textArea">
+		<div>
+			提交答案：<input type="text=" id="headinput" value="请输入答案">
+			<button id="headtijiao">提交</button>
+		</div>
     	<span>输入接收消息房间号：</span><br/><input id="room" type="text"/>
     	<button onclick="sendRoom()">确定</button>
     	<button onclick="closeWebSocket()">关闭连接</button>
