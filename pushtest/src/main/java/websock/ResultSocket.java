@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/result")
 public class ResultSocket {
 
+    private String room = "";
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
     private static CopyOnWriteArraySet<ResultSocket> resultSocketSet = new CopyOnWriteArraySet<ResultSocket>();
 
@@ -31,7 +32,7 @@ public class ResultSocket {
     // 收到客户端消息后调用的方法
     @OnMessage
     public void onMessage(String message, Session session) {
-
+        this.room = message;
     }
 
     // 发生错误时调用
@@ -47,8 +48,9 @@ public class ResultSocket {
     }
 
     // 外部调用方法
-    public static void sendMessageByOut(String message) {
+    public static void sendMessageByOut(String room, String message) {
         for (ResultSocket item : resultSocketSet) {
+            if (! item.room.equals(room)) continue;
             try {
                 item.sendMessage(message);
             } catch (IOException e) {

@@ -11,6 +11,7 @@
 <head>
     <title>WebSocket</title>
     <link href="css/manage.css" rel="stylesheet" type="text/css"/>
+	<script src="js/para.js" ></script>
 </head>
 <body>
 

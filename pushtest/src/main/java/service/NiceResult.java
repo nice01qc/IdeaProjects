@@ -23,8 +23,9 @@ public class NiceResult extends HttpServlet {
 
 
         String text = request.getParameter("result");
-        if (text != null && text.length() > 0) {
-            ResultSocket.sendMessageByOut(text);
+        String room = request.getParameter("room");
+        if (text != null && text.length() > 0 && room != null && !room.equals("")) {
+            ResultSocket.sendMessageByOut(room, text);
         }
 
     }

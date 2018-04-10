@@ -11,6 +11,7 @@
 <head>
     <title>message</title>
     <link href="css/webSock.css" rel="stylesheet" type="text/css"/>
+	<script src="js/para.js" ></script>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
 
     <div id="textArea">
 		<div>
-			提交答案：<input type="text=" id="headinput" value="请输入答案">
+			提交答案：<input type="text=" id="headinput" value="">
 			<button id="headtijiao">提交</button>
 		</div>
     	<span>输入接收消息房间号：</span><br/><input id="room" type="text"/>
