@@ -109,6 +109,7 @@ public class WebSocket {
                 break;
             }
         }
+
         if (RedisTool.isExit("clientRoom")) {
             RedisTool.delSetData("clientRoom", room);
         }
