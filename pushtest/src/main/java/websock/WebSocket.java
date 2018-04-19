@@ -2,10 +2,7 @@ package websock;
 
 import util.RedisTool;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -38,7 +35,7 @@ public class WebSocket {
 
     // 收到客户端消息后调用的方法
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) throws IOException {
         String room = message.trim();
         if (!room.matches("^[0-9a-zA-Z]+$")) return;
         // 把房间号加入到redis
@@ -51,7 +48,7 @@ public class WebSocket {
             List<String> listroom = RedisTool.getAllByKey(room + "text");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
-                    sendMessageByOut(room, x);
+                    session.getBasicRemote().sendText(x);
                 }
             }
         }
@@ -61,7 +58,7 @@ public class WebSocket {
             List<String> listroom = RedisTool.getAllByKey(room + "img");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
-                    sendMessageByOut(room, x);
+                    session.getBasicRemote().sendText(x);
                 }
             }
         }
