@@ -70,7 +70,7 @@ function setMessageInnerHTML(innerHTML) {
     div.ondblclick = function () {
         this.parentNode.removeChild(this);
     }
-    message.append(div);
+    message.appendChild(div);
 }
 
 // 将图片加入imgdir 必须完整的格式，且以“-”加数据结尾
@@ -81,7 +81,7 @@ function setImg(imgdir) {
     img.ondblclick = function () {
         this.parentNode.removeChild(this);
     }
-    imgArea.append(img);
+    imgArea.appendChild(img);
 }
 
 

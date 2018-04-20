@@ -1,9 +1,10 @@
 
 #textArea{
-	width: 40%;
+	width: 30%;
 	border: 2px solid #DDDDDD;
 	padding: 10px;
 	position: fixed;
+	z-index: 1;
 }
 
 #textArea button{
@@ -54,6 +55,8 @@
 	width: 50%;
 	border: 2px solid #DDDDDD;
 	padding: 10px;
+	position: relative;
+	z-index: 1000;
 }
 #imgArea img{
 	display: inline-block;

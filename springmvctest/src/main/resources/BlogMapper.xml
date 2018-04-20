@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BookMapper">
+    <select id="selectBook" resultType="domain.Book">
+        select  * from book where id = #{id}
+    </select>
+
+
+    <select id="selectBooks" resultType="map">
+        select * from book
+    </select>
+
+    <resultMap id="bookResultMap" type="domain.Book">
+         <id property="id" column="id" />
+        <result property="author" column="author" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <select id="selectBook1" resultMap="bookResultMap">
+        select * from book
+    </select>
+
+    <resultMap id="studentResultMap"   type="domain.Student" >
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="sex" column="sex" />
+        <result property="age" column="age" />
+
+        <association property="clazz" column="clazz_id" javaType="domain.Clazz" select="selectClazzWithId">
+        </association>
+    </resultMap>
+
+    <select id="selectClazzWithId" resultType="domain.Clazz" >
+        select * from tb_clazz where id = #{id}
+    </select>
+
+    <select id="selectStudent" resultMap="studentResultMap">
+        select * from tb_student
+    </select>
+
+
+
+
+    <resultMap id="clazzResultMap" type="domain.Clazz" >
+        <id property="id" column="id" />
+        <result property="code" column="code" />
+
+        <collection property="students" javaType="ArrayList" column="id" ofType="domain.Student" select="selectStudentWithId">
+        </collection>
+    </resultMap>
+    <select id="selectStudentWithId" resultType="domain.Student">
+        select * from tb_student where clazz_id = #{id}
+    </select>
+
+    <select id="selectClazz" resultMap="clazzResultMap">
+        select * from tb_clazz
+    </select>
+</mapper>
+
+
+

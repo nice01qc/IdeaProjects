@@ -36,8 +36,8 @@ public class ManageSocket {
     // 收到客户端消息后调用的方法
     @OnMessage
     public void onMessage(String message, Session session) {
-        String room = message.trim();
-        if (room.matches("[a-zA-Z0-9]+")) {
+        String room = message.replaceAll(" ","");
+        if (room.matches("[:a-zA-Z0-9]+")) {
             if (room.equals(0)){
                 WebSocket.clearAllRoom();
             }

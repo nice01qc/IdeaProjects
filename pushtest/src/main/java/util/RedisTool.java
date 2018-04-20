@@ -51,6 +51,9 @@ public class RedisTool {
     public static Long listAddValueByKey(String key, String value) {
         return jedis.lpush(key, value);
     }
+    public static long getListLengthByKey(String key){
+        return jedis.llen(key);
+    }
 
     public static Long setAddValueByKey(String key, String value) {
         return jedis.sadd(key, value);
@@ -74,10 +77,15 @@ public class RedisTool {
         return jedis.smembers(key);
     }
 
+    public static int getSetLengthBykey(String key){
+        return jedis.smembers(key).size();
+    }
+
 
 
     public static String getStringValue(String key) {
         return jedis.get(key);
     }
+
 
 }

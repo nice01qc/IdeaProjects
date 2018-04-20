@@ -2,7 +2,10 @@ package websock;
 
 import util.RedisTool;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -48,7 +51,7 @@ public class WebSocket {
             List<String> listroom = RedisTool.getAllByKey(room + "text");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
-                    session.getBasicRemote().sendText(x);
+                    sendMessage(x);
                 }
             }
         }
@@ -58,7 +61,7 @@ public class WebSocket {
             List<String> listroom = RedisTool.getAllByKey(room + "img");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
-                    session.getBasicRemote().sendText(x);
+                    sendMessage(x);
                 }
             }
         }
@@ -110,6 +113,35 @@ public class WebSocket {
         if (RedisTool.isExit("clientRoom")) {
             RedisTool.delSetData("clientRoom", room);
         }
+
+        if (RedisTool.isExit(room + "text")){
+            if (RedisTool.isExit("allTextNum")){
+                int tmpsum = Integer.parseInt(RedisTool.getStringValue("allTextNum"));
+                int tmproomsum = (int) RedisTool.getListLengthByKey(room + "text");
+                int diff = Math.abs(tmpsum - tmproomsum);
+                RedisTool.setStringValue("allTextNum", String.valueOf(diff));
+                ManageSocket.updateTextNum();
+            }
+
+            RedisTool.delKey(room + "text");
+        }
+
+        if (RedisTool.isExit(room + "img")){
+
+            if (RedisTool.isExit("allImgNum")){
+                int tmpsum = Integer.parseInt(RedisTool.getStringValue("allImgNum"));
+                int tmproomsum = (int) RedisTool.getListLengthByKey(room + "img");
+                int diff = Math.abs(tmpsum - tmproomsum);
+                RedisTool.setStringValue("allImgNum", String.valueOf(diff));
+                ManageSocket.updateImgNum();
+            }
+
+            RedisTool.delKey(room + "img");
+        }
+
+
+
+
     }
 
 

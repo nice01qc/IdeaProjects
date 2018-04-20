@@ -4,8 +4,6 @@ import util.RedisTool;
 import websock.ManageSocket;
 import websock.WebSocket;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,12 +11,12 @@ import java.io.IOException;
 
 public class NiceImg extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         doPost(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         String imgdata = request.getParameter("img");
         String room = request.getParameter("room");
@@ -27,7 +25,7 @@ public class NiceImg extends HttpServlet {
             RedisTool.listAddValueByKey(room + "img", imgdata);
             increImgNum();  // 添加到数据库
 
-            RedisTool.setExpire(room + "img", 60 * 60);
+            RedisTool.setExpire(room + "img", 60 * 60 * 5);
             WebSocket.sendMessageByOut(room, imgdata);
             WebSocket.sendMessageByOut(room, "imgNum:" + request.getServletContext().getAttribute("allImgNum"));
             ManageSocket.updateImgNum();

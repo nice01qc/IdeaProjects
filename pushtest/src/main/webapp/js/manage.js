@@ -88,7 +88,7 @@
 	clearOneRoomOK.onclick = function(){
 		var clearOneRoom = document.getElementById("clearOneRoom");
 		if (clearOneRoom.value.match(/^[a-zA-Z0-9]+$/g)) {
-			sendMessage(clearOneRoom.value);
+			sendMessage("room:"+clearOneRoom.value);
 			alert("clear " + clearOneRoom.value + " succeed!")
 		}else{
 			alert("输入无效");
