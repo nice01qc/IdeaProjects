@@ -15,6 +15,7 @@
 </head>
 <body>
 
+	<div id="showbigimg"></div>
 
 
     <div id="textArea">
@@ -33,6 +34,7 @@
     <div id="imgArea"></div>
 
 <script src="js/webSock.js"></script>
+
 </body>
 
 </html>

@@ -26,8 +26,16 @@ public class NiceImg extends HttpServlet {
             increImgNum();  // 添加到数据库
 
             RedisTool.setExpire(room + "img", 60 * 60 * 5);
-            WebSocket.sendMessageByOut(room, imgdata);
-            WebSocket.sendMessageByOut(room, "imgNum:" + request.getServletContext().getAttribute("allImgNum"));
+            try {
+                WebSocket.sendMessageByOut(room, imgdata);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                WebSocket.sendMessageByOut(room, "imgNum:" + request.getServletContext().getAttribute("allImgNum"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             ManageSocket.updateImgNum();
         }
 

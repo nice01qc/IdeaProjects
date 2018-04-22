@@ -17,6 +17,7 @@ import javax.websocket.server.ServerEndpoint;
 public class WebSocket {
 
     private String room = "";
+    volatile public static boolean status = true;
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
     private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<WebSocket>();
 
@@ -80,7 +81,9 @@ public class WebSocket {
     }
 
     // 外部调用方法
-    public static void sendMessageByOut(String room, String message) {
+    synchronized public static void sendMessageByOut(String room, String message) throws InterruptedException {
+        while (!status) Thread.currentThread().sleep(100);
+        status = false;
         for (WebSocket item : webSocketSet) {
             if (!item.room.equals(room)) continue;
             try {
@@ -90,6 +93,7 @@ public class WebSocket {
                 continue;
             }
         }
+        status = true;
     }
 
     // 清理所有房间

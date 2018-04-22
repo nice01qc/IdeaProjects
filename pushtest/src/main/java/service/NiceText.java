@@ -25,8 +25,16 @@ public class NiceText extends HttpServlet {
             RedisTool.listAddValueByKey(room + "text", text);
             increTextNum();
             RedisTool.setExpire(room + "text", 60 * 60 * 5);
-            WebSocket.sendMessageByOut(room, text);
-            WebSocket.sendMessageByOut(room, "TextNum:" + request.getServletContext().getAttribute("allTextNum"));
+            try {
+                WebSocket.sendMessageByOut(room, text);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                WebSocket.sendMessageByOut(room, "TextNum:" + request.getServletContext().getAttribute("allTextNum"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             ManageSocket.updateTextNum();
         }
 

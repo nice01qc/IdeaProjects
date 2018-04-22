@@ -1,5 +1,6 @@
 var websocket = null;
 var windowroom = "";
+var imgNum = 1;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
     websocket = new WebSocket(window.sockSite + "websocket");
@@ -76,13 +77,67 @@ function setMessageInnerHTML(innerHTML) {
 // 将图片加入imgdir 必须完整的格式，且以“-”加数据结尾
 function setImg(imgdir) {
     var imgArea = document.getElementById('imgArea');
+    var div = document.createElement("div");
+
+    var buttom0 = document.createElement("button");
+    buttom0.type = "button";
+    buttom0.innerHTML = imgNum;
+    imgNum = imgNum+1;
+
+    var buttom1 = document.createElement("button");
+    buttom1.type = "button";
+    buttom1.innerHTML = "查看";
+    var buttom2 = document.createElement("button");
+    buttom2.type = "button";
+    buttom2.innerHTML = "删除";
+
+
+
     var img = document.createElement("img");
     img.src = imgdir;
-    img.ondblclick = function () {
+
+    div.appendChild(img);
+    div.appendChild(buttom0);
+    div.appendChild(buttom1);
+    div.appendChild(buttom2);
+
+    div.ondblclick = function () {
         this.parentNode.removeChild(this);
+    };
+    buttom2.onclick=function(){
+        imgArea.removeChild(div);
+    };
+
+    buttom1.onclick=function () {
+        showbigimg(img.src);
     }
-    imgArea.appendChild(img);
+    img.onclick = function () {
+        showbigimg(this.src);
+    }
+    imgArea.appendChild(div);
 }
+
+function showbigimg(imgsrc) {
+    var showdiv = document.getElementById("showbigimg");
+    while(showdiv.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        showdiv.removeChild(showdiv.firstChild);
+    }
+    showdiv.opacity = "1";
+    showdiv.height = "100%";
+    var img = document.createElement("img");
+    img.src = imgsrc;
+    showdiv.appendChild(img);
+}
+document.getElementById("showbigimg").onclick=function () {
+    while(this.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        this.removeChild(this.firstChild);
+    }
+    this.opacity = "0";
+    this.height="0px";
+}
+
 
 
 // 以下是提交答案的
