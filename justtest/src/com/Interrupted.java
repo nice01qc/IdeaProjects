@@ -6,7 +6,7 @@ public class Interrupted {
         Thread sleepTahread = new Thread(new SleepRunner(),"");
         sleepTahread.setDaemon(true);
 
-        Thread busyThread = new BusyRunner();
+        Thread busyThread = new Thread(new BusyRunner());
         busyThread.setDaemon(true);
         sleepTahread.start();
         busyThread.start();
@@ -42,7 +42,7 @@ public class Interrupted {
     }
 
 
-    static class BusyRunner extends Thread{
+    static class BusyRunner implements Runnable{
         @Override
         public void run() {
             while (true){
