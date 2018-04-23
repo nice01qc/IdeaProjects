@@ -35,7 +35,7 @@ public class ManageSocket {
 
     // 收到客户端消息后调用的方法
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) throws IOException {
         String room = message.replaceAll(" ","");
         if (room.matches("[:a-zA-Z0-9]+")) {
             if (room.equals(0)){

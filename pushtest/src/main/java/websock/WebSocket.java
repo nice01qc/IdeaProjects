@@ -4,9 +4,8 @@ import util.RedisTool;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.*;
@@ -20,6 +19,7 @@ public class WebSocket {
     volatile public static boolean status = true;
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
     private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<WebSocket>();
+    private static ConcurrentHashMap<String,Set<String>> statusHashMap = new ConcurrentHashMap<String,Set<String>>();
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
@@ -39,7 +39,18 @@ public class WebSocket {
 
     // 收到客户端消息后调用的方法
     @OnMessage
-    public void onMessage(String message, Session session) throws IOException {
+    public void onMessage(String message, Session session) throws IOException, InterruptedException {
+        if (message.matches("^[0-9]+:no$")) {
+            sendMessageByOut(this.room, message.replaceAll("no", "yes"));
+            addToStatusHashMap(this.room,message.replaceAll(":no",""));
+            return;
+        }
+        if (message.matches("^[0-9]+:yes$")) {
+            sendMessageByOut(this.room, message.replaceAll("yes", "no"));
+            delFromStatusHashMap(this.room,message.replaceAll(":yes",""));
+            return;
+        }
+
         String room = message.trim();
         if (!room.matches("^[0-9a-zA-Z]+$")) return;
         // 把房间号加入到redis
@@ -49,6 +60,7 @@ public class WebSocket {
         this.room = room;
         // 发送以存储的文字
         if (RedisTool.isExit(room + "text")) {
+            sendMessage("TextNum:" + RedisTool.getListLengthByKey(room+"text")); // 更新信息数量
             List<String> listroom = RedisTool.getAllByKey(room + "text");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
@@ -59,6 +71,7 @@ public class WebSocket {
 
         // 发送以存储的图片
         if (RedisTool.isExit(room + "img")) {
+            sendMessage("imgNum:" + RedisTool.getListLengthByKey(room + "img")); // 更新图片数量
             List<String> listroom = RedisTool.getAllByKey(room + "img");
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
@@ -66,6 +79,16 @@ public class WebSocket {
                 }
             }
         }
+        // 恢复照片状态
+        if (statusHashMap.containsKey(this.room)){
+            Set<String> stringSet = statusHashMap.get(this.room);
+            String result = "status";
+            for (String x : stringSet){
+                result += "-" + x;
+            }
+            sendMessage(result);
+        }
+
     }
 
     // 发生错误时调用
@@ -82,6 +105,7 @@ public class WebSocket {
 
     // 外部调用方法
     synchronized public static void sendMessageByOut(String room, String message) throws InterruptedException {
+
         while (!status) Thread.currentThread().sleep(100);
         status = false;
         for (WebSocket item : webSocketSet) {
@@ -97,29 +121,28 @@ public class WebSocket {
     }
 
     // 清理所有房间
-    public static void clearAllRoom() {
+    public static void clearAllRoom() throws IOException {
         for (WebSocket webSocket : webSocketSet) {
-            webSocket = null;
+            webSocket.session.close();
         }
         webSocketSet.clear();
         RedisTool.delKey("clientRoom");
     }
 
-    // 清理指定房间名
-    public static void clearOneRoom(String room) {
+    // 清理指定房间名All
+    public static void clearOneRoom(String room) throws IOException {
         for (WebSocket webSocket : webSocketSet) {
             if (webSocket.room.equals(room)) {
                 webSocketSet.remove(webSocket);
+                webSocket.session.close();
                 break;
             }
         }
-
         if (RedisTool.isExit("clientRoom")) {
             RedisTool.delSetData("clientRoom", room);
         }
-
-        if (RedisTool.isExit(room + "text")){
-            if (RedisTool.isExit("allTextNum")){
+        if (RedisTool.isExit(room + "text")) {
+            if (RedisTool.isExit("allTextNum")) {
                 int tmpsum = Integer.parseInt(RedisTool.getStringValue("allTextNum"));
                 int tmproomsum = (int) RedisTool.getListLengthByKey(room + "text");
                 int diff = Math.abs(tmpsum - tmproomsum);
@@ -129,24 +152,59 @@ public class WebSocket {
 
             RedisTool.delKey(room + "text");
         }
-
-        if (RedisTool.isExit(room + "img")){
-
-            if (RedisTool.isExit("allImgNum")){
+        if (RedisTool.isExit(room + "img")) {
+            if (RedisTool.isExit("allImgNum")) {
                 int tmpsum = Integer.parseInt(RedisTool.getStringValue("allImgNum"));
                 int tmproomsum = (int) RedisTool.getListLengthByKey(room + "img");
                 int diff = Math.abs(tmpsum - tmproomsum);
                 RedisTool.setStringValue("allImgNum", String.valueOf(diff));
                 ManageSocket.updateImgNum();
             }
-
             RedisTool.delKey(room + "img");
         }
+    }
+    // 清理指定房间名内容
+    public static void clearOneRoomMessage(String room) throws IOException {
+        if (RedisTool.isExit(room + "text")) {
+            if (RedisTool.isExit("allTextNum")) {
+                int tmpsum = Integer.parseInt(RedisTool.getStringValue("allTextNum"));
+                int tmproomsum = (int) RedisTool.getListLengthByKey(room + "text");
+                int diff = Math.abs(tmpsum - tmproomsum);
+                RedisTool.setStringValue("allTextNum", String.valueOf(diff));
+                ManageSocket.updateTextNum();
+            }
 
-
-
-
+            RedisTool.delKey(room + "text");
+        }
+        if (RedisTool.isExit(room + "img")) {
+            if (RedisTool.isExit("allImgNum")) {
+                int tmpsum = Integer.parseInt(RedisTool.getStringValue("allImgNum"));
+                int tmproomsum = (int) RedisTool.getListLengthByKey(room + "img");
+                int diff = Math.abs(tmpsum - tmproomsum);
+                RedisTool.setStringValue("allImgNum", String.valueOf(diff));
+                ManageSocket.updateImgNum();
+            }
+            RedisTool.delKey(room + "img");
+        }
+        statusHashMap.clear();
     }
 
-
+    private void addToStatusHashMap(String room, String message){
+        if (room.equals(""))return;
+        if (statusHashMap.containsKey(room)){
+            statusHashMap.get(room).add(message);
+        }else {
+            Set<String> stringSet = new HashSet<String>();
+            stringSet.add(message);
+            statusHashMap.put(room,stringSet);
+        }
+    }
+    private void delFromStatusHashMap(String room, String message){
+        if (room.equals(""))return;
+        if (statusHashMap.containsKey(room)){
+            if (statusHashMap.get(room).contains(message)){
+                statusHashMap.get(room).remove(message);
+            }
+        }
+    }
 }

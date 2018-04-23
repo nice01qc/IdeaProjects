@@ -32,7 +32,9 @@ public class NiceImg extends HttpServlet {
                 e.printStackTrace();
             }
             try {
-                WebSocket.sendMessageByOut(room, "imgNum:" + request.getServletContext().getAttribute("allImgNum"));
+                if (RedisTool.isExit(room + "img")) {
+                    WebSocket.sendMessageByOut(room, "imgNum:" + RedisTool.getListLengthByKey(room + "img"));
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -41,13 +43,12 @@ public class NiceImg extends HttpServlet {
 
     }
 
-
     private void increImgNum() {
         int allImgNum = 1;
         String key = "allImgNum";
         if (RedisTool.isExit(key)) {
-            allImgNum = Integer.parseInt(RedisTool.getStringValue(key))+1;
+            allImgNum = Integer.parseInt(RedisTool.getStringValue(key)) + 1;
         }
-        RedisTool.setStringValue(key,String.valueOf(allImgNum));
+        RedisTool.setStringValue(key, String.valueOf(allImgNum));
     }
 }

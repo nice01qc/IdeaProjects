@@ -27,7 +27,17 @@ websocket.onmessage = function (event) {
         document.getElementById("imgNum").innerHTML = event.data;
     } else if (event.data.match(/^TextNum:[0-9]+$/g)) {
         document.getElementById("TextNum").innerHTML = event.data;
-    } else {
+    }else if (event.data.match(/^[0-9]+:no$/g)) {
+        var roomStateNum = event.data.split(":")[0];
+        changeImgStateNO(roomStateNum);
+    }else if (event.data.match(/^[0-9]+:yes$/g)) {
+        var roomStateNum = event.data.split(":")[0];
+        changeImgStateYES(roomStateNum);
+    }else if (event.data.match(/^status-[0-9-]+$/g)) {
+        initialImgStates(event.data.replace(/status-/g, ""));
+    }else if (event.data.match(/^deleteAll$/g)) {
+        deleteAll();
+    }else {
         setMessageInnerHTML(event.data);    // 此处处理此处代码
     }
 }
@@ -56,6 +66,10 @@ function sendRoom() {
         alert("ok get room, you can receive message ! or the room is reseted !");
         var messagenode = document.getElementById('message');
         messagenode.innerHTML = "<div>以下消息双击可以删除,图片也可以</div>";
+        document.getElementById('imgArea').innerHTML="";
+        window.imgNum = 1;
+        document.getElementById("imgNum").innerHTML = 0;
+        document.getElementById("TextNum").innerHTML = 0;
     } else {
         alert("房间号码无效!");
     }
@@ -82,6 +96,8 @@ function setImg(imgdir) {
     var buttom0 = document.createElement("button");
     buttom0.type = "button";
     buttom0.innerHTML = imgNum;
+    buttom0.style.background = "#FAB74F";
+    buttom0.setAttribute("class", "buttom0");
     imgNum = imgNum+1;
 
     var buttom1 = document.createElement("button");
@@ -91,7 +107,16 @@ function setImg(imgdir) {
     buttom2.type = "button";
     buttom2.innerHTML = "删除";
 
-
+    var buttom3 = document.createElement("button");
+    buttom3.type = "button";
+    buttom3.innerHTML = "no";
+    buttom3.setAttribute("class", "buttom3");
+    buttom3.onclick=function(){
+        var result = "";
+        if (this.innerHTML == "no") result = buttom0.innerHTML+":"+"no";
+        if (this.innerHTML == "yes") result = buttom0.innerHTML+":"+"yes";
+        websocket.send(result);
+    };
 
     var img = document.createElement("img");
     img.src = imgdir;
@@ -99,20 +124,20 @@ function setImg(imgdir) {
     div.appendChild(img);
     div.appendChild(buttom0);
     div.appendChild(buttom1);
+    div.appendChild(buttom3);
     div.appendChild(buttom2);
 
-    div.ondblclick = function () {
-        this.parentNode.removeChild(this);
-    };
     buttom2.onclick=function(){
         imgArea.removeChild(div);
     };
 
     buttom1.onclick=function () {
         showbigimg(img.src);
+        emphasizeClickImg(this);
     }
     img.onclick = function () {
         showbigimg(this.src);
+        emphasizeClickImg(buttom1);
     }
     imgArea.appendChild(div);
 }
@@ -138,6 +163,18 @@ document.getElementById("showbigimg").onclick=function () {
     this.height="0px";
 }
 
+function emphasizeClickImg(buttoms){
+	var imgdivs = document.getElementById("imgArea").getElementsByTagName("div");
+    for (var i = imgdivs.length - 1; i >= 0; i--) {
+    	imgdivs[i].style.background = 'initial';
+    }
+	buttoms.parentNode.style.background = '#FA6C0C';
+}
+
+
+
+
+
 
 
 // 以下是提交答案的
@@ -157,4 +194,67 @@ headtijiao.onclick = function () {
         headinput.value = "ok,已发送";
     }
 
+}
+
+
+function changeImgStateNO(num) {
+    var buttoms = document.getElementsByClassName("buttom0");
+    for (var i = buttoms.length - 1; i >= 0; i--) {
+        if (buttoms[i].innerHTML == num) {
+            buttoms[i].parentNode.style.opacity = '1';
+            buttoms[i].parentNode.style.background = 'initial';
+            var fourbuttom = buttoms[i].parentNode.getElementsByTagName("button");
+            for (var i = fourbuttom.length - 1; i >= 0; i--) {
+                if (fourbuttom[i].innerHTML == "no" || fourbuttom[i].innerHTML == "yes") {
+                    fourbuttom[i].innerHTML = "no";
+                    fourbuttom[i].style.background = 'initial';
+                }
+            }
+        }
+    }
+}
+
+function changeImgStateYES(num) {
+    var buttoms = document.getElementsByClassName("buttom0");
+    for (var i = buttoms.length - 1; i >= 0; i--) {
+        if (buttoms[i].innerHTML == num) {
+            buttoms[i].parentNode.style.opacity = '0.2';
+            buttoms[i].parentNode.style.background = '#1D1DFE';
+            var fourbuttom = buttoms[i].parentNode.getElementsByTagName("button");
+            for (var i = fourbuttom.length - 1; i >= 0; i--) {
+                if (fourbuttom[i].innerHTML == "no" || fourbuttom[i].innerHTML == "yes") {
+                    fourbuttom[i].innerHTML = "yes";
+                    fourbuttom[i].style.background = 'red';
+                }
+            }
+        }
+    }
+}
+
+function getImgStateALL() {
+    var buttoms = document.getElementsByClassName("buttom3");
+    var result = "status";
+    for (var i = buttoms.length - 1; i >= 0; i--) {
+        if (buttoms[i].innerHTML == "yes") {
+            var buttom0 = buttoms[i].parentNode.getElementsByClassName("buttom0");
+            if (buttom0.length == 1) {
+                result = result+"-"+buttom0[0].innerHTML;
+            }
+        }
+    }
+    return result;
+}
+
+function initialImgStates(str){
+    var nums = str.split("-");
+    for (var i = nums.length - 1; i >= 0; i--) {
+        changeImgStateYES(nums[i]);
+    }
+}
+
+function deleteAll(){
+	document.getElementById('message').innerHTML="";
+	document.getElementById('imgArea').innerHTML="";
+	document.getElementById("imgNum").innerHTML = 0;
+    document.getElementById("TextNum").innerHTML = 0;
 }

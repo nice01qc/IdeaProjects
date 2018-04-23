@@ -30,10 +30,14 @@
         <servlet-name>NiceResult</servlet-name>
         <url-pattern>/result</url-pattern>
     </servlet-mapping>
-
-
-
-
+    <servlet>
+        <servlet-name>NiceCommand</servlet-name>
+        <servlet-class>service.NiceCommand</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NiceCommand</servlet-name>
+        <url-pattern>/command</url-pattern>
+    </servlet-mapping>
 
 
     <filter>

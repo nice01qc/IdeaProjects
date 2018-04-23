@@ -60,7 +60,7 @@
 	z-index: 1000;
 }
 #imgArea div{
-	width: 210px;
+	width: 110px;
 	padding:5px;
 	border:2px solid #8CE3F0;
 	margin:5px;
@@ -69,20 +69,19 @@
 }
 #imgArea img{
 	display: inline-block;
-	width: 200px;
-	margin: 5px 10px;
+	width: 100px;
 	border: 2px solid #666666;
 }
 #imgArea button{
 	display: inline-block;
-	width: 50px;
-	margin-left:20px;
-	border: 2px solid #666666;
+	width: 45px;
+	margin-left:5px;
+	border: 1px solid #666666;
 	border-radius:10px;
 }
 #imgArea button:hover{
 	cursor: pointer;
-	border: 2px solid white;
+	border: 1px solid white;
 	border-radius:0px;
 	background:#8CE3F0;
 }

@@ -31,7 +31,9 @@ public class NiceText extends HttpServlet {
                 e.printStackTrace();
             }
             try {
-                WebSocket.sendMessageByOut(room, "TextNum:" + request.getServletContext().getAttribute("allTextNum"));
+                if (RedisTool.isExit(room+"text")){
+                    WebSocket.sendMessageByOut(room, "TextNum:" + RedisTool.getListLengthByKey(room+"text"));
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

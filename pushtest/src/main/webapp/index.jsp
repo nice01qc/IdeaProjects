@@ -11,6 +11,7 @@
 <head>
     <title>message</title>
     <link href="css/webSock.css" rel="stylesheet" type="text/css"/>
+	<link rel="shortcut icon" href="img/index.ico">
 	<script src="js/para.js" ></script>
 </head>
 <body>
