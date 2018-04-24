@@ -20,20 +20,21 @@ public class NiceImg extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String imgdata = request.getParameter("img");
         String room = request.getParameter("room");
+        String roomImg = room + "img"; // 用于存放特定room发过来的图片
 
         if (imgdata != null && imgdata.length() > 200) {
-            RedisTool.listAddValueByKey(room + "img", imgdata);
+            RedisTool.listAddValueByKey(roomImg, imgdata);
             increImgNum();  // 添加到数据库
 
-            RedisTool.setExpire(room + "img", 60 * 60 * 5);
+            RedisTool.setExpire(roomImg, 60 * 60 * 5);
             try {
                 WebSocket.sendMessageByOut(room, imgdata);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             try {
-                if (RedisTool.isExit(room + "img")) {
-                    WebSocket.sendMessageByOut(room, "imgNum:" + RedisTool.getListLengthByKey(room + "img"));
+                if (RedisTool.isExit(roomImg)) {
+                    WebSocket.sendMessageByOut(room, "imgNum:" + RedisTool.getListLengthByKey(roomImg));
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

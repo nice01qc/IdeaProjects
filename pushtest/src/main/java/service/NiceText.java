@@ -21,18 +21,20 @@ public class NiceText extends HttpServlet {
 
         String text = request.getParameter("text");
         String room = request.getParameter("room");
+        String roomText = room + "text";    // 用于存放特定room发过来的文字
+
         if (text != null && text.length() > 0) {
-            RedisTool.listAddValueByKey(room + "text", text);
+            RedisTool.listAddValueByKey(roomText, text);
             increTextNum();
-            RedisTool.setExpire(room + "text", 60 * 60 * 5);
+            RedisTool.setExpire(roomText, 60 * 60 * 5);
             try {
                 WebSocket.sendMessageByOut(room, text);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             try {
-                if (RedisTool.isExit(room+"text")){
-                    WebSocket.sendMessageByOut(room, "TextNum:" + RedisTool.getListLengthByKey(room+"text"));
+                if (RedisTool.isExit(roomText)){
+                    WebSocket.sendMessageByOut(room, "TextNum:" + RedisTool.getListLengthByKey(roomText));
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -41,7 +43,6 @@ public class NiceText extends HttpServlet {
         }
 
     }
-
 
     private void increTextNum() {
         int allImgNum = 1;

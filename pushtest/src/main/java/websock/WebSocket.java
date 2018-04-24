@@ -1,8 +1,6 @@
 package websock;
 
 import util.RedisTool;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,7 +48,6 @@ public class WebSocket {
             delFromStatusHashMap(this.room,message.replaceAll(":yes",""));
             return;
         }
-
         String room = message.trim();
         if (!room.matches("^[0-9a-zA-Z]+$")) return;
         // 把房间号加入到redis
@@ -58,21 +55,22 @@ public class WebSocket {
         // 更新房间号
         ManageSocket.updateroom(room);
         this.room = room;
+        String roomText = room + "text";
+        String roomImg = room + "img";
         // 发送以存储的文字
-        if (RedisTool.isExit(room + "text")) {
-            sendMessage("TextNum:" + RedisTool.getListLengthByKey(room+"text")); // 更新信息数量
-            List<String> listroom = RedisTool.getAllByKey(room + "text");
+        if (RedisTool.isExit(roomText)) {
+            sendMessage("TextNum:" + RedisTool.getListLengthByKey(roomText)); // 更新信息数量
+            List<String> listroom = RedisTool.getAllByKey(roomText);
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
                     sendMessage(x);
                 }
             }
         }
-
         // 发送以存储的图片
-        if (RedisTool.isExit(room + "img")) {
-            sendMessage("imgNum:" + RedisTool.getListLengthByKey(room + "img")); // 更新图片数量
-            List<String> listroom = RedisTool.getAllByKey(room + "img");
+        if (RedisTool.isExit(roomImg)) {
+            sendMessage("imgNum:" + RedisTool.getListLengthByKey(roomImg)); // 更新图片数量
+            List<String> listroom = RedisTool.getAllByKey(roomImg);
             if (listroom != null && !listroom.isEmpty()) {
                 for (String x : listroom) {
                     sendMessage(x);
@@ -189,6 +187,7 @@ public class WebSocket {
         statusHashMap.clear();
     }
 
+    // 以下用于恢复做题状态
     private void addToStatusHashMap(String room, String message){
         if (room.equals(""))return;
         if (statusHashMap.containsKey(room)){
