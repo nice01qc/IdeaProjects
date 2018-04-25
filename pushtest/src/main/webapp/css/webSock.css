@@ -1,35 +1,73 @@
+div#content{
+	width: 1030px;
+	height: 1100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+div#content h5:nth-child(odd){
+	font-size:1.2em;
+	background:#E2E2E2;
+	display:inline-block;
+	width:320px;
+	text-align:center;
+
+}
+div#content h5:nth-child(even){
+	font-size:1.2em;
+	background:#E2E2E2;
+	display:inline-block;
+	width:700px;
+	text-align:center;
+}
+
+h1#progressBar{
+	width:900px;
+	height:20px;
+	border:2px solid #6D6D6D;
+	margin-top:-20px;
+	margin-bottom:5px;
+}
+h1#progressBar div{
+	margin:1px;
+	float:left;
+}
+
+
+
+header{
+	padding: 15px 0px;
+	background: #918F8F;
+}
+header span{
+	margin: 0 20px;
+}
+header button{
+	background: #D1CECE;
+	border-radius: 80px;
+	padding: 5px;
+}
+header button:hover{
+	cursor:pointer;
+	background: #918F8F;
+	color:white;
+}
+header input{
+	width: 100px;
+	border-radius: 40px;
+	padding: 5px;
+}
+
 
 #textArea{
 	width: 300px;
 	border: 2px solid #DDDDDD;
-	padding: 10px;
+	padding: 0px 5px;
 	display:inline-block;
 	float:left;
-	position: fixed;
 	z-index: 1;
 }
-
-#textArea button{
-	border: 2px solid #DDDDDD;
-	margin: 0 10px;
-	opacity: 0.5;
-}
-
-#textArea button:hover{
-	opacity: 1;
-	cursor:hand;
-}
-
-#textArea input{
-	padding: 5px;
-	width: 100px;
-	display: inline-block;
-	border: 2px solid #DDDDDD;
-	margin: 15px 10px;
-}
-
 #message{
-	margin: 20px 0 0 0;
+	margin: 5px 0 0 0;
 }
 #message div{
 	padding: 4px;
@@ -56,8 +94,6 @@
 	width:705px;
 	display:inline-block;
 	float: right;
-	position: relative;
-	z-index: 1000;
 }
 #imgArea div{
 	width: 110px;
@@ -98,7 +134,6 @@ span#TextNum{
 }
 div#showbigimg{
 	width: 100%;
-	border: 2px solid black;
 	position: fixed;
 	z-index:9999;
 }

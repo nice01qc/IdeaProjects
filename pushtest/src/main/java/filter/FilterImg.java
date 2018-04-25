@@ -15,7 +15,7 @@ public class FilterImg implements Filter {
         String room = servletRequest.getParameter("room");
 
         long allImgNum = RedisTool.getListLengthByKey(room + "img");
-        if (allImgNum > 500) RedisTool.emptyRedis();
+        if (allImgNum > 500) RedisTool.delKey(room + "img");
 
 
         if (room != null && !room.equals("") && room.matches("[0-9a-zA-Z]+")) {

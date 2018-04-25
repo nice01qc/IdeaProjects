@@ -14,7 +14,7 @@ public class FilterText implements Filter {
         servletRequest.setCharacterEncoding("utf-8");
         String room = servletRequest.getParameter("room");
         long allTextNum = RedisTool.getListLengthByKey(room+"text");
-        if (allTextNum > 2000) RedisTool.emptyRedis();
+        if (allTextNum > 500) RedisTool.delKey(room+"text");
 
 
         if (room != null && !room.equals("") && room.matches("[0-9a-zA-Z]+")) {

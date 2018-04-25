@@ -1,6 +1,8 @@
 var websocket = null;
 var windowroom = "";
 var imgNum = 1;
+var date = new Date();
+var beginTime = date.getTime();
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
     websocket = new WebSocket(window.sockSite + "websocket");
@@ -25,14 +27,18 @@ websocket.onmessage = function (event) {
         setImg(event.data);
     } else if (event.data.match(/^imgNum:[0-9]+$/g)) {
         document.getElementById("imgNum").innerHTML = event.data;
+        document.getElementById("imgNum").style.background=getRandomColor();
     } else if (event.data.match(/^TextNum:[0-9]+$/g)) {
         document.getElementById("TextNum").innerHTML = event.data;
+        document.getElementById("TextNum").style.background=getRandomColor();
     }else if (event.data.match(/^[0-9]+:no$/g)) {
         var roomStateNum = event.data.split(":")[0];
         changeImgStateNO(roomStateNum);
+        progressBar();
     }else if (event.data.match(/^[0-9]+:yes$/g)) {
         var roomStateNum = event.data.split(":")[0];
         changeImgStateYES(roomStateNum);
+        progressBar();
     }else if (event.data.match(/^status-[0-9-]+$/g)) {
         initialImgStates(event.data.replace(/status-/g, ""));
     }else if (event.data.match(/^deleteAll$/g)) {
@@ -41,6 +47,8 @@ websocket.onmessage = function (event) {
         setMessageInnerHTML(event.data);    // 此处处理此处代码
     }
 }
+
+
 
 //连接关闭的回调方法
 websocket.onclose = function () {
@@ -63,13 +71,8 @@ function sendRoom() {
     if (message.match(/^[a-zA-Z0-9]+$/g)) {
         websocket.send(message);
         windowroom = message;
-        alert("ok get room, you can receive message ! or the room is reseted !");
-        var messagenode = document.getElementById('message');
-        messagenode.innerHTML = "<div>以下消息双击可以删除,图片也可以</div>";
-        document.getElementById('imgArea').innerHTML="";
-        window.imgNum = 1;
-        document.getElementById("imgNum").innerHTML = 0;
-        document.getElementById("TextNum").innerHTML = 0;
+        alert("你的房间号为：" + message + "，可以接收消息了！");
+        deleteAll();
     } else {
         alert("房间号码无效!");
     }
@@ -85,6 +88,7 @@ function setMessageInnerHTML(innerHTML) {
     div.ondblclick = function () {
         this.parentNode.removeChild(this);
     }
+    div.style.border="2px solid " + getRandomColor();
     message.appendChild(div);
 }
 
@@ -129,6 +133,7 @@ function setImg(imgdir) {
 
     buttom2.onclick=function(){
         imgArea.removeChild(div);
+        progressBar();
     };
 
     buttom1.onclick=function () {
@@ -140,6 +145,8 @@ function setImg(imgdir) {
         emphasizeClickImg(buttom1);
     }
     imgArea.appendChild(div);
+
+    progressBar();
 }
 
 function showbigimg(imgsrc) {
@@ -164,13 +171,12 @@ document.getElementById("showbigimg").onclick=function () {
 }
 
 function emphasizeClickImg(buttoms){
-	var imgdivs = document.getElementById("imgArea").getElementsByTagName("div");
+    var imgdivs = document.getElementById("imgArea").getElementsByTagName("div");
     for (var i = imgdivs.length - 1; i >= 0; i--) {
-    	imgdivs[i].style.background = 'initial';
+        imgdivs[i].style.background = 'initial';
     }
-	buttoms.parentNode.style.background = '#FA6C0C';
+    buttoms.parentNode.style.background = '#FA6C0C';
 }
-
 
 
 
@@ -218,8 +224,8 @@ function changeImgStateYES(num) {
     var buttoms = document.getElementsByClassName("buttom0");
     for (var i = buttoms.length - 1; i >= 0; i--) {
         if (buttoms[i].innerHTML == num) {
-            buttoms[i].parentNode.style.opacity = '0.2';
-            buttoms[i].parentNode.style.background = '#1D1DFE';
+            buttoms[i].parentNode.style.opacity = '0.1';
+            buttoms[i].parentNode.style.background = 'black';
             var fourbuttom = buttoms[i].parentNode.getElementsByTagName("button");
             for (var i = fourbuttom.length - 1; i >= 0; i--) {
                 if (fourbuttom[i].innerHTML == "no" || fourbuttom[i].innerHTML == "yes") {
@@ -250,11 +256,64 @@ function initialImgStates(str){
     for (var i = nums.length - 1; i >= 0; i--) {
         changeImgStateYES(nums[i]);
     }
+    progressBar();
 }
 
 function deleteAll(){
-	document.getElementById('message').innerHTML="";
-	document.getElementById('imgArea').innerHTML="";
-	document.getElementById("imgNum").innerHTML = 0;
+    document.getElementById('message').innerHTML="";
+    document.getElementById('imgArea').innerHTML="";
+    document.getElementById("imgNum").innerHTML = 0;
     document.getElementById("TextNum").innerHTML = 0;
+    imgNum = 1;
+    progressBar();
+}
+// 颜色随机生成
+function getRandomColor(){
+    return  '#' +
+        (function(color){
+            return (color +=  '0123456789abcdef'[Math.floor(Math.random()*16)])
+            && (color.length == 6) ?  color : arguments.callee(color);
+        })('');
+}
+resetColor();
+function resetColor(){
+    setInterval('change()',100);
+}
+
+function change(){
+    var showshow = document.getElementById("showshow");
+    var myDate = new Date();
+    var diff = (myDate.getTime() - beginTime);
+    var hour = parseInt(diff/1000/60/60)%60;
+    var munite = parseInt(diff/1000/60)%60;
+    var miao = parseInt(diff/1000)%60;
+    var haomiao = parseInt(diff/100)%100;
+    showshow.innerHTML = hour + ":" + munite + ":" + miao + ":" + haomiao ;
+}
+
+
+// 进度显示
+function progressBar(){
+    var progress = document.getElementById("progressBar");
+    progress.innerHTML = "";
+    var allbutoms = document.getElementsByClassName("buttom3");
+    var imgnums = allbutoms.length;
+    var finishnum = 0;
+    for (var i = 0; i < allbutoms.length; i++) {
+        if (allbutoms[i].innerHTML == "yes") {
+            finishnum++;
+        }
+    }
+
+    var everyLong = parseInt((900 - imgnums*2)/imgnums);
+    for (var i = 0; i < finishnum; i++) {
+        var div = document.createElement("div");
+        div.style.display = "inline-block";
+        div.style.width = everyLong + "px";
+        div.style.height = "18px";
+        div.style.background = "#D1CFCF";
+        progress.appendChild(div);
+    }
+
+
 }

@@ -52,6 +52,7 @@ public class RedisTool {
         return jedis.lpush(key, value);
     }
     public static long getListLengthByKey(String key){
+        if (!jedis.exists(key)) return 0;
         return jedis.llen(key);
     }
 
@@ -76,11 +77,6 @@ public class RedisTool {
     public static Set<String> getAllSetValue(String key) {
         return jedis.smembers(key);
     }
-
-    public static int getSetLengthBykey(String key){
-        return jedis.smembers(key).size();
-    }
-
 
 
     public static String getStringValue(String key) {

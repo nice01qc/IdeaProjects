@@ -10,29 +10,37 @@
 <html>
 <head>
     <title>message</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <link href="css/webSock.css" rel="stylesheet" type="text/css"/>
-	<link rel="shortcut icon" href="img/index.ico">
-	<script src="js/para.js" ></script>
+    <link rel="shortcut icon" href="img/index.ico">
+    <script src="js/para.js" ></script>
 </head>
 <body>
+<div id="showbigimg"></div>
+<header>
+        <span>
+            提交答案：<input type="text=" id="headinput" value="">
+            <button id="headtijiao">提交</button>
+        </span>
+    <span>输入房间号：</span><input id="room" type="text"/>
+    <button onclick="sendRoom()">确定</button>
+    <button onclick="closeWebSocket()">关闭连接</button>
+    <span id="imgNum"></span><span id="TextNum"></span>
+    <span style="display: inline-block;border-radius: 30px;margin-left: 50px;" id="showshow">111</span>
+</header>
 
-	<div id="showbigimg"></div>
 
-
+<div id="content">
+    <h5>message</h5>
+    <h5>img</h5>
+    <h1 id="progressBar"></h1>
     <div id="textArea">
-		<div>
-			提交答案：<input type="text=" id="headinput" value="">
-			<button id="headtijiao">提交</button>
-		</div>
-    	<span>输入接收消息房间号：</span><br/><input id="room" type="text"/>
-    	<button onclick="sendRoom()">确定</button>
-    	<button onclick="closeWebSocket()">关闭连接</button>
-    	<span id="imgNum"></span><span id="TextNum"></span><hr/>
-    	<div id="message">
-    		<div id="firstdiv">以下消息双击可以删除,图片也可以</div>
-    	</div>
+        <div id="message" style="overflow:scroll; width:300px; height: 1000px;">
+            <div id="firstdiv">以下消息双击可以删除,图片也可以</div>
+        </div>
     </div>
-    <div id="imgArea"></div>
+    <div id="imgArea" style="overflow:scroll; width:705px; height: 1000px;"></div>
+</div>
 
 <script src="js/webSock.js"></script>
 
