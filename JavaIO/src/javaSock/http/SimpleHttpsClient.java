@@ -1,27 +1,29 @@
 package javaSock.http;
 
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-/**
- * 一个简单的HTTP客户端，发送HTTP请求，模拟浏览器
- * 可打印服务器发送过来的HTTP消息
- */
-public class SimpleHttpClient {
+public class SimpleHttpsClient {
+
     private static String encoding = "utf-8";
 
     public static void main(String[] args) {
         try {
 
-            Socket s = new Socket("118.25.1.128", 8080);
+            Socket s = new Socket("www.baidu.com", 80);
+
+           // Socket s =  SSLSocketFactory.getDefault().createSocket("www.lintcode.com", 443);
 
             OutputStreamWriter osw = new OutputStreamWriter(s.getOutputStream());
             StringBuffer sb = new StringBuffer();
-            sb.append("GET /pushtest/ HTTP/1.1\r\n");
+            sb.append("GET / HTTP/1.1\r\n");
             sb.append("Host: localhost:8099\r\n");
             sb.append("Connection: Keep-Alive\r\n");
             //注，这是关键的关键，忘了这里让我搞了半个小时。这里一定要一个回车换行，表示消息头完，不然服务器会等待
@@ -93,4 +95,6 @@ public class SimpleHttpClient {
 
         return new String(tmpByteArr, encoding);
     }
+
+
 }
