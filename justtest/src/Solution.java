@@ -1,32 +1,33 @@
+import java.util.LinkedList;
+
 public class Solution {
-    public static boolean Find(int target, int [][] array) {
-
-        for(int i=0,j=0;i<array.length;i++){
-            for (; j < array[i].length && j >= 0;j++){
-                if (array[i][j] < target) continue;
-                else if (array[i][j] == target) return true;
-                else {
-                    if (j > 0 && array[i][j-1] > target){
-                        j-=2;
-                        continue;
-                    }else if (j > 0 && array[i][j-1] == target){
-                        return true;
-                    }else {
-                        j--;
-                        break;
-                    }
-                }
-            }
-            if (j >= array[i].length) j=0;
+    public int JumpFloorII(int target) {
+        if (target <= 0) return target;
+        LinkedList<Integer> allnumList = new LinkedList<>();
+        int result = 0;
+        int tmp = 0;
+        while (target-- > 0) {
+            tmp = getSumList(allnumList) +1;
+            allnumList.add(tmp);
         }
-        return false;
-
-
+        return allnumList.get(allnumList.size()-1);
     }
 
+    public int getSumList(LinkedList<Integer> linkedList){
+        if (linkedList.isEmpty()) return 0;
+        int sum = 0;
+        for (int i = 0; i < linkedList.size(); i++){
+            sum += linkedList.get(i);
+        }
+        return sum;
+    }
 
     public static void main(String[] args) {
-        int[][] a = new int[][]{{1,2,3,4},{2,4,9,12},{4,7,10,13},{6,8,11,15}};
-        System.out.println(Find(7,a));
+        Solution solution = new Solution();
+
+        System.out.println(solution.JumpFloorII(12));
+        System.out.println((int)Math.pow(2,12-1));
+        System.out.println(2<<(12-2));
+        System.out.println(2<<1);
     }
 }
