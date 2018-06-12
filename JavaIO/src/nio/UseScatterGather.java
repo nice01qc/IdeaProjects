@@ -12,12 +12,9 @@ public class UseScatterGather
   static private final int bodyLength = 6;
 
   static public void main( String args[] ) throws Exception {
-    if (args.length!=1) {
-      System.err.println( "Usage: java UseScatterGather port" );
-      System.exit( 1 );
-    }
 
-    int port = Integer.parseInt( args[0] );
+
+    int port = 8080;
 
     ServerSocketChannel ssc = ServerSocketChannel.open();
     InetSocketAddress address = new InetSocketAddress( port );

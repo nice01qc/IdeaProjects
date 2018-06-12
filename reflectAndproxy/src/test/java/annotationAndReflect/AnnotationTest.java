@@ -27,6 +27,7 @@ public class AnnotationTest {
             Annotation[] annotations = field.getDeclaredAnnotations();
             for (int j = 0; j<annotations.length; j++){
                 Annotation annotation = annotations[j];
+
                 String annotationTypeName = annotation.annotationType().getSimpleName();
                 // 仅判断现有的注解类
                 if ("Boy".equals(annotationTypeName)){
