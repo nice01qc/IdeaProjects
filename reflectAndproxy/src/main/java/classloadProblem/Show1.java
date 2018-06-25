@@ -1,7 +1,7 @@
 package classloadProblem;
 
 // 展示着三个加载器的默认加载路径
-public class Show {
+public class Show1 {
     public static void main(String[] args) throws ClassNotFoundException {
         // Bootstrap 目录有
         String[] boot = System.getProperty("sun.boot.class.path").split(";");
@@ -18,7 +18,7 @@ public class Show {
         for (int i = 0; i < app.length; i++){ System.out.println(app[i]); }
 
         // 查看用的是哪个加载器,
-        ClassLoader c1 = Show.class.getClassLoader();
+        ClassLoader c1 = Show1.class.getClassLoader();
         System.out.println("-------> Cl ClassLoader is: " + c1.toString());
         System.out.println("-------> Cl ClassLoader'parent is: " + c1.getParent().toString());
 //        System.out.println("-------> Cl ClassLoader'parent'parent is: " + c1.getParent().getParent().toString());

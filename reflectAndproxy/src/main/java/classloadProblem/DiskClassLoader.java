@@ -40,7 +40,7 @@ public class DiskClassLoader extends ClassLoader {
         }catch (IOException e){
             e.printStackTrace();
         }
-        return super.findClass(name);
+        return null;
     }
 
     //  获取要加载的class文件名

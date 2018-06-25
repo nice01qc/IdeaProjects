@@ -1,3 +1,5 @@
+import java.lang.reflect.Proxy;
+
 public class Testt1 {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException {
         Testt1 testt1 = new Testt1();
@@ -7,5 +9,7 @@ public class Testt1 {
         System.out.println(testt1.hashCode());
         System.out.println(testt2.hashCode());
         System.out.println(testt3.hashCode());
+
+
     }
 }
