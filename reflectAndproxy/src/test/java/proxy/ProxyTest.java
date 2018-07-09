@@ -63,6 +63,11 @@ public class ProxyTest {
     // ·测试cglib动态代理
     @Test
     public void testCglib(){
+        System.out.println(MyCglibObject.class.isInterface());
+        System.out.println(MyCglibObject.class.equals(Object.class));
+        System.out.println(ProxyInterface.class.isInterface());
+
+
         Enhancer enhancer = new Enhancer();
         // 继承被代理类，作为父类
         enhancer.setSuperclass(MyCglibObject.class);

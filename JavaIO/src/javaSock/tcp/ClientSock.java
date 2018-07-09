@@ -9,7 +9,7 @@ public class ClientSock {
         //客户端
         Scanner scanner = new Scanner(System.in);
         //1、创建客户端Socket，指定服务器地址和端口
-        Socket socket = new Socket("localhost", 8080);
+        Socket socket = new Socket("localhost", 10086);
 
         //2、获取输出流，向服务器端发送信息
         OutputStream os = socket.getOutputStream();//字节输出流

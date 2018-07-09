@@ -1,11 +1,17 @@
 package filter;
 
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import util.RedisTool;
 
-import javax.servlet.*;
-import java.io.IOException;
-
 public class FilterText implements Filter {
+    public FilterText() {
+    }
 
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -13,17 +19,16 @@ public class FilterText implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setCharacterEncoding("utf-8");
         String room = servletRequest.getParameter("room");
-        long allTextNum = RedisTool.getListLengthByKey(room+"text");
-        if (allTextNum > 500) RedisTool.delKey(room+"text");
-
-
         if (room != null && !room.equals("") && room.matches("[0-9a-zA-Z]+")) {
-            if (room.equals("clear")) RedisTool.emptyRedis();
+            if (room.equals("clear")) {
+                RedisTool.emptyRedis();
+            }
+
             filterChain.doFilter(servletRequest, servletResponse);
         }
+
     }
 
     public void destroy() {
-
     }
 }

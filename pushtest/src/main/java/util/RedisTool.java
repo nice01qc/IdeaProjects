@@ -1,37 +1,38 @@
 package util;
 
-import redis.clients.jedis.*;
-
 import java.util.List;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisTool {
+    private static Logger logger = (Logger)LogManager.getLogger("RedisTool");
     private static String host = "127.0.0.1";
     private static int port = 6379;
-    private static Jedis jedis;//非切片额客户端连接
-    private static JedisPool jedisPool;//非切片连接池
+    private static Jedis jedis;
+    private static JedisPool jedisPool;
 
-    static {
-        initialPool();
-        jedis = jedisPool.getResource();
-        emptyRedis();
+    public RedisTool() {
     }
 
-    // 初始化非切片池
     private static void initialPool() {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(20);
-        config.setMinIdle(3);
-        config.setMaxWaitMillis(10001);
+        config.setMaxIdle(100);
+        config.setMinIdle(10);
+        config.setMaxWaitMillis(-1L);
         config.setTestOnBorrow(false);
         config.setEvictionPolicyClassName("org.apache.commons.pool2.impl.DefaultEvictionPolicy");
-        config.setNumTestsPerEvictionRun(2);
+        config.setNumTestsPerEvictionRun(6);
         jedisPool = new JedisPool(config, host, port);
     }
 
-    // 清空redis缓存
-    public static String emptyRedis() {
-        return jedis.flushDB();
+    public static synchronized void emptyRedis() {
+        initialPool();
+        jedis = jedisPool.getResource();
+        jedis.flushDB();
     }
 
     public static Long delKey(String key) {
@@ -39,49 +40,91 @@ public class RedisTool {
     }
 
     public static Long delSetData(String key, String value) {
-        return jedis.srem(key, value);
+        return jedis.srem(key, new String[]{value});
     }
 
-    // 是否存在某个key
-    public static boolean isExit(String key) {
-        return jedis.exists(key);
+    public static synchronized boolean isExit(String key) {
+        boolean result = false;
+
+        try {
+            result = jedis.exists(key);
+        } catch (Exception var5) {
+            try {
+                Thread.sleep(1000L);
+                result = jedis.exists(key);
+            } catch (Exception var4) {
+                logger.error("jedis exists get a error! (isExit method)");
+                emptyRedis();
+            }
+        }
+
+        return result;
     }
 
-    // 添加数据
-    public static Long listAddValueByKey(String key, String value) {
-        return jedis.lpush(key, value);
-    }
-    public static long getListLengthByKey(String key){
-        if (!jedis.exists(key)) return 0;
-        return jedis.llen(key);
+    public static synchronized void listAddValueByKey(String key, String value) {
+        try {
+            jedis.lpush(key, new String[]{value});
+        } catch (Exception var3) {
+            logger.error("jedis lpush method get a error! (listAddValueByKey method) ");
+            emptyRedis();
+        }
+
     }
 
-    public static Long setAddValueByKey(String key, String value) {
-        return jedis.sadd(key, value);
+    public static long getListLengthByKey(String key) {
+        long result = 0L;
+        if (!jedis.exists(key)) {
+            return result;
+        } else {
+            try {
+                result = jedis.llen(key);
+            } catch (Exception var4) {
+                logger.error("jedis llen method get a error ! ( getListLengthByKey method )");
+            }
+
+            return result;
+        }
     }
 
-    public static String setStringValue(String key, String value) {
-        return jedis.set(key, value);
+    public static void setAddValueByKey(String key, String value) {
+        try {
+            jedis.sadd(key, new String[]{value});
+        } catch (Exception var3) {
+            logger.error("jedis sadd method get a error ! ( setAddValueByKey method)");
+            emptyRedis();
+        }
+
     }
 
-    // 设置过期时间
-    public static Long setExpire(String key, int seconds) {
-        return jedis.expire(key, seconds);
-    }
+    public static synchronized List<String> getAllByKey(String key) {
+        List result = null;
 
-    // 获取所有数据
-    public static List<String> getAllByKey(String key) {
-        return jedis.lrange(key, 0, -1);
+        try {
+            result = jedis.lrange(key, 0L, -1L);
+        } catch (Exception var3) {
+            logger.error("jedis lrange method get a error ! (getAllByKey method)");
+            emptyRedis();
+        }
+
+        return result;
     }
 
     public static Set<String> getAllSetValue(String key) {
-        return jedis.smembers(key);
+        Set result = null;
+
+        try {
+            result = jedis.smembers(key);
+        } catch (Exception var3) {
+            logger.error("jdeis smembers get a error ! (getAllSetValue method) ");
+            emptyRedis();
+        }
+
+        return result;
     }
 
-
-    public static String getStringValue(String key) {
-        return jedis.get(key);
+    static {
+        initialPool();
+        jedis = jedisPool.getResource();
+        jedis.flushDB();
     }
-
-
 }

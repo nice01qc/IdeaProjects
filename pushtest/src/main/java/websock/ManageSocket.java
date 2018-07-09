@@ -1,49 +1,52 @@
 package websock;
 
-import util.RedisTool;
-
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import util.RedisTool;
 
 @ServerEndpoint("/manage")
 public class ManageSocket {
-
-    //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
-    private static CopyOnWriteArraySet<ManageSocket> manageSocketSet = new CopyOnWriteArraySet<ManageSocket>();
-
-    //与某个客户端的连接会话，需要通过它来给客户端发送数据
+    private static Logger logger = (Logger)LogManager.getLogger("other");
+    private static CopyOnWriteArraySet<ManageSocket> manageSocketSet = new CopyOnWriteArraySet();
     private Session session;
 
-    // 连接建立成功调用的方法
+    public ManageSocket() {
+    }
+
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        manageSocketSet.add(this);     //加入set中
-        updateImgNum();
-        updateTextNum();
+        manageSocketSet.add(this);
         updateAllRoom();
     }
 
-    // 连接关闭调用的方法
     @OnClose
     public void onClose() {
-        manageSocketSet.remove(this);  //从set中删除
+        manageSocketSet.remove(this);
     }
 
-    // 收到客户端消息后调用的方法
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-        String room = message.replaceAll(" ","");
+        String room = message.replaceAll(" ", "");
         if (room.matches("[:a-zA-Z0-9]+")) {
-            if (room.equals(0)){
+            if (room.equals(0)) {
                 WebSocket.clearAllRoom();
             }
+
             if (room.matches("^room:[0-9a-zA-Z]+$")) {
                 WebSocket.clearOneRoom(room.replaceAll("room:", ""));
             }
+
             if (room.equals("clear")) {
                 RedisTool.emptyRedis();
             }
@@ -51,54 +54,46 @@ public class ManageSocket {
 
     }
 
-    // 发生错误时调用
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
         error.printStackTrace();
+        logger.error(error.getMessage());
     }
-
 
     public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
     }
 
-    // 外部调用方法
     public static void sendMessageByOut(String message) {
-        for (ManageSocket item : manageSocketSet) {
+        Iterator var1 = manageSocketSet.iterator();
+
+        while(var1.hasNext()) {
+            ManageSocket item = (ManageSocket)var1.next();
+
             try {
                 item.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-                continue;
+            } catch (IOException var4) {
+                var4.printStackTrace();
+                logger.error(var4.getMessage());
             }
         }
+
     }
 
-    public static void updateImgNum(){
-        if (RedisTool.isExit("allImgNum")) {
-            sendMessageByOut("allImgNum:" + RedisTool.getStringValue("allImgNum"));
-        }
-    }
-
-    public static void updateTextNum(){
-        if (RedisTool.isExit("allTextNum")) {
-            sendMessageByOut("allTextNum:" + RedisTool.getStringValue("allTextNum"));
-        }
-    }
-
-    public static void updateroom(String message){
+    public static void updateroom(String message) {
         sendMessageByOut("room:" + message);
     }
 
-    public static void updateAllRoom(){
+    public static void updateAllRoom() {
         if (RedisTool.isExit("clientRoom")) {
             Set<String> stringSet = RedisTool.getAllSetValue("clientRoom");
-            for (String string : stringSet){
+            Iterator var1 = stringSet.iterator();
+
+            while(var1.hasNext()) {
+                String string = (String)var1.next();
                 sendMessageByOut("room:" + string);
             }
         }
+
     }
-
-
 }

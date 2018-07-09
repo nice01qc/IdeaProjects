@@ -1,50 +1,28 @@
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.concurrent.*;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.ByteBuffer;
 
 public class MainTest {
-    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-
-        int[] data  = {1,4};
-        int num = 100000;
-        long t1 = System.currentTimeMillis();
-        for (int i = 0; i < num; i++)
-            for (int j=0; j<num; j++)swap1(data,0,1);
-        long t2 = System.currentTimeMillis();
-        System.out.println("判断的代价：" + (t2-t1));
+    public static void main(String[] args) throws FileNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
 
-        t1 = System.currentTimeMillis();
-        for (int i = 0; i < num; i++)
-            for (int j=0; j<num; j++)swap2(data,0,1);
-        t2 = System.currentTimeMillis();
-        System.out.println("交换的代价：" + (t2-t1));
-
-        t1 = System.currentTimeMillis();
-        for (int i = 0; i < num; i++)
-            for (int j=0; j<num; j++)swap3();
-        t2 = System.currentTimeMillis();
-        System.out.println("自增的代价：" + (t2-t1));
-
-    }
-
-    private static void swap1(int[] data, int i, int j)
-    {
-        if (data[i] < data[j]){
-
-        }
-    }
-    private static void swap3()
-    {
-        int i = 0;
-        i++;
-    }
+        ByteBuffer buffer = ByteBuffer.allocate(100);
+        buffer.put(new Integer(0).byteValue());
+        buffer.put(new Integer(0).byteValue());
+        buffer.put(new Integer(0).byteValue());
+        buffer.put(new Integer(11).byteValue());
+        buffer.put(new Integer(0).byteValue());
+        buffer.put(new Integer(0).byteValue());
+        buffer.put(new Integer(11).byteValue());
+        buffer.put(new Integer(11).byteValue());
 
 
-    private static void swap2(int[] data, int i, int j)
-    {
-        int tmp = data[i];
-        data[i] = data[j];
-        data[j] = tmp;
+        buffer.flip();
+        System.out.println(buffer.getInt());
+        System.out.println(buffer.getInt());
+
+        System.out.println(Integer.toBinaryString(2827));
+        System.out.println(Integer.toBinaryString(11));
+        buffer.slice();
     }
 }

@@ -2,6 +2,9 @@ import java.lang.reflect.*;
 
 public class MyMainTest {
     public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+
+        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles",true);
+
         MyInterfaceImp myInterfaceImp = new MyInterfaceImp();
         InvocationHandler handler = new InvocationHandler() {
             @Override

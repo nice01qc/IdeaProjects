@@ -7,7 +7,6 @@ import java.nio.channels.*;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 import java.util.*;
 
 public class MultiPortEcho
@@ -31,9 +30,11 @@ public class MultiPortEcho
     for (int i=0; i<ports.length; ++i) {
       ServerSocketChannel ssc = ServerSocketChannel.open();
       ssc.configureBlocking( false );
-      ServerSocket ss = ssc.socket();
       InetSocketAddress address = new InetSocketAddress( ports[i] );
-      ss.bind( address );
+
+//      ServerSocket ss = ssc.socket();
+////      ss.bind( address );
+      ssc.bind(address);
 
       if (!ssc.isRegistered()){
         SelectionKey key = ssc.register( selector, SelectionKey.OP_ACCEPT );
@@ -51,26 +52,19 @@ public class MultiPortEcho
 
       while (it.hasNext()) {
         SelectionKey key = (SelectionKey)it.next();
-/**
- * 以下有两个if，用于处理两个阶段，已连接阶段，可读数据阶段。也可以直接一波（就第一个阶段后接着读取数据）
- */
-        if ((key.readyOps() & SelectionKey.OP_ACCEPT)   // 用于判断是否与SelectionKey.OP_ACCEPT
-          == SelectionKey.OP_ACCEPT) {
-          // Accept the new connection
+        if (key.isConnectable()){
+          System.out.println("isConnectable...");
+        }
+        if (key.isAcceptable()){
           ServerSocketChannel ssc = (ServerSocketChannel)key.channel();
           SocketChannel sc = ssc.accept();
           sc.configureBlocking( false );
-
-          // Add the new connection to the selector
-          System.out.println(sc.isRegistered());
           SelectionKey newKey = sc.register( selector, SelectionKey.OP_READ );
           it.remove();
-
-          System.out.println( "Got connection from "+sc );
-        } else if ((key.readyOps() & SelectionKey.OP_READ)
-          == SelectionKey.OP_READ) {
+        }else if (key.isReadable()) {
           // Read the data
           SocketChannel sc = (SocketChannel)key.channel();
+
 
           // Echo data
           int bytesEchoed = 0;
@@ -103,7 +97,7 @@ public class MultiPortEcho
           System.out.println(sumNUM + " \tbytesLength: "+bytesEchoed + "\tmessage: \"" + message + "\" from "+sc );
           sc.close();   // 接收完了消息，应当把socket关闭
 
-
+          it.remove();
 
         }
 
