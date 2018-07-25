@@ -6,17 +6,17 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <servlet>
-        <servlet-name>NiceImg</servlet-name>
-        <servlet-class>service.NiceImg</servlet-class>
+        <servlet-name>Img</servlet-name>
+        <servlet-class>service.Img</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>NiceImg</servlet-name>
+        <servlet-name>Img</servlet-name>
         <url-pattern>/img</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>NiceText</servlet-name>
-        <servlet-class>service.NiceText</servlet-class>
+        <servlet-class>service.Text</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NiceText</servlet-name>
@@ -24,7 +24,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>NiceResult</servlet-name>
-        <servlet-class>service.NiceResult</servlet-class>
+        <servlet-class>service.Result</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NiceResult</servlet-name>
@@ -32,7 +32,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>NiceCommand</servlet-name>
-        <servlet-class>service.NiceCommand</servlet-class>
+        <servlet-class>service.Command</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NiceCommand</servlet-name>

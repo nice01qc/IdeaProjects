@@ -12,119 +12,152 @@ public class RedisTool {
     private static Logger logger = (Logger)LogManager.getLogger("RedisTool");
     private static String host = "127.0.0.1";
     private static int port = 6379;
-    private static Jedis jedis;
     private static JedisPool jedisPool;
+    private static Object lock = new Object();
 
-    public RedisTool() {
+    static {
+        initialPool();
+        Jedis jedis = jedisPool.getResource();
+        jedis.flushDB();
+        jedis.close();
     }
 
     private static void initialPool() {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(100);
-        config.setMinIdle(10);
-        config.setMaxWaitMillis(-1L);
+        config.setMaxTotal(20);
+        config.setMaxIdle(15);
+        config.setMinIdle(5);
+        config.setMaxWaitMillis(600);
+        config.setBlockWhenExhausted(true);
         config.setTestOnBorrow(false);
-        config.setEvictionPolicyClassName("org.apache.commons.pool2.impl.DefaultEvictionPolicy");
-        config.setNumTestsPerEvictionRun(6);
+        config.setNumTestsPerEvictionRun(3);
+        config.setTimeBetweenEvictionRunsMillis(5000);
         jedisPool = new JedisPool(config, host, port);
     }
 
-    public static synchronized void emptyRedis() {
-        initialPool();
-        jedis = jedisPool.getResource();
-        jedis.flushDB();
+    public static void emptyRedis() {
+            Jedis jedis = null;
+            try{
+                jedis = jedisPool.getResource();
+                jedis.flushDB();
+            }catch (Exception e){
+
+            }finally {
+                jedis.close();
+            }
     }
 
     public static Long delKey(String key) {
-        return jedis.del(key);
-    }
+        Jedis jedis = null;
+        Long result = null;
+        try{
+            jedis = jedisPool.getResource();
+            result = jedis.del(key);
+        }catch (Exception e){
 
-    public static Long delSetData(String key, String value) {
-        return jedis.srem(key, new String[]{value});
-    }
-
-    public static synchronized boolean isExit(String key) {
-        boolean result = false;
-
-        try {
-            result = jedis.exists(key);
-        } catch (Exception var5) {
-            try {
-                Thread.sleep(1000L);
-                result = jedis.exists(key);
-            } catch (Exception var4) {
-                logger.error("jedis exists get a error! (isExit method)");
-                emptyRedis();
-            }
+        }finally {
+            jedis.close();
         }
-
         return result;
     }
 
-    public static synchronized void listAddValueByKey(String key, String value) {
+    public static Long delSetData(String key, String value) {
+        Jedis jedis = null;
+        Long result = null;
+        try{
+            jedis = jedisPool.getResource();
+            result = jedis.srem(key, new String[]{value});
+        }catch (Exception e){
+
+        }finally {
+            jedis.close();
+        }
+        return result;
+    }
+
+    public static boolean isExit(String key) {
+            Jedis jedis = null;
+            boolean result = false;
+            try {
+                jedis = jedisPool.getResource();
+                result = jedis.exists(key);
+            } catch (Exception var5) {
+                logger.error("jedis exists get a error! (isExit method)");
+            }finally {
+                jedis.close();
+            }
+            return result;
+    }
+
+    public static void listAddValueByKey(String key, String value) {
+        Jedis jedis = null;
         try {
+            jedis = jedisPool.getResource();
             jedis.lpush(key, new String[]{value});
         } catch (Exception var3) {
             logger.error("jedis lpush method get a error! (listAddValueByKey method) ");
-            emptyRedis();
+        }finally {
+            jedis.close();
         }
-
     }
 
     public static long getListLengthByKey(String key) {
+        Jedis jedis = null;
         long result = 0L;
-        if (!jedis.exists(key)) {
-            return result;
-        } else {
-            try {
+        try{
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)) {
+                return result;
+            } else {
                 result = jedis.llen(key);
-            } catch (Exception var4) {
-                logger.error("jedis llen method get a error ! ( getListLengthByKey method )");
             }
-
-            return result;
+        }catch (Exception e){
+            logger.error("jedis llen method get a error ! ( getListLengthByKey method )");
+        }finally {
+            jedis.close();
         }
+        return result;
     }
 
     public static void setAddValueByKey(String key, String value) {
+        Jedis jedis = null;
         try {
+            jedis = jedisPool.getResource();
             jedis.sadd(key, new String[]{value});
         } catch (Exception var3) {
             logger.error("jedis sadd method get a error ! ( setAddValueByKey method)");
-            emptyRedis();
+        }finally {
+            jedis.close();
         }
-
     }
 
-    public static synchronized List<String> getAllByKey(String key) {
-        List result = null;
+    public static List<String> getAllByKey(String key) {
+        Jedis jedis = null;
+        List<String> result = null;
 
         try {
+            jedis = jedisPool.getResource();
             result = jedis.lrange(key, 0L, -1L);
         } catch (Exception var3) {
             logger.error("jedis lrange method get a error ! (getAllByKey method)");
-            emptyRedis();
+        }finally {
+            jedis.close();
         }
-
         return result;
     }
 
     public static Set<String> getAllSetValue(String key) {
+        Jedis jedis = null;
         Set result = null;
-
         try {
+            jedis = jedisPool.getResource();
             result = jedis.smembers(key);
         } catch (Exception var3) {
             logger.error("jdeis smembers get a error ! (getAllSetValue method) ");
-            emptyRedis();
+        }finally {
+            jedis.close();
         }
-
         return result;
     }
 
-    static {
-        initialPool();
-        jedis = jedisPool.getResource();
-        jedis.flushDB();
-    }
 }

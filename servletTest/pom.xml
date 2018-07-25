@@ -24,9 +24,6 @@
 
 <dependencies>
 
-
-
-
   <!-- https://mvnrepository.com/artifact/javax/javaee-web-api -->
   <dependency>
     <groupId>javax</groupId>
@@ -34,8 +31,6 @@
     <version>7.0</version>
     <scope>provided</scope>
   </dependency>
-
-
 
   <!--其他web依赖-->
   <dependency>
@@ -60,6 +55,7 @@
 
 
 
+
   <!--测试-->
   <dependency>
     <groupId>junit</groupId>
@@ -67,6 +63,7 @@
     <version>${junit.version}</version>
     <scope>test</scope>
   </dependency>
+
   <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
   <dependency>
     <groupId>commons-fileupload</groupId>

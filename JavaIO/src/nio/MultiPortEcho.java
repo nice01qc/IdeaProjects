@@ -1,4 +1,4 @@
-package nio;// $Id$
+package nio;
 
 import java.io.*;
 import java.net.*;
@@ -15,13 +15,13 @@ public class MultiPortEcho
   private int ports[];
   private ByteBuffer echoBuffer = ByteBuffer.allocate( 1024 );
 
-  public MultiPortEcho( int ports[] ) throws IOException {
+  public MultiPortEcho( int ports[] ) throws IOException, InterruptedException {
     this.ports = ports;
 
     go();
   }
 
-  private void go() throws IOException {
+  private void go() throws IOException, InterruptedException {
     // Create a new selector
     Selector selector = Selector.open();
 
@@ -43,18 +43,19 @@ public class MultiPortEcho
       System.out.println( "Going to listen on "+ports[i] );
     }
 
-    while (true) {      // 通过轮询来查询状态
+    while (true) {     // 通过轮询来查询状态
 
       int num = selector.select();
-
+      System.out.println(num);
       Set selectedKeys = selector.selectedKeys();
       Iterator it = selectedKeys.iterator();
 
       while (it.hasNext()) {
         SelectionKey key = (SelectionKey)it.next();
-        if (key.isConnectable()){
-          System.out.println("isConnectable...");
-        }
+        System.out.println("select ");
+//        if (key.isConnectable()){
+//          System.out.println("isConnectable...");
+//        }
         if (key.isAcceptable()){
           ServerSocketChannel ssc = (ServerSocketChannel)key.channel();
           SocketChannel sc = ssc.accept();
@@ -64,8 +65,6 @@ public class MultiPortEcho
         }else if (key.isReadable()) {
           // Read the data
           SocketChannel sc = (SocketChannel)key.channel();
-
-
           // Echo data
           int bytesEchoed = 0;
           String message = "";
@@ -82,9 +81,7 @@ public class MultiPortEcho
 
             echoBuffer.flip();
 
-
 //            byte[] bytess = new byte[echoBuffer.limit()];
-//
 //            echoBuffer.get(bytess);
 //            message += byteToString(bytess);
             message += byteToString1(echoBuffer);
@@ -103,6 +100,7 @@ public class MultiPortEcho
 
 
       }
+      Thread.sleep(2000);
 
 //System.out.println( "going to clear" );
 //      selectedKeys.clear();

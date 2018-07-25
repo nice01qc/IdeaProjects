@@ -5,13 +5,43 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <context-param>
+    <param-name>nice</param-name>
+    <param-value>01qc</param-value>
+  </context-param>
 
   <servlet>
     <servlet-name>ImageServlet</servlet-name>
     <servlet-class>one.ImageServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>ImageServlet</servlet-name>
     <url-pattern>/img</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Test</servlet-name>
+    <servlet-class>one.Test</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Test</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>Test1</servlet-name>
+    <servlet-class>one.Test1</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Test1</servlet-name>
+    <url-pattern>/test1</url-pattern>
+  </servlet-mapping>
+
 </web-app>

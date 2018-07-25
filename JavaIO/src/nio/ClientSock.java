@@ -11,7 +11,7 @@ public class ClientSock {
     static private final int firstHeaderLength = 2;
     static private final int secondHeaderLength = 4;
     static private final int bodyLength = 6;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         //1、创建客户端Socket，指定服务器地址和端口
         Socket socket = new Socket("localhost", 1234);
@@ -22,8 +22,6 @@ public class ClientSock {
         int length = socket.getInputStream().read(message);
         for (int i =0; i < length; i++) System.out.print((char)message[i]);
         System.out.println();
-
-
 
         socket.close();
     }
