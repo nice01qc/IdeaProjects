@@ -17,7 +17,7 @@ public class EnableSellerAspect {
     private Seller seller; //要实现的目标接口，也就是说value实现了此接口，可以转型为此类
 
     // @annotaion()函数-->这样就可以使用自己的注解进行注解了ps:NaughtyWaiter
-    @AfterReturning("@annotation(test2aop.aop.annotation.NeedTest)")
+    @AfterReturning(value = "@annotation(test2aop.aop.annotation.NeedTest)")
     public void needTestFun(){
         System.out.println("needTestFun() executed !");
     }
@@ -32,7 +32,7 @@ public class EnableSellerAspect {
      *     方法参数ps: (String,*);(String,..);(Object+,*);其中“*”为一个，“..”为任意个
      *     一些模式：" .* " 表示包下所有类, " ..* " 表示包、子孙包下所有类
      */
-    @Before("execution(public void test2aop.aop.NaiveWaiter.greetTo(String))")
+    @Before(value = "execution(public void test2aop.aop.NaiveWaiter.greetTo(String))")
     public void go(){
         System.out.println("goooooooooooooooooooooooooo");
     }
@@ -40,7 +40,7 @@ public class EnableSellerAspect {
     /**
      * args()和@args() 函数：args是针对方法参数进行筛选，@args()针对方法参数进行注解 进行筛选-->没成功
      */
-    @After("args(String)")
+    @After(value = "args(String)")
     public void call(){
         System.out.println("please call me ! ");
     }

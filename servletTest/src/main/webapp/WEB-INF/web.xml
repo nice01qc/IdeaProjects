@@ -32,6 +32,10 @@
     <url-pattern>/test</url-pattern>
   </servlet-mapping>
 
+  <!--在tomcat config/web.xml设置为30分钟 -->
+  <session-config>
+    <session-timeout>15</session-timeout>
+  </session-config>
 
   <servlet>
     <servlet-name>Test1</servlet-name>
@@ -43,5 +47,21 @@
     <servlet-name>Test1</servlet-name>
     <url-pattern>/test1</url-pattern>
   </servlet-mapping>
+
+
+  <!--session 监听-->
+  <listener>
+    <listener-class>one.listen.SessionMonitor</listener-class>
+  </listener>
+
+  <!--filter过滤器-->
+<filter>
+  <filter-name>ExampleFilter</filter-name>
+  <filter-class>one.filter.ExampleFilter</filter-class>
+</filter>
+  <filter-mapping>
+    <filter-name>ExampleFilter</filter-name>
+    <servlet-name>Test1</servlet-name>
+  </filter-mapping>
 
 </web-app>

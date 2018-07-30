@@ -1,6 +1,7 @@
 package test2aop.aop;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import test2aop.aop.annotation.NeedTest;
 
 @Component

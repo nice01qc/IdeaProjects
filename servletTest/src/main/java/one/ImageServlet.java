@@ -29,6 +29,7 @@ public class ImageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
 
+
         BASE64Encoder encoder = new BASE64Encoder();
 
         DiskFileItemFactory factory = new DiskFileItemFactory();

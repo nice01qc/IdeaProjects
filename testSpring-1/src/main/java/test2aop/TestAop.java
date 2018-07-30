@@ -20,7 +20,7 @@ public class TestAop {
 
         Go go2 = (Go) cglibProxy.getProxy(go.getClass());
 
-        System.out.println(go2.div(32,0));
+        System.out.println(go2.div(32,1));
 
     }
 }

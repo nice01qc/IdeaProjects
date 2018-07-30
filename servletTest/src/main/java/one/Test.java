@@ -63,7 +63,11 @@ public class Test extends HttpServlet {
         this.getServletContext().setAttribute("jake","testJake");
         System.out.println(this.getServletContext().getAttribute("jake"));
 
-        this.getServletConfig().getServletName()
+        req.getRequestDispatcher("/").include(req,resp);
+        req.getRequestDispatcher("/").forward(req,resp);
+        resp.sendRedirect("url");
+
+
     }
 
 }
