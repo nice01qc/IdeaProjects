@@ -27,7 +27,7 @@ public class RedisTool {
         config.setMaxTotal(20);
         config.setMaxIdle(15);
         config.setMinIdle(5);
-        config.setMaxWaitMillis(600);
+        config.setMaxWaitMillis(1000);
         config.setBlockWhenExhausted(true);
         config.setTestOnBorrow(false);
         config.setNumTestsPerEvictionRun(3);

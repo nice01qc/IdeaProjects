@@ -1,0 +1,1 @@
+16:26:27.624 [http-bio-8080-exec-4] ERROR other - java.util.concurrent.ExecutionException: java.net.SocketException: Software caused connection abort: socket write error

@@ -19,7 +19,7 @@
 <div id="showbigimg"></div>
 <header>
         <span>
-            提交答案：<input type="text=" id="headinput" value="">
+            与插件通信：<input type="text=" id="headinput" value="">
             <button id="headtijiao">提交</button>
         </span>
     <span>输入房间号：</span><input id="room" type="text"/>
