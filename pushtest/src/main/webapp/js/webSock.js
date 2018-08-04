@@ -183,7 +183,7 @@ function emphasizeClickImg(buttoms){
 
 
 
-// 以下是提交答案的
+// 以下是与插件通信用的
 var headinput = document.getElementById("headinput");
 var headtijiao = document.getElementById("headtijiao");
 headtijiao.onclick = function () {
