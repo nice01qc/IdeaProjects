@@ -8,7 +8,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 
+@WebFilter(filterName = "filter0SecretFilt", urlPatterns = {"/*"})
 public class SecretFilt implements Filter {
     private ServletContext servletContext = null;
 

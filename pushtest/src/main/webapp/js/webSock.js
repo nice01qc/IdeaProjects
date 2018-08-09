@@ -5,9 +5,8 @@ var date = new Date();
 var beginTime = date.getTime();
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket(window.sockSite + "websocket");
-}
-else {
+    websocket = new WebSocket(window.sockSite + "indexSocket");
+}else {
     alert('当前浏览器 Not support websocket')
 }
 
@@ -183,7 +182,7 @@ function emphasizeClickImg(buttoms){
 
 
 
-// 以下是与插件通信用的
+// 与插件通信用的
 var headinput = document.getElementById("headinput");
 var headtijiao = document.getElementById("headtijiao");
 headtijiao.onclick = function () {
@@ -193,16 +192,14 @@ headtijiao.onclick = function () {
     } else {
         var text = headinput.value;
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', window.site + 'result', true);
+        xhr.open('POST', window.site + 'communication', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("result=" + encodeURIComponent(text)+ "&room=" + encodeURIComponent(windowroom));
-
         headinput.value = "ok,已发送";
     }
-
 }
 
-
+// 转换图片状态
 function changeImgStateNO(num) {
     var buttoms = document.getElementsByClassName("buttom0");
     for (var i = buttoms.length - 1; i >= 0; i--) {
@@ -219,7 +216,6 @@ function changeImgStateNO(num) {
         }
     }
 }
-
 function changeImgStateYES(num) {
     var buttoms = document.getElementsByClassName("buttom0");
     for (var i = buttoms.length - 1; i >= 0; i--) {
@@ -236,7 +232,7 @@ function changeImgStateYES(num) {
         }
     }
 }
-
+//整理所有图片状态
 function getImgStateALL() {
     var buttoms = document.getElementsByClassName("buttom3");
     var result = "status";
@@ -259,6 +255,7 @@ function initialImgStates(str){
     progressBar();
 }
 
+// 删除所有插入的信息
 function deleteAll(){
     document.getElementById('message').innerHTML="";
     document.getElementById('imgArea').innerHTML="";
@@ -280,15 +277,16 @@ function resetColor(){
     setInterval('change()',100);
 }
 
+// 显示当前完整日期
 function change(){
     var showshow = document.getElementById("showshow");
     var myDate = new Date();
-    var diff = (myDate.getTime() - beginTime);
-    var hour = parseInt(diff/1000/60/60)%60;
-    var munite = parseInt(diff/1000/60)%60;
-    var miao = parseInt(diff/1000)%60;
-    var haomiao = parseInt(diff/100)%100;
-    showshow.innerHTML = hour + ":" + munite + ":" + miao + ":" + haomiao ;
+    // var diff = (myDate.getTime() - beginTime);
+    // var hour = parseInt(diff/1000/60/60)%60;
+    // var munite = parseInt(diff/1000/60)%60;
+    // var miao = parseInt(diff/1000)%60;
+    // var haomiao = parseInt(diff/100)%100;
+    showshow.innerHTML = myDate ;
 }
 
 

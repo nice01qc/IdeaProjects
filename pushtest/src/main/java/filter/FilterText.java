@@ -7,11 +7,13 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+
 import util.RedisTool;
 
+
+@WebFilter(filterName = "filter1FilterText", servletNames = {"Text"})
 public class FilterText implements Filter {
-    public FilterText() {
-    }
 
     public void init(FilterConfig filterConfig) throws ServletException {
     }

@@ -14,6 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import util.RedisTool;
 
+
+
 @ServerEndpoint("/manage")
 public class ManageSocket {
     private static Logger logger = (Logger)LogManager.getLogger("other");
@@ -40,11 +42,11 @@ public class ManageSocket {
         String room = message.replaceAll(" ", "");
         if (room.matches("[:a-zA-Z0-9]+")) {
             if (room.equals(0)) {
-                WebSocket.clearAllRoom();
+                IndexSocket.clearAllRoom();
             }
 
             if (room.matches("^room:[0-9a-zA-Z]+$")) {
-                WebSocket.clearOneRoom(room.replaceAll("room:", ""));
+                IndexSocket.clearOneRoom(room.replaceAll("room:", ""));
             }
 
             if (room.equals("clear")) {
