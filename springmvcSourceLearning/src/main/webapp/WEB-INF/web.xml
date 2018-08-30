@@ -19,7 +19,7 @@
 
     <servlet-mapping>
         <servlet-name>Springmvc</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 
   <!--使用ContextLoaderListener配置时，需要告诉它spring配置文件的位置-->
