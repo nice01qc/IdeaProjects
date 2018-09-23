@@ -17,15 +17,9 @@ public class Test1 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println(this.getServletContext().getInitParameter("nice"));
-        System.out.println(this.getServletContext().getAttribute("jake"));
+        resp.sendRedirect("https://baike.baidu.com/");
 
-        PrintWriter p = resp.getWriter();
-
-        p.write("<h1> 123</h1>");
-        p.write("<h3>金<h3/>");
-
-        p.flush();
+        System.out.println("I.....");
 
 
     }

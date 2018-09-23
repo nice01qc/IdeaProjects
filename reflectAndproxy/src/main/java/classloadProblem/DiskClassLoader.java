@@ -22,7 +22,7 @@ public class DiskClassLoader extends ClassLoader {
         try{
             FileInputStream is = new FileInputStream(file);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            int len = 0;    // 此处应该有问题,其实没问题，请见byte与int区别，只是范围大小而已，这样就相当于一个一个地读取
+            int len = 0;    // 与unsingn有关
             try{
                 while ((len = is.read()) != -1){
                     bos.write(len);

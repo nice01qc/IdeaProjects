@@ -1,5 +1,7 @@
 package one;
 
+import aop.T;
+import aop.TestBean;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
@@ -11,8 +13,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 import java.text.MessageFormat;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TreeMap;
 
 public class MyTestBean1 {
 
@@ -34,11 +38,12 @@ public class MyTestBean1 {
     @Test
     public void testDate(){
 
-//        BeanFactory apc = new XmlBeanFactory(new ClassPathResource("one/testDate.xml"));
+        BeanFactory apc = new XmlBeanFactory(new ClassPathResource("one/aop.xml"));
 
-        ClassPathXmlApplicationContext apc = new ClassPathXmlApplicationContext("one/testDate.xml");
-        UserManager userManager = (UserManager)apc.getBean("userManager");
-//        System.out.println(userManager.getDateValue());
+//        ClassPathXmlApplicationContext apc = new ClassPathXmlApplicationContext("one/aop.xml");
+        T testBean = (T)apc.getBean("testBean");
+
+        testBean.test();
 
 
     }
@@ -49,10 +54,7 @@ public class MyTestBean1 {
         ConfigurableListableBeanFactory apc = new XmlBeanFactory(new ClassPathResource("one/beanfactory.xml"));
 
         BeanFactoryPostProcessor bfpp = (BeanFactoryPostProcessor)apc.getBean("bfpp");
-//
-//        bfpp.postProcessBeanFactory(apc);
-//
-//        System.out.println(apc.getBean("simpleBean"));
+
     }
 
     @Test

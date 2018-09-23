@@ -16,6 +16,10 @@ public class MyMainTest {
             }
         };
 
+        Class<?>[] c  = myInterfaceImp.getClass().getInterfaces();
+        System.out.println(c[0].getSimpleName());
+        System.out.println(c[0].isInterface());
+
         Class<?> clazz = Proxy.getProxyClass(Thread.currentThread().getContextClassLoader(),myInterfaceImp.getClass().getInterfaces());
 
         Constructor constructor = clazz.getConstructor(new Class[]{InvocationHandler.class});
@@ -23,8 +27,5 @@ public class MyMainTest {
         MyInterface myInterface = (MyInterface)constructor.newInstance(new Object[]{handler});
 
         myInterface.sout();
-
-
-
     }
 }

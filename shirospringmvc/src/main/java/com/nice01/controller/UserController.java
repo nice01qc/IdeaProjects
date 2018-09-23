@@ -27,9 +27,7 @@ public class UserController {
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-
         return "login success...";
-
     }
 
 

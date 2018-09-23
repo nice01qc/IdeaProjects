@@ -9,7 +9,7 @@ public class DiskClassLoadertest {
         DiskClassLoader diskLoader = new DiskClassLoader("E:\\lib");
         // 在D:\lib放入Show.class便可进入测试,测试时，由于target/classes在appClassLoader默认
         // 路径里面，因此需要保证没有此类，才会调用自己设计的路径里面的类
-        Class c = diskLoader.loadClass("classloadProblem.Show");
+        Class c = diskLoader.loadClass("classloadProblem.Show1");
 
         if (c != null){
             Object obj = c.newInstance();
