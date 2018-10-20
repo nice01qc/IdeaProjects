@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
@@ -82,7 +83,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     //秒杀是否成功，成功:减库存，增加明细；失败:抛出异常，事务回滚
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     /**
      * 使用注解控制事务方法的优点:
      * 1.开发团队达成一致约定，明确标注事务方法的编程风格

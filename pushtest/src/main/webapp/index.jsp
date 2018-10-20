@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: nice01qc
-  Date: 2018/4/4
-  Time: 21:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -18,10 +11,10 @@
 <body>
 <div id="showbigimg"></div>
 <header>
-        <span>
-            与插件通信：<input type="text=" id="headinput" value="">
-            <button id="headtijiao">提交</button>
-        </span>
+    <%--<span>--%>
+        <%--与插件通信：<input type="text=" id="headinput" value="">--%>
+        <%--<button id="headtijiao">提交</button>--%>
+    <%--</span>--%>
     <span>输入房间号：</span><input id="room" type="text"/>
     <button onclick="sendRoom()">确定</button>
     <button onclick="closeWebSocket()">关闭连接</button>

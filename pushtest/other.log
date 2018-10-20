@@ -1,1 +1,15 @@
-16:26:27.624 [http-bio-8080-exec-4] ERROR other - java.util.concurrent.ExecutionException: java.net.SocketException: Software caused connection abort: socket write error
+14:32:10.662 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:32:39.190 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:32:40.911 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:36.801 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:38.128 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:38.577 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:38.787 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:39.068 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:39.296 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:33:39.504 [http-bio-8080-exec-9] ERROR other - java.lang.reflect.InvocationTargetException
+14:36:57.102 [http-bio-8080-exec-4] ERROR other - java.lang.reflect.InvocationTargetException
+14:38:15.812 [http-bio-8080-exec-4] ERROR other - java.lang.reflect.InvocationTargetException
+14:39:05.438 [http-bio-8080-exec-4] ERROR other - java.lang.reflect.InvocationTargetException
+14:40:48.618 [http-bio-8080-exec-4] ERROR other - java.lang.reflect.InvocationTargetException
+15:17:02.929 [http-bio-8080-exec-8] ERROR other - java.lang.reflect.InvocationTargetException

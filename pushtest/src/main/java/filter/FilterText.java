@@ -20,6 +20,7 @@ public class FilterText implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setCharacterEncoding("utf-8");
+        servletResponse.setCharacterEncoding("utf-8");
         String room = servletRequest.getParameter("room");
         if (room != null && !room.equals("") && room.matches("[0-9a-zA-Z]+")) {
             if (room.equals("clear")) {

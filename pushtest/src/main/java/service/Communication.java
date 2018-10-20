@@ -6,8 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import websock.CommunicationSocket;
 
-@WebServlet(name = "Communication", urlPatterns = {"/communication"})
+@WebServlet(
+        name = "Communication",
+        urlPatterns = {"/communication"}
+)
 public class Communication extends HttpServlet {
+    public Communication() {
+    }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         this.doPost(req, resp);

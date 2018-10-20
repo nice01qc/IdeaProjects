@@ -24,6 +24,7 @@ public class SecretFilt implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setCharacterEncoding("utf-8");
+        servletResponse.setCharacterEncoding("utf-8");
         String secret = (String)this.servletContext.getAttribute("secret");
         String room = servletRequest.getParameter("room");
         if (room != null && !room.equals("")) {

@@ -11,17 +11,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ObscenityRemovingBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
-
     private Set<String> obscenties;
-    public ObscenityRemovingBeanFactoryPostProcessor(){
+
+    public ObscenityRemovingBeanFactoryPostProcessor() {
         this.obscenties = new HashSet<String>();
     }
 
-
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-
         String[] beanNames = beanFactory.getBeanDefinitionNames();
-        for (String beanName : beanNames){
+        for (String beanName : beanNames) {
             BeanDefinition bd = beanFactory.getBeanDefinition(beanName);
             StringValueResolver valueResolver = new StringValueResolver() {
                 public String resolveStringValue(String strVal) {
@@ -32,22 +30,17 @@ public class ObscenityRemovingBeanFactoryPostProcessor implements BeanFactoryPos
             BeanDefinitionVisitor visitor = new BeanDefinitionVisitor(valueResolver);
             visitor.visitBeanDefinition(bd);
         }
-
-
     }
 
-    public boolean isObscene(Object value){
+    public boolean isObscene(Object value) {
         String protentialObscenity = value.toString().toUpperCase();
         return this.obscenties.contains(protentialObscenity);
     }
 
-    public void setObscenties(Set<String> obscenties){
+    public void setObscenties(Set<String> obscenties) {
         this.obscenties.clear();
-        for (String obscenity : obscenties){
+        for (String obscenity : obscenties) {
             this.obscenties.add(obscenity.toUpperCase());
         }
     }
-
-
-
 }

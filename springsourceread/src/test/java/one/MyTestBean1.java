@@ -13,10 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 import java.text.MessageFormat;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MyTestBean1 {
 
@@ -38,17 +35,16 @@ public class MyTestBean1 {
     @Test
     public void testDate(){
 
-        BeanFactory apc = new XmlBeanFactory(new ClassPathResource("one/aop.xml"));
+        BeanFactory apc = new XmlBeanFactory(new ClassPathResource("one/beanfactory.xml"));
 
 //        ClassPathXmlApplicationContext apc = new ClassPathXmlApplicationContext("one/aop.xml");
-        T testBean = (T)apc.getBean("testBean");
+        T testBean = (T)apc.getBean("child");
+
+
 
         testBean.test();
-
-
     }
-
-    @Test
+       @Test
     public void testPostProcessor(){
 
         ConfigurableListableBeanFactory apc = new XmlBeanFactory(new ClassPathResource("one/beanfactory.xml"));
@@ -72,6 +68,14 @@ public class MyTestBean1 {
         System.out.println(msg1);
 
         System.out.println(msg2);
+    }
+
+    @Test
+    public void testss(){
+        List<Integer> list = new ArrayList<Integer>();
+
+
+
     }
 
 

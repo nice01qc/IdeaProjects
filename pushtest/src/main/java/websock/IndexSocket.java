@@ -1,31 +1,39 @@
 package websock;
 
+import com.google.gson.Gson;
+import entity.Answer;
+import entity.DirecEnum;
+import entity.IndexSocketMessage;
+
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import util.RedisKey;
 import util.RedisTool;
 
 @ServerEndpoint("/indexSocket")
 public class IndexSocket {
-    private static Logger logger = (Logger)LogManager.getLogger("other");
-    private String room = "";
+    private static Logger logger = (Logger) LogManager.getLogger("other");
 
-    private static CopyOnWriteArraySet<IndexSocket> webSocketSet = new CopyOnWriteArraySet();
-    private static ConcurrentHashMap<String, Set<String>> statusHashMap = new ConcurrentHashMap();
+    private static Gson gson = new Gson();
+    private String room = "";
+    private static Set<IndexSocket> webSocketSet = Collections.synchronizedSet(new HashSet(16));
+    private static ConcurrentHashMap<String, Set<String>> statusHashMap = new ConcurrentHashMap(16);
+    private static ConcurrentHashMap<String, HashMap<String, String>> answerHashMap = new ConcurrentHashMap<String, HashMap<String, String>>();
+
     private Session session;
 
+    public IndexSocket() {
+    }
 
     @OnOpen
     public void onOpen(Session session) {
@@ -39,76 +47,35 @@ public class IndexSocket {
     }
 
     @OnMessage
-    public void onMessage(String message, Session session) throws IOException, InterruptedException {
-        if (message.matches("^[0-9]+:no$")) {
-            sendMessageByOut(this.room, message.replaceAll("no", "yes"));
-            this.addToStatusHashMap(this.room, message.replaceAll(":no", ""));
-        } else if (message.matches("^[0-9]+:yes$")) {
-            sendMessageByOut(this.room, message.replaceAll("yes", "no"));
-            this.delFromStatusHashMap(this.room, message.replaceAll(":yes", ""));
-        } else {
-            String room = message.trim();
-            if (room.matches("^[0-9a-zA-Z]+$")) {
-                RedisTool.setAddValueByKey("clientRoom", room);
-                ManageSocket.updateroom(room);
-                this.room = room;
-                String roomText = room + "text";
-                String roomImg = room + "img";
-                List listroom;
-                int i;
-                if (RedisTool.isExit(roomText)) {
+    public void onMessage(String message, Session session) {
+        IndexSocketMessage ism = gson.fromJson(message, IndexSocketMessage.class);
+        DirecEnum diretion = ism.getDirection();
 
-                    this.sendMessage("TextNum:" + RedisTool.getListLengthByKey(roomText));
-                    listroom = RedisTool.getAllByKey(roomText);
-                    if (listroom == null) {
-                        Thread.sleep(400L);
-                        listroom = RedisTool.getAllByKey(roomText);
-                    }
-
-                    if (listroom.size() > 500) {
-                        RedisTool.delKey(roomText);
-                    }
-
-                    if (listroom != null && !listroom.isEmpty()) {
-                        for(i = listroom.size() - 1; i >= 0; --i) {
-                            this.sendMessage((String)listroom.get(i));
-                        }
-                    }
-                }
-
-                if (RedisTool.isExit(roomImg)) {
-                    this.sendMessage("imgNum:" + RedisTool.getListLengthByKey(roomImg));
-                    listroom = RedisTool.getAllByKey(roomImg);
-                    if (listroom == null) {
-                        Thread.sleep(400L);
-                        listroom = RedisTool.getAllByKey(roomImg);
-                    }
-
-                    if (listroom.size() > 250) {
-                        RedisTool.delKey(roomImg);
-                    }
-
-                    if (listroom != null && !listroom.isEmpty()) {
-                        for(i = listroom.size() - 1; i >= 0; --i) {
-                            this.sendMessage((String)listroom.get(i));
-                        }
-                    }
-                }
-
-                if (statusHashMap.containsKey(this.room)) {
-                    Set<String> stringSet = (Set)statusHashMap.get(this.room);
-                    String result = "status";
-
-                    String x;
-                    for(Iterator var8 = stringSet.iterator(); var8.hasNext(); result = result + "-" + x) {
-                        x = (String)var8.next();
-                    }
-
-                    this.sendMessage(result);
-                }
-
+        if (diretion == DirecEnum.IMGSTATENO && !ism.imgSerialNumIsNull())
+        {
+            sendMessageByOut(ism.setDirection(DirecEnum.IMGSTATEYES).setRoom(this.room));
+            addToStatusHashMap(ism.getRoom(), ism.getImgSerialNum());
+        } else if (diretion == DirecEnum.IMGSTATEYES && !ism.imgSerialNumIsNull())
+        {
+            sendMessageByOut(ism.setDirection(DirecEnum.IMGSTATENO).setRoom(this.room));
+            delFromStatusHashMap(ism.getRoom(), ism.getImgSerialNum());
+        } else if (diretion == DirecEnum.ANSWER && !ism.answersIsNull())
+        {
+            if (this.room == null || this.room.equals("")) return;
+            ism.setRoom(this.room);
+            Answer answer = ism.getAnswers();
+            if (!answerHashMap.contains(this.room)) {
+                answerHashMap.put(this.room, new HashMap<String, String>());
             }
+            HashMap<String, String> hashMap = answerHashMap.get(this.room);
+            hashMap.put(answer.getNum(), answer.getResult());
+            sendMessageByOut(ism);
+        } else if (diretion == DirecEnum.ROOM && !ism.roomIsNull())
+        {
+            this.room = ism.getRoom();
+            this.initAllMessage(ism);
         }
+
     }
 
     @OnError
@@ -117,22 +84,84 @@ public class IndexSocket {
         logger.error(error.getMessage());
     }
 
-    public synchronized void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
+    public synchronized void sendMessage(String message) {
+        try {
+            this.session.getBasicRemote().sendText(message);
+        } catch (IOException var3) {
+            var3.printStackTrace();
+            logger.error(var3.getMessage());
+        }
+
     }
 
-    public static void sendMessageByOut(String room, String message) throws InterruptedException {
-        Iterator var2 = webSocketSet.iterator();
+    private void initAllMessage(IndexSocketMessage ism) {
+        String room = ism.getRoom();
+        IndexSocketMessage result = new IndexSocketMessage();
+        RedisTool.setAddValueByKey(RedisKey.getCLIENTROOM(), room);
+        ManageSocket.updateroom(room);
+        this.room = room;
+        String roomTextRedisKey = RedisKey.getTextRedisKeyByRoom(room);
+        List<String> roomTextList = null;
+        int i;
+        if (RedisTool.isExit(roomTextRedisKey)) {
+            this.sendMessage(gson.toJson(result.clear().setDirection(DirecEnum.TEXTNUM).setTextNum(String.valueOf(RedisTool.getListLengthByKey(roomTextRedisKey)))));
+            roomTextList = RedisTool.getAllByKey(roomTextRedisKey);
+            if (roomTextList.size() > 500) {
+                RedisTool.delKey(roomTextRedisKey);
+            }
 
-        while(var2.hasNext()) {
-            IndexSocket item = (IndexSocket)var2.next();
-            if (item.room.equals(room)) {
-                try {
-                    item.sendMessage(message);
-                } catch (IOException var5) {
-                    var5.printStackTrace();
-                    logger.error(var5.getMessage());
+            if (roomTextList != null && !roomTextList.isEmpty()) {
+                result.clear().setDirection(DirecEnum.TEXT).setTextNum((String) null);
+
+                for (i = roomTextList.size() - 1; i >= 0; --i) {
+                    this.sendMessage(gson.toJson(result.setText((String) roomTextList.get(i))));
                 }
+            }
+        }
+
+        String roomImgRedisKey = RedisKey.getImgRedisKeyByRoom(room);
+        List<String> roomImgList = null;
+        if (RedisTool.isExit(roomImgRedisKey)) {
+            this.sendMessage(gson.toJson(result.clear().setDirection(DirecEnum.IMGNUM).setImgNum(String.valueOf(RedisTool.getListLengthByKey(roomImgRedisKey)))));
+            roomImgList = RedisTool.getAllByKey(roomImgRedisKey);
+            if (roomImgList.size() > 250) {
+                RedisTool.delKey(roomImgRedisKey);
+            }
+
+            if (roomImgList != null && !roomImgList.isEmpty()) {
+                result.clear().setDirection(DirecEnum.IMG);
+
+                for (i = roomImgList.size() - 1; i >= 0; --i) {
+                    this.sendMessage(gson.toJson(result.setImg((String) roomImgList.get(i))));
+                }
+            }
+        }
+
+        if (statusHashMap.containsKey(this.room)) {
+            Set<String> stringSet = (Set) statusHashMap.get(room);
+            this.sendMessage(gson.toJson(result.clear().setDirection(DirecEnum.ALLIMAGESTATE).setAllImageState(stringSet)));
+        }
+        if (answerHashMap.containsKey(this.room)) {
+            HashMap<String, String> hashMap = answerHashMap.get(this.room);
+            IndexSocketMessage idx = new IndexSocketMessage();
+            idx.setDirection(DirecEnum.ANSWER);
+            for (String x : hashMap.keySet()) {
+                Answer answer = new Answer(x, hashMap.get(x));
+                idx.setAnswers(answer);
+                this.sendMessage(gson.toJson(idx));
+            }
+        }
+
+    }
+
+
+    public static void sendMessageByOut(IndexSocketMessage ism) {
+        Iterator socketIterator = webSocketSet.iterator();
+
+        while (socketIterator.hasNext()) {
+            IndexSocket socket = (IndexSocket) socketIterator.next();
+            if (socket.room != null && socket.room.equals(ism.getRoom())) {
+                socket.sendMessage(gson.toJson(ism));
             }
         }
 
@@ -141,72 +170,74 @@ public class IndexSocket {
     public static void clearAllRoom() throws IOException {
         Iterator var0 = webSocketSet.iterator();
 
-        while(var0.hasNext()) {
-            IndexSocket indexSocket = (IndexSocket)var0.next();
+        while (var0.hasNext()) {
+            IndexSocket indexSocket = (IndexSocket) var0.next();
             indexSocket.session.close();
         }
 
         webSocketSet.clear();
-        RedisTool.delKey("clientRoom");
+        statusHashMap.clear();
+        RedisTool.delKey(RedisKey.getCLIENTROOM());
     }
 
     public static void clearOneRoom(String room) throws IOException {
         Iterator var1 = webSocketSet.iterator();
 
-        while(var1.hasNext()) {
-            IndexSocket indexSocket = (IndexSocket)var1.next();
-            if (indexSocket.room.equals(room)) {
+        while (var1.hasNext()) {
+            IndexSocket indexSocket = (IndexSocket) var1.next();
+            if (indexSocket.room != null && indexSocket.room.equals(room)) {
                 webSocketSet.remove(indexSocket);
                 indexSocket.session.close();
                 break;
             }
         }
 
-        if (RedisTool.isExit("clientRoom")) {
-            RedisTool.delSetData("clientRoom", room);
+        if (RedisTool.isExit(RedisKey.getCLIENTROOM())) {
+            RedisTool.delSetData(RedisKey.getCLIENTROOM(), room);
         }
 
-        if (RedisTool.isExit(room + "text")) {
-            RedisTool.delKey(room + "text");
+        if (RedisTool.isExit(RedisKey.getTextRedisKeyByRoom(room))) {
+            RedisTool.delKey(RedisKey.getTextRedisKeyByRoom(room));
         }
 
-        if (RedisTool.isExit(room + "img")) {
-            RedisTool.delKey(room + "img");
+        if (RedisTool.isExit(RedisKey.getImgRedisKeyByRoom(room))) {
+            RedisTool.delKey(RedisKey.getImgRedisKeyByRoom(room));
         }
 
+        statusHashMap.remove(room);
+        answerHashMap.remove(room);
     }
 
     public static void clearOneRoomMessage(String room) throws IOException {
-        if (RedisTool.isExit(room + "text")) {
-            RedisTool.delKey(room + "text");
+        if (RedisTool.isExit(RedisKey.getTextRedisKeyByRoom(room))) {
+            RedisTool.delKey(RedisKey.getTextRedisKeyByRoom(room));
         }
 
-        if (RedisTool.isExit(room + "img")) {
-            RedisTool.delKey(room + "img");
+        if (RedisTool.isExit(RedisKey.getImgRedisKeyByRoom(room))) {
+            RedisTool.delKey(RedisKey.getImgRedisKeyByRoom(room));
         }
 
         statusHashMap.clear();
+        answerHashMap.clear();
     }
 
-    private void addToStatusHashMap(String room, String message) {
-        if (!room.equals("")) {
+    private static void addToStatusHashMap(String room, String message) {
+        if (!"".equals(room)) {
             if (statusHashMap.containsKey(room)) {
-                ((Set)statusHashMap.get(room)).add(message);
+                ((Set) statusHashMap.get(room)).add(message);
             } else {
                 Set<String> stringSet = new HashSet();
                 stringSet.add(message);
                 statusHashMap.put(room, stringSet);
             }
-
         }
+
     }
 
-    private void delFromStatusHashMap(String room, String message) {
-        if (!room.equals("")) {
-            if (statusHashMap.containsKey(room) && ((Set)statusHashMap.get(room)).contains(message)) {
-                ((Set)statusHashMap.get(room)).remove(message);
-            }
-
+    private static void delFromStatusHashMap(String room, String message) {
+        if (!"".equals(room) && statusHashMap.containsKey(room) && ((Set) statusHashMap.get(room)).contains(message)) {
+            ((Set) statusHashMap.get(room)).remove(message);
         }
+
     }
 }

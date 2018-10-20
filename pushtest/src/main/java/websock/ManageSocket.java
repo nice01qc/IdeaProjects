@@ -1,5 +1,4 @@
 package websock;
-
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
@@ -13,8 +12,6 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import util.RedisTool;
-
-
 
 @ServerEndpoint("/manage")
 public class ManageSocket {

@@ -19,6 +19,8 @@ public class CommunicationSocket {
     private static CopyOnWriteArraySet<CommunicationSocket> resultSocketSet = new CopyOnWriteArraySet();
     private Session session;
 
+    public CommunicationSocket() {
+    }
 
     @OnOpen
     public void onOpen(Session session) {

@@ -2,7 +2,6 @@ package cn.codingxiaxw.dao;
 
 import cn.codingxiaxw.entity.Seckill;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.List;
