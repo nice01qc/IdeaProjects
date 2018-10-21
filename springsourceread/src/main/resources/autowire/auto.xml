@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byType">
+<!--上面设置了默认通过什么自动注入，也可以在单个bean里面设置 -->
+
+    <!--下面设置为false，则其他类自动注入时不会考虑他-->
+    <bean class="autowire.MessageServiceDBImpl" autowire-candidate="false" />
+
+    <bean class="autowire.MessageServiceFileImpl" />
+    <bean class="autowire.MessagePrinter"/>
+
+
+</beans>

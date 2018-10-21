@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean name="testListener" class="one.TestListener" />
+    <bean parent="testListener" class="one.ChildBean" id="childBean" scope="singleton" primary="true" name="childBean2"
+          lazy-init="true" init-method="getChild" destroy-method="getChild" depends-on="testListener" autowire-candidate="true"
+          autowire="byName" abstract="true" />
+
+    <!--
+        parent属性更多的是用于模板
+        必要条件：1、子bean必须与父bean保持兼容，也就是说子bean中必须有父bean定义的所有属性。
+
+                 2、父bean必须是抽象bean或者定义lazy-init=true也就是不让bean工厂实例化该bean
+        1、如果父bean有class属性，而子bean没有，那么子bean的class就和父bean相同
+        2、如果父bean没有定义class属性，子bean必须定义class属性，这时候父bean实际上仅仅是一个纯模版或抽象bean，仅仅充当子定义的父定义。
+    -->
+
+    <!--
+        primary与自动注入有关（如果autowired是byType类型）
+    -->
+
+    <!--
+        lazy-init  在getbean时再加载（相对于ApplicationContext）
+    -->
+
+    <!--
+        depends-on ：保证实例化时先实例化depends-on指向类
+    -->
+
+    <!--
+        autowire-candidate：在别的类自动注入时不会考虑为false的类，默认为true？
+    -->
+
+    <!--
+        autowire：通过什么自动注入，可以在beans里面统一设置
+    -->
+
+</beans>
