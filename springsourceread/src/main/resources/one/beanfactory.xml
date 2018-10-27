@@ -24,13 +24,6 @@
 
 
 
-    <bean id="child" class="one.ChildBean">
-        <property name="child" value="456"/>
-        <property name="parentBean" ref="parent"/>
-    </bean>
 
-    <bean id="parent" class="one.ParentBean">
-        <property name="parent" value="123" />
-    </bean>
 
 </beans>

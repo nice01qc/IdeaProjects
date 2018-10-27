@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--<bean id="child" class="one.ChildBean">-->
+        <!--<property name="child" value="456"/>-->
+        <!--<property name="parentBean" ref="parent"/>-->
+    <!--</bean>-->
+
+    <bean id="parent" class="one.ParentBean">
+        <property name="parent" value="123" />
+    </bean>
+
+
+</beans>

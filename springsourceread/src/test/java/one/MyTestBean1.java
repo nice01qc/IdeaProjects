@@ -71,11 +71,9 @@ public class MyTestBean1 {
     }
 
     @Test
-    public void testss(){
-        List<Integer> list = new ArrayList<Integer>();
-
-
-
+    public void testRley(){
+        BeanFactory apc = new XmlBeanFactory(new ClassPathResource("rely/relyconfig.xml"));
+        T testBean = (T)apc.getBean("parent");
     }
 
 

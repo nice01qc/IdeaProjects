@@ -12,6 +12,7 @@ import util.RedisKey;
 import util.RedisTool;
 import websock.IndexSocket;
 
+
 @WebServlet(name = "Text", urlPatterns = {"/text"})
 public class Text extends HttpServlet {
     private static Logger logger = (Logger) LogManager.getLogger("other");
