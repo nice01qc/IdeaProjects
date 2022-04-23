@@ -15,7 +15,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring>3.2.3.RELEASE</spring>
+    <spring>5.3.19</spring>
   </properties>
 
   <dependencies>
