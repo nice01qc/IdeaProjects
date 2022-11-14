@@ -10,7 +10,7 @@
     <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring>3.2.3.RELEASE</spring>
+        <spring>3.2.18.RELEASE</spring>
     </properties>
 
 
